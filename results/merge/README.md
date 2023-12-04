@@ -6,7 +6,7 @@
 
 *
 
-Predicative performance error measures for COVID-19 daily deaths in international periodically updated epidemic models 2020-2022 by country 
+**Predicative performance error measures for COVID-19 daily deaths in international periodically updated epidemic models 2020-2022 by country** 
 
 Two color schemes for error measures are used for each model: (a) deciles of the individual epidemic model, and (b) deciles of mean of all epidemic models. The first map differentiates countries in each individual model and the second map facilitates comparison across all models. 
 
