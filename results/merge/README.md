@@ -74,7 +74,7 @@ IHME = [Institute for Health Metrics and Evaluation model, UW](https://covid19.h
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/89f9ff80-daf8-4e17-8277-8b446ed8d9e7)
 
-LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
+IMPE = [Imperial College model](https://mrc-ide.github.io/global-lmic-reports/)
 
 ***
 
@@ -82,13 +82,15 @@ LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/79d28bea-1111-480b-b7b8-8321fff6a1e7)
 
-LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
+IMPE = [Imperial College model](https://mrc-ide.github.io/global-lmic-reports/)
 
 ***
 
 [graph 104 a C19 daily deaths, LANL model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20104%20a%20C19%20daily%20deaths%2C%20LANL%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/f1e8ce95-5031-4597-a2c0-cf01b2974b84)
+
+LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
 
 ***
 
