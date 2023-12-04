@@ -58,7 +58,10 @@ Two color schemes for error measures are used for each model: (a) deciles of the
 
 *
 
+[graph 103 a C19 daily deaths, IMPE model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20103%20a%20C19%20daily%20deaths%2C%20IMPE%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/89f9ff80-daf8-4e17-8277-8b446ed8d9e7)
 
+*
 
 
