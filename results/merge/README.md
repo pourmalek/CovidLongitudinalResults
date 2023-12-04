@@ -20,7 +20,7 @@ UCLA: University of California, Los Angeles, Epidemic Model Guided Machine Learn
 
 YYGU: Youyang Gu. COVID-19 Projections Using Machine Learning. https://github.com/youyanggu/covid19_projections
 
-*
+***
 
 **Descriptive statistics of predicative performance error measures for COVID-19 daily deaths in six international periodically updated epidemic models 2020-2022, at the global level and WHO regions**
 
@@ -28,13 +28,13 @@ YYGU: Youyang Gu. COVID-19 Projections Using Machine Learning. https://github.co
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/8aee0c55-b91b-4b56-9ae5-85335bbfded2)
 
-*
+***
 
 **Predicative performance error measures for COVID-19 daily deaths in international periodically updated epidemic models 2020-2022 by country** 
 
 Two color schemes for error measures are used for each model: (a) deciles of the individual epidemic model, and (b) deciles of mean of all epidemic models. The first map differentiates countries in each individual model and the second map facilitates comparison across all models. 
 
-*
+***
 
 [graph 101 a C19 daily deaths, DELP model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20101%20a%20C19%20daily%20deaths%2C%20DELP%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
@@ -42,7 +42,7 @@ Two color schemes for error measures are used for each model: (a) deciles of the
 
 DELP =  [DELPHI model, MIT](https://covidanalytics.io/projections)
 
-*
+***
 
 [graph 101 b C19 daily deaths, DELP model, Absolute Percent Error, Deciles of DELP](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20101%20b%20C19%20daily%20deaths%2C%20DELP%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20DELP.pdf)
 
@@ -50,7 +50,7 @@ DELP =  [DELPHI model, MIT](https://covidanalytics.io/projections)
 
 DELP =  [DELPHI model, MIT](https://covidanalytics.io/projections)
 
-*
+***
 
 [graph 102 a C19 daily deaths, IHME model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20102%20a%20C19%20daily%20deaths%2C%20IHME%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
@@ -58,7 +58,7 @@ DELP =  [DELPHI model, MIT](https://covidanalytics.io/projections)
 
 IHME = [Institute for Health Metrics and Evaluation model, UW](https://covid19.healthdata.org/global?view=cumulative-deaths&tab=trend)
 
-*
+***
 
 [graph 102 b C19 daily deaths, IHME model, Absolute Percent Error, Deciles of IHME](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20102%20b%20C19%20daily%20deaths%2C%20IHME%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20IHME.pdf)
 
@@ -66,7 +66,7 @@ IHME = [Institute for Health Metrics and Evaluation model, UW](https://covid19.h
 
 IHME = [Institute for Health Metrics and Evaluation model, UW](https://covid19.healthdata.org/global?view=cumulative-deaths&tab=trend)
 
-*
+***
 
 [graph 103 a C19 daily deaths, IMPE model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20103%20a%20C19%20daily%20deaths%2C%20IMPE%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
@@ -74,13 +74,14 @@ IHME = [Institute for Health Metrics and Evaluation model, UW](https://covid19.h
 
 LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
 
-*
+***
 
 [graph 103 b C19 daily deaths, IMPE model, Absolute Percent Error, Deciles of IMPE](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20103%20b%20C19%20daily%20deaths%2C%20IMPE%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20IMPE.pdf)
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/79d28bea-1111-480b-b7b8-8321fff6a1e7)
 
-
 LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
 
-*
+***
+
+
