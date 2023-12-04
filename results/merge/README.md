@@ -2,7 +2,7 @@ Predictive performance of international periodically updated COVID-19 epidemic m
 
 ### Descriptive statistics and maps of error measures
 
-*
+***
 
 International periodically updated COVID-19 pandemic models:
 
