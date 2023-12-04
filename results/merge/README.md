@@ -118,3 +118,11 @@ UCLA = [University of California Los Angeles model](https://covid19.uclaml.org)
 
 ***
 
+[graph 106 a C19 daily deaths, YYGU model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20106%20a%20C19%20daily%20deaths%2C%20YYGU%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/80d6931f-a6d2-4bae-b2fb-f5bb37ff6960)
+
+UCLA = [University of California Los Angeles model](https://covid19.uclaml.org)
+
+***
+
