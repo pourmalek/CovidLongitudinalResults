@@ -6,6 +6,12 @@ Descriptive statistics of predicative performance error measures for COVID-19 da
 
 *
 
+Predicative performance error measures for COVID-19 daily deaths in international periodically updated epidemic models 2020-2022 by country 
+
+Two color schemes for error measures are used for each model: (a) deciles of the individual epidemic model, and (b) deciles of mean of all epidemic models. The first map differentiates countries in each individual model and the second map facilitates comparison across all models. 
+
+*
+
 [graph 101 a C19 daily deaths, DELP model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20101%20a%20C19%20daily%20deaths%2C%20DELP%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/cadb646d-5e2a-441c-9449-ee2886cd37e1)
