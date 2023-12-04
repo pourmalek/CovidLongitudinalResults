@@ -122,7 +122,10 @@ UCLA = [University of California Los Angeles model](https://covid19.uclaml.org)
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/80d6931f-a6d2-4bae-b2fb-f5bb37ff6960)
 
-UCLA = [University of California Los Angeles model](https://covid19.uclaml.org)
+YYGU = [Youyang Gu model](https://covid19-projections.com)
 
 ***
+
+
+YYGU = [Youyang Gu model](https://covid19-projections.com)
 
