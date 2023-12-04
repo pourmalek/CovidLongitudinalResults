@@ -12,7 +12,7 @@ IMPE: Imperial. COVID-19 pandemic model developed by Imperial College, London. h
 
 LANL: Los Alamos National Laboratories. COVID-19 pandemic model developed by Los Alamos National Laboratories, Los Alamos. https://covid-19.bsvgateway.org
 
-UCLA:
+UCLA: University of California, Los Angeles, Epidemic Model Guided Machine Learning for COVID-19 Forecasts.
 
 YYGU:
 
