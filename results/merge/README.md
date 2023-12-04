@@ -38,12 +38,14 @@ Two color schemes for error measures are used for each model: (a) deciles of the
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/cadb646d-5e2a-441c-9449-ee2886cd37e1)
 
+DELP =  [DELPHI model, MIT](https://covidanalytics.io/projections)
 *
 
 [graph 101 b C19 daily deaths, DELP model, Absolute Percent Error, Deciles of DELP](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20101%20b%20C19%20daily%20deaths%2C%20DELP%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20DELP.pdf)
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/a74c50c8-e6dd-4523-8198-cd27b265499e)
 
+DELP =  [DELPHI model, MIT](https://covidanalytics.io/projections)
 *
 
 [graph 102 a C19 daily deaths, IHME model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20102%20a%20C19%20daily%20deaths%2C%20IHME%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
