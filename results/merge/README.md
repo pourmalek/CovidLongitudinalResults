@@ -9,3 +9,10 @@
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/cadb646d-5e2a-441c-9449-ee2886cd37e1)
 
 *
+
+[graph 101 b C19 daily deaths, DELP model, Absolute Percent Error, Deciles of DELP](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20101%20b%20C19%20daily%20deaths%2C%20DELP%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20DELP.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/a74c50c8-e6dd-4523-8198-cd27b265499e)
+
+*
+
