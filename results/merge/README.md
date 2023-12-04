@@ -1,5 +1,17 @@
 ### Descriptive statistics and maps of error measures
 
+*
+
+International periodically updated COVID-19 pandemic models:
+
+DELP: DELPHI. Differential Equations Lead to Predictions of Hospitalizations and Infections. COVID-19 pandemic model named DELPHI developed by Massachusetts Institute of Technology, Cambridge. https://covidanalytics.io/projections
+
+IHME: Institute for Health Metrics and Evaluation. COVID-19 pandemic model by developed Institute for Health Metrics and Evaluation, Seattle. https://covid19.healthdata.org/global?view=cumulative-deaths&tab=trend
+
+IMPE: Imperial. COVID-19 pandemic model developed by Imperial College, London. https://mrc-ide.github.io/global-lmic-reports/
+
+*
+
 **Descriptive statistics of predicative performance error measures for COVID-19 daily deaths in six international periodically updated epidemic models 2020-2022, at the global level and WHO regions**
 
 [Results Summary Statistics.xlsx](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/Results%20Summary%20Statistics.xlsx)
