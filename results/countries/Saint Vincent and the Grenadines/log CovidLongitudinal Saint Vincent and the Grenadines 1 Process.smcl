@@ -1,0 +1,2397 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines/log CovidLongitudinal Saint Vincent and the Grenadines 1 Process.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}26 Nov 2023, 14:13:12
+{txt}
+{com}. 
+. ***************************************************************************
+. * This is "do CovidLongitudinal Saint Vincent and the Grenadines 1 Process.do"
+. 
+. * Project: Longitudinal assessment of COVID-19 models 
+. 
+. * Objective: Process the reported deaths by JOHN and 
+.         * the estimates by models (DELP, IHME, IMPE, LANL, UCLA, YYGU)
+.         * for each country ---->> Saint Vincent and the Grenadines <<----                                                                 
+. ***************************************************************************
+. 
+. 
+. 
+. **** "do CovidLongitudinal Saint Vincent and the Grenadines 1 Process.do"
+. **** Get Daily deaths forecast only: DayDeaMeFo`model'update where `model' is DELP, IHME, IMPE, LANL, UCLA, YYGU
+. 
+. 
+. ** input data files: "$pathCovidLongitudinal/download/`model'/`model' countries long.dta"
+. **                   "$pathCovidLongitudinal/download/JOHN"
+. **                   "$pathCovidLongitudinal/download/`model'"
+. 
+. ** output data files: "`model' Saint Vincent and the Grenadines.dta"
+. **                   "ALL MODLES Saint Vincent and the Grenadines.dta"
+. 
+. ** output data dictionary files: "Saint Vincent and the Grenadines ALL MODELS update dates data dictionary.csv"
+. **                               "`model' Saint Vincent and the Grenadines data dictionary.csv"
+. **                               "ALL MODLES Saint Vincent and the Grenadines data dictionary.csv"
+. 
+. ** graphs:
+. ** "graph 02 Saint Vincent and the Grenadines `model' C19 daily deaths all updates.pdf"
+. ** "graph 02 Saint Vincent and the Grenadines ALL MODELS C19 daily deaths all updates.pdf"
+. 
+. 
+. 
+. 
+. ************************************************************************
+. 
+. * get update dates on which country available in each model
+. 
+. 
+. local list IMPE
+{txt}
+{com}. 
+. foreach model of local list {c -(}
+{txt}  2{com}. 
+.         use "$pathCovidLongitudinal/download/`model'/`model' countries long.dta", clear 
+{txt}  3{com}.         
+.         di in red "`model'" " Saint Vincent and the Grenadines absent update_date_block"
+{txt}  4{com}.         
+.         qui keep if loc_grand_name == "Saint Vincent and the Grenadines"
+{txt}  5{com}.         
+.         keep if absent == 0
+{txt}  6{com}.         
+.         gen model = "`model'"
+{txt}  7{com}.         
+.         order model
+{txt}  8{com}.         
+.         di "`model'"
+{txt}  9{com}.         
+.         di in red `r(N)'
+{txt} 10{com}.         
+.         keep model loc_grand_name absent update_date_block
+{txt} 11{com}.         
+.         order model loc_grand_name absent update_date_block
+{txt} 12{com}.         
+.         tostring update_date_block, gen(update_date_block_string)
+{txt} 13{com}.         
+.         gen slash = " ///"
+{txt} 14{com}.         
+.         gen update_date_block_slash = update_date_block_string + slash
+{txt} 15{com}.         
+.         drop slash
+{txt} 16{com}.         
+.         label var model "epidemic model being studied"
+{txt} 17{com}.         
+.         label var loc_grand_name "country"
+{txt} 18{com}.         
+.         label var absent "this country is absent in this model update"
+{txt} 19{com}.         
+.         label var update_date_block "update date block"
+{txt} 20{com}.         
+.         label var update_date_block_string "update date block string"
+{txt} 21{com}.         
+.         label var update_date_block_slash "update date block slash"
+{txt} 22{com}. 
+.         qui compress
+{txt} 23{com}.         
+.         save "Saint Vincent and the Grenadines `model' update dates.dta", replace
+{txt} 24{com}. 
+. {c )-}
+{err}IMPE Saint Vincent and the Grenadines absent update_date_block
+{txt}(81 observations deleted)
+IMPE
+
+update_date_block_string generated as {res:str8}
+{p 0 4 2}
+file {bf}
+Saint Vincent and the Grenadines IMPE update dates.dta{rm}
+saved
+{p_end}
+
+{com}. *
+. 
+. 
+. 
+. 
+. 
+. 
+. use "Saint Vincent and the Grenadines IMPE update dates.dta", clear 
+{txt}
+{com}. 
+. local list IMPE
+{txt}
+{com}. 
+. foreach model of local list {c -(}
+{txt}  2{com}.         
+.         append using "Saint Vincent and the Grenadines `model' update dates.dta"
+{txt}  3{com}.         
+.         duplicates drop
+{txt}  4{com}.         
+. {c )-}
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(67 observations deleted)
+
+{com}. *
+. 
+. save "Saint Vincent and the Grenadines ALL MODELS update dates.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+Saint Vincent and the Grenadines ALL MODELS update dates.dta{rm}
+saved
+{p_end}
+
+{com}.         
+. export excel using "Saint Vincent and the Grenadines ALL MODELS update dates.xlsx", replace firstrow(variables) 
+{res}{txt}file {bf:Saint Vincent and the Grenadines ALL MODELS update dates.xlsx} saved
+
+{com}. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "Saint Vincent and the Grenadines ALL MODELS update dates data dictionary.csv", replace 
+{res}{txt}file {bf:Saint Vincent and the Grenadines ALL MODELS update dates data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. *********************
+. grstyle init
+{res}{txt}
+{com}. 
+. grstyle color background white
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. *********************
+. * gen calendar file
+. 
+. clear
+{txt}
+{com}. 
+. di td(01jan2020) // 21915
+{res}21915
+{txt}
+{com}. 
+. di td(01jan2024) // 23376
+{res}23376
+{txt}
+{com}. 
+. di td(01jan2024) - td(01jan2020) + 1 // 732
+{res}1462
+{txt}
+{com}. 
+. 
+. 
+. set obs 1462
+{txt}{p}
+Number of observations ({bf:_N}) was 0,
+now 1,462.
+{p_end}
+
+{com}. 
+. gen date = .
+{txt}(1,462 missing values generated)
+
+{com}. 
+. replace date = 21915 in 1
+{txt}(1 real change made)
+
+{com}. 
+. replace date = date[_n-1] + 1 in 2/l
+{txt}(1,461 real changes made)
+
+{com}. 
+. replace date = date[_n-1] + 1 in 2/1462
+{txt}(0 real changes made)
+
+{com}. 
+. format date %tdDDMonCCYY
+{txt}
+{com}. 
+. codebook date
+
+{txt}{hline}
+{res}date{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric daily date ({res}float{txt})
+
+{col 18}Range: [{res}21915{txt},{res}23376{txt}]{col 55}Units: {res}1
+{col 8}{txt}Or equivalently: [{res}01jan2020{txt},{res}01jan2024{txt}]{col 55}Units: {res}days
+{col 10}{txt}Unique values: {res}1,462{col 51}{txt}Missing .: {res}0{txt}/{res}1,462
+
+{txt}{col 19}Mean: {res}{ralign 7:22645.5}{txt} = {res}31dec2021{txt}(+ 12 hours)
+{col 14}Std. dev.: {res}{ralign 7:422.187}
+{txt}{col 12}Percentiles: {col 25}{ralign 9:10%}{ralign 11:25%}{ralign 11:50%}{ralign 11:75%}{ralign 11:90%}
+{res}{col 25}{ralign 9:22061}{ralign 11:   22280}{ralign 11: 22645.5}{ralign 11:   23011}{ralign 11:   23230}
+{col 25}{ralign 9:26may2020}{ralign 11:31dec2020}{ralign 11:31dec2021}{ralign 11:01jan2023}{ralign 11:08aug2023}
+{txt}
+{com}. 
+. save "calendar.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+calendar.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * JOHN
+. 
+. cd "$pathCovidLongitudinal/download/JOHN"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/JOHN
+{txt}
+{com}. 
+. use "CovidLongitudinal JOHN.dta", clear 
+{txt}
+{com}. 
+. keep if loc_grand_name == "Saint Vincent and the Grenadines"
+{txt}(221,763 observations deleted)
+
+{com}. 
+. keep date DayDeaMeSmJOHNVCT
+{txt}
+{com}. 
+. label var date "calendar date"
+{txt}
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. cd "$pathCovidLongitudinal/countries/Saint Vincent and the Grenadines"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}
+{com}. 
+. save "JOHN Saint Vincent and the Grenadines.dta", replace 
+{txt}{p 0 4 2}
+file {bf}
+JOHN Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. * graph Saint Vincent and the Grenadines JOHN daily deaths
+. 
+. twoway ///
+> (line DayDeaMeSmJOHNVCT date, sort lwidth(thick) lcolor(cyan)) ///
+> if date >= td(01jan2020) & date <= td(01jan2023) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.1fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Saint Vincent and the Grenadines, JOHN", size(medium) color(black)) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Saint Vincent and the Grenadines JOHN C19 daily deaths reported.pdf", replace
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * DELP
+. 
+. * Saint Vincent and the Grenadines not included in DELP
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * IHME 
+. 
+. * Saint Vincent and the Grenadines not included in IHME
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * IMPE
+. 
+. local list ///
+> 20201025 ///
+> 20201028 ///
+> 20201101 ///
+> 20201110 ///
+> 20201114 ///
+> 20201118 ///
+> 20201123 ///
+> 20201129 ///
+> 20201204 ///
+> 20201212 ///
+> 20201220 ///
+> 20201226 ///
+> 20210104 ///
+> 20210110 ///
+> 20210112 ///
+> 20210118 ///
+> 20210124 ///
+> 20210130 ///
+> 20210203 ///
+> 20210210 ///
+> 20210217 ///
+> 20210226 ///
+> 20210305 ///
+> 20210312 ///
+> 20210319 ///
+> 20210329 ///
+> 20210406 ///
+> 20210417 ///
+> 20210424 ///
+> 20210510 ///
+> 20210516 ///
+> 20210522 ///
+> 20210527 ///
+> 20210604 ///
+> 20210611 ///
+> 20210618 ///
+> 20210626 ///
+> 20210702 ///
+> 20210709 ///
+> 20210719 ///
+> 20210806 ///
+> 20210819 ///
+> 20210825 ///
+> 20210909 ///
+> 20210924 ///
+> 20211006 ///
+> 20211021 ///
+> 20211027 ///
+> 20211103 ///
+> 20211115 ///
+> 20211121 ///
+> 20211129 ///
+> 20211205 ///
+> 20211213 ///
+> 20211226 ///
+> 20220102 ///
+> 20220120 ///
+> 20220131 ///
+> 20220315 ///
+> 20220530 ///
+> 20220620 ///
+> 20220703 ///
+> 20220712 ///
+> 20220728 ///
+> 20220808 ///
+> 20220901 ///
+> 20221225
+{txt}
+{com}. 
+. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         cd "$pathCovidLongitudinal/download/IMPE"
+{txt}  3{com}.         
+.         di in red "This is IMPE update " `update'
+{txt}  4{com}. 
+.         use "IMPE `update'.dta", clear
+{txt}  5{com}.                 
+.         keep if loc_grand_name == "Saint Vincent and the Grenadines"
+{txt}  6{com}. 
+.         duplicates drop
+{txt}  7{com}.                 
+.         
+.         
+.         
+.         * gen daily deaths // done in /code/downloads/IMPE/do CovidLongitudinal IMPE.do
+.         
+.         
+.         
+.         
+.         * smooth
+.                 
+.         sort date
+{txt}  8{com}.                         
+.         qui tsset date, daily   
+{txt}  9{com}.                         
+.         qui tssmooth ma DayDeaMeRaIMPE`update'_window = DayDeaMeRaIMPE`update' if DayDeaMeRaIMPE`update' >= 0, window(3 1 3) 
+{txt} 10{com}. 
+.         qui tssmooth ma DayDeaMeSmIMPE`update' = DayDeaMeRaIMPE`update'_window, weights( 1 2 3 <4> 3 2 1) replace
+{txt} 11{com}. 
+.         drop *_window
+{txt} 12{com}.         
+.         label var DayDeaMeSmIMPE`update' "Daily deaths mean smooth IMPE" 
+{txt} 13{com}.         
+.         
+.         
+.         
+.         * gen Daily deaths smooth forecast only
+.                         
+.         clonevar DayDeaMeFoIMPE`update' = DayDeaMeSmIMPE`update' 
+{txt} 14{com}.         
+.         label var DayDeaMeFoIMPE`update' "Daily deaths smooth mean forecast only IMPE"
+{txt} 15{com}.                 
+.         gen update_date`update' = date("`update'", "YMD")
+{txt} 16{com}.                                 
+.         qui replace DayDeaMeFoIMPE`update' = . if date < update_date`update' 
+{txt} 17{com}.         
+.         
+.         
+.         capture drop fit_type death_calibrated v1
+{txt} 18{com}.         
+.         label var loc_grand_name "country"
+{txt} 19{com}.         
+.         label var date "calendar date"
+{txt} 20{com}.         
+.         label var DayDeaMeRaIMPE`update' "Daily deaths mean raw IMPE"
+{txt} 21{com}.         
+.         label var DayDeaMeSmIMPE`update' "Daily deaths mean smooth IMPE"
+{txt} 22{com}.         
+.         label var DayDeaMeFoIMPE`update' "Daily deaths mean smooth forecast only IMPE"
+{txt} 23{com}.         
+.         label var update_date`update' "update date"
+{txt} 24{com}.         
+.         
+.         
+.         
+.         
+.         qui compress    
+{txt} 25{com}.         
+.         cd "$pathCovidLongitudinal/countries/Saint Vincent and the Grenadines"
+{txt} 26{com}.         
+.         save "IMPE `update' Saint Vincent and the Grenadines.dta", replace emptyok
+{txt} 27{com}.         
+.         
+.         *
+. 
+.         
+. {c )-}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201025
+{txt}(57,965 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201025 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201028
+{txt}(58,448 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201028 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201101
+{txt}(58,754 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201101 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201110
+{txt}(61,207 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201110 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201114
+{txt}(61,967 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201114 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201118
+{txt}(62,457 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201118 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201123
+{txt}(63,307 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201123 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201129
+{txt}(64,785 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201129 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201204
+{txt}(65,651 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201204 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201212
+{txt}(67,006 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201212 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201220
+{txt}(68,064 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201220 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201226
+{txt}(68,714 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201226 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210104
+{txt}(70,849 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210104 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210110
+{txt}(72,041 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210110 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210112
+{txt}(72,670 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210112 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210118
+{txt}(73,611 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210118 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210124
+{txt}(74,798 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210124 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210130
+{txt}(75,428 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210130 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210203
+{txt}(75,927 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210203 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210210
+{txt}(77,457 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210210 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210217
+{txt}(78,739 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210217 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210226
+{txt}(80,246 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210226 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210305
+{txt}(81,622 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210305 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210312
+{txt}(82,634 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210312 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210319
+{txt}(83,848 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210319 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210329
+{txt}(85,697 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210329 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210406
+{txt}(86,947 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210406 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210417
+{txt}(89,165 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210417 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210424
+{txt}(90,484 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210424 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210510
+{txt}(92,918 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210510 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210516
+{txt}(94,109 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210516 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210522
+{txt}(95,262 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210522 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210527
+{txt}(96,241 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210527 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210604
+{txt}(97,803 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210604 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210611
+{txt}(99,145 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210611 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210618
+{txt}(100,510 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210618 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210626
+{txt}(102,016 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210626 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210702
+{txt}(103,151 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210702 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210709
+{txt}(104,492 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210709 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210719
+{txt}(106,380 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210719 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210806
+{txt}(109,679 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210806 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210819
+{txt}(112,098 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210819 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210825
+{txt}(113,225 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210825 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210909
+{txt}(115,893 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210909 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210924
+{txt}(118,584 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210924 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211006
+{txt}(120,357 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211006 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211021
+{txt}(123,008 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211021 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211027
+{txt}(124,139 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211027 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211103
+{txt}(125,142 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211103 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211115
+{txt}(127,173 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211115 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211121
+{txt}(128,770 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211121 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211129
+{txt}(130,155 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211129 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211205
+{txt}(130,607 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211205 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211213
+{txt}(130,450 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211213 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211226
+{txt}(133,367 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211226 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220102
+{txt}(134,561 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220102 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220120
+{txt}(114,996 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220120 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220131
+{txt}(114,970 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220131 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220315
+{txt}(147,273 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220315 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220530
+{txt}(144,451 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220530 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220620
+{txt}(148,049 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220620 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220703
+{txt}(145,649 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220703 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220712
+{txt}(146,561 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220712 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220728
+{txt}(149,916 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220728 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220808
+{txt}(151,894 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220808 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220901
+{txt}(153,827 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220901 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20221225
+{txt}(174,193 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20221225 Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+
+{com}. *
+. 
+. 
+. 
+. 
+. * merge updates
+. 
+. cd "$pathCovidLongitudinal/countries/Saint Vincent and the Grenadines"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}
+{com}. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         merge m:m date using "IMPE `update' Saint Vincent and the Grenadines.dta"
+{txt}  3{com}.         
+.         drop _merge
+{txt}  4{com}. 
+. {c )-}
+{res}{txt}{p 0 7 2}
+(variable
+{bf:death_calibrated} was {bf:str4}, now {bf:str5} to accommodate using data's values)
+{p_end}
+
+{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             843
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}              52{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              38{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             735
+{txt}{col 9}from master{col 30}{res}             735{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             146{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             726
+{txt}{col 9}from master{col 30}{res}             726{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             155{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             721
+{txt}{col 9}from master{col 30}{res}             721{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             160{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             716
+{txt}{col 9}from master{col 30}{res}             716{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             165{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             710
+{txt}{col 9}from master{col 30}{res}             710{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             171{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             703
+{txt}{col 9}from master{col 30}{res}             703{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             178{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             694
+{txt}{col 9}from master{col 30}{res}             694{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             187{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             686
+{txt}{col 9}from master{col 30}{res}             686{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             195{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             680
+{txt}{col 9}from master{col 30}{res}             680{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             201{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             673
+{txt}{col 9}from master{col 30}{res}             673{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             208{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             663
+{txt}{col 9}from master{col 30}{res}             663{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             218{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             655
+{txt}{col 9}from master{col 30}{res}             655{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             226{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             644
+{txt}{col 9}from master{col 30}{res}             644{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             237{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             637
+{txt}{col 9}from master{col 30}{res}             637{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             244{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             622
+{txt}{col 9}from master{col 30}{res}             622{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             259{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             617
+{txt}{col 9}from master{col 30}{res}             617{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             264{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             610
+{txt}{col 9}from master{col 30}{res}             610{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             271{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             605
+{txt}{col 9}from master{col 30}{res}             605{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             276{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             597
+{txt}{col 9}from master{col 30}{res}             597{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             284{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             590
+{txt}{col 9}from master{col 30}{res}             590{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             291{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             583
+{txt}{col 9}from master{col 30}{res}             583{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             298{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             575
+{txt}{col 9}from master{col 30}{res}             575{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             306{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             569
+{txt}{col 9}from master{col 30}{res}             569{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             312{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             562
+{txt}{col 9}from master{col 30}{res}             562{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             319{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             552
+{txt}{col 9}from master{col 30}{res}             552{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             329{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             534
+{txt}{col 9}from master{col 30}{res}             534{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             347{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             521
+{txt}{col 9}from master{col 30}{res}             521{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             360{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             515
+{txt}{col 9}from master{col 30}{res}             515{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             366{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             500
+{txt}{col 9}from master{col 30}{res}             500{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             381{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             485
+{txt}{col 9}from master{col 30}{res}             485{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             396{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             473
+{txt}{col 9}from master{col 30}{res}             473{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             408{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             462
+{txt}{col 9}from master{col 30}{res}             462{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             419{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             452
+{txt}{col 9}from master{col 30}{res}             452{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             429{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             446
+{txt}{col 9}from master{col 30}{res}             446{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             435{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             455
+{txt}{col 9}from master{col 30}{res}             455{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             426{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             427
+{txt}{col 9}from master{col 30}{res}             427{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             454{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             419
+{txt}{col 9}from master{col 30}{res}             419{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             462{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             413
+{txt}{col 9}from master{col 30}{res}             413{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             468{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             405
+{txt}{col 9}from master{col 30}{res}             405{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             476{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             392
+{txt}{col 9}from master{col 30}{res}             392{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             489{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             385
+{txt}{col 9}from master{col 30}{res}             385{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             496{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             367
+{txt}{col 9}from master{col 30}{res}             367{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             514{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             356
+{txt}{col 9}from master{col 30}{res}             356{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             525{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             314
+{txt}{col 9}from master{col 30}{res}             314{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             567{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             250
+{txt}{col 9}from master{col 30}{res}             250{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             631{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             386
+{txt}{col 9}from master{col 30}{res}             386{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             495{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             223
+{txt}{col 9}from master{col 30}{res}             223{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             658{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             223
+{txt}{col 9}from master{col 30}{res}             223{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             658{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             198
+{txt}{col 9}from master{col 30}{res}             198{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             683{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             187
+{txt}{col 9}from master{col 30}{res}             187{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             694{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             167
+{txt}{col 9}from master{col 30}{res}             167{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             714{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              52
+{txt}{col 9}from master{col 30}{res}              52{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             829{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. *       
+. 
+. 
+. capture drop fit_type death_calibrated v1 // IMPE extra vars 
+{txt}
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. save "IMPE Saint Vincent and the Grenadines.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+IMPE Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. * add JOHN
+. 
+. merge m:1 date using "JOHN Saint Vincent and the Grenadines.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             292
+{txt}{col 9}from master{col 30}{res}              15{txt}  (_merge==1)
+{col 9}from using{col 30}{res}             277{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             866{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+.         drop if date < td(01jan2020)
+{txt}(0 observations deleted)
+
+{com}. 
+.         drop if date > td(01jan2023) 
+{txt}(82 observations deleted)
+
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. save "IMPE Saint Vincent and the Grenadines.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+IMPE Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "IMPE Saint Vincent and the Grenadines data dictionary.csv", replace 
+{res}{txt}file {bf:IMPE Saint Vincent and the Grenadines data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+. 
+. 
+. 
+. /* foreach update of local list {c -(}
+>         
+>         * graph Saint Vincent and the Grenadines IMPE daily deaths each update 
+>         
+>         twoway ///
+>         (line DayDeaMeSmJOHNVCT date, sort lwidth(thick) lcolor(cyan)) ///      
+>         (line DayDeaMeFoIMPE`update' date, sort lwidth(thin) lcolor(magenta)) /// 
+>         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
+>         , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+>         xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+>         ytitle(Daily deaths) title("C19 daily deaths, IMPE, update `update'", size(medium) color(black)) ///
+>         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
+>         subtitle("Saint Vincent and the Grenadines, forecast only") legend(position(6) order(1 "JOHN" 2 "IMPE forecast ") rows(1) size(small)) ///
+>         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
+>         
+>         qui graph export "graph 01 Saint Vincent and the Grenadines IMPE daily deaths update `update'.pdf", replace     
+> 
+> {c )-}
+> */
+. 
+. 
+. 
+. 
+. * graph Saint Vincent and the Grenadines IMPE daily deaths all updates
+. 
+. twoway ///
+> (line DayDeaMeSmJOHNVCT date, sort lwidth(thick) lcolor(cyan)) /// 
+> (line DayDeaMeFoIMPE20201025 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201028 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201101 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201114 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201123 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201204 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201212 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201220 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210104 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210112 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210124 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210130 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210203 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210210 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210217 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210305 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210312 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210319 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210329 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210406 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210417 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210424 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210510 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210516 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210522 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210527 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210604 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210611 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210618 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210626 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210702 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210709 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210719 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210806 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210819 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210825 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210909 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210924 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211006 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211021 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211027 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211103 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211115 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211121 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211205 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211213 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220102 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220120 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220131 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220315 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220530 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220620 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220703 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220712 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220728 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220808 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220901 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20221225 date, sort lwidth(thin) lcolor(magenta)) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Saint Vincent and the Grenadines, IMPE, all updates", size(medium) color(black)) ///
+> legend(position(6) order(1 "JOHN" 2 "IMPE forecast ") rows(1) size(small)) legend(region(lcolor(none))) legend(bexpand) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Saint Vincent and the Grenadines IMPE C19 daily deaths all updates.pdf", replace
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * LANL
+. 
+. * Saint Vincent and the Grenadines not included in LANL
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * UCLA
+. * Saint Vincent and the Grenadines not included in UCLA
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * YYGU
+. * Saint Vincent and the Grenadines not included in YYGU
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. *************************************************************
+. 
+. * merge models
+. 
+. local list IMPE 
+{txt}
+{com}. 
+. use "IMPE Saint Vincent and the Grenadines.dta", clear
+{txt}
+{com}. 
+. foreach model of local list {c -(}
+{txt}  2{com}. 
+.         merge m:m date loc_grand_name using "`model' Saint Vincent and the Grenadines.dta", force
+{txt}  3{com}.         
+.         drop _merge
+{txt}  4{com}.         
+.         isid date loc_grand_name, missok
+{txt}  5{com}.         
+. {c )-}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}           1,076{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. *
+. 
+. qui compress
+{txt}
+{com}. 
+. save "ALL MODLES Saint Vincent and the Grenadines.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+ALL MODLES Saint Vincent and the Grenadines.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "ALL MODLES Saint Vincent and the Grenadines data dictionary.csv", replace 
+{res}{txt}file {bf:ALL MODLES Saint Vincent and the Grenadines data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+.         
+. 
+.         
+. 
+. 
+. * graph Saint Vincent and the Grenadines ALL MODELS daily deaths all updates
+. 
+. twoway ///
+> (line DayDeaMeFoIMPE20201025 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201028 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201101 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201114 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201123 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201204 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201212 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201220 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210104 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210112 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210124 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210130 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210203 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210210 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210217 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210305 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210312 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210319 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210329 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210406 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210417 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210424 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210510 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210516 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210522 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210527 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210604 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210611 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210618 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210626 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210702 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210709 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210719 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210806 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210819 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210825 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210909 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210924 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211006 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211021 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211027 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211103 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211115 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211121 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211205 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211213 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220102 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220120 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220131 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220315 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220530 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220620 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220703 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220712 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220728 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220808 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220901 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20221225 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeSmJOHNVCT date, sort lwidth(thick) lcolor(cyan)) /// 
+> if date >= td(01jan2020) & date <= td(01jan2023) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Saint Vincent and the Grenadines, all models, all updates, forecast only", size(medium) color(black)) ///
+> legend(position(6) order(68 "JOHN" 1 "IMPE") ///
+> rows(1) size(small)) legend(region(lcolor(none))) legend(bexpand) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Saint Vincent and the Grenadines ALL MODELS C19 daily deaths all updates.pdf", replace
+{txt}
+{com}. 
+.         
+. 
+. 
+. 
+. 
+. 
+. 
+. cd "$pathCovidLongitudinal/countries/Saint Vincent and the Grenadines"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines
+{txt}
+{com}. 
+. 
+. view "log CovidLongitudinal Saint Vincent and the Grenadines 1 Process.smcl"
+{txt}
+{com}. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Vincent and the Grenadines/log CovidLongitudinal Saint Vincent and the Grenadines 1 Process.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}26 Nov 2023, 14:13:19
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

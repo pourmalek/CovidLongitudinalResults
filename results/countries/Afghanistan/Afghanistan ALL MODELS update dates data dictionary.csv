@@ -1,0 +1,7 @@
+name,varlab
+model,epidemic model being studied
+loc_grand_name,country
+absent,this country is absent in this model update
+update_date_block,update date block
+update_date_block_string,update date block string
+update_date_block_slash,update date block slash

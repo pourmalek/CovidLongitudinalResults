@@ -1,0 +1,29 @@
+name,varlab
+country,Country name
+iso,Country iso3 code
+country_id_no,Country ID number
+loc_grand_name,Country grand name
+DD_DELP_Errorr,Daily Deaths DELP Error mean of medians over updates and calendar months
+DD_IHME_Errorr,Daily Deaths IHME Error mean of medians over updates and calendar months
+DD_IMPE_Errorr,Daily Deaths IMPE Error mean of medians over updates and calendar months
+DD_LANL_Errorr,Daily Deaths LANL Error mean of medians over updates and calendar months
+DD_YYGU_Errorr,Daily Deaths YYGU Error mean of medians over updates and calendar months
+DD_UCLA_Errorr,Daily Deaths UCLA Error mean of medians over updates and calendar months
+DD_DELP_AbsErr,Daily Deaths DELP Absolute Error mean of medians over updates and calendar month
+DD_IHME_AbsErr,Daily Deaths IHME Absolute Error mean of medians over updates and calendar month
+DD_IMPE_AbsErr,Daily Deaths IMPE Absolute Error mean of medians over updates and calendar month
+DD_LANL_AbsErr,Daily Deaths LANL Absolute Error mean of medians over updates and calendar month
+DD_YYGU_AbsErr,Daily Deaths YYGU Absolute Error mean of medians over updates and calendar month
+DD_UCLA_AbsErr,Daily Deaths UCLA Absolute Error mean of medians over updates and calendar month
+DD_DELP_PerErr,Daily Deaths DELP Percent Error mean of medians over updates and calendar months
+DD_IHME_PerErr,Daily Deaths IHME Percent Error mean of medians over updates and calendar months
+DD_IMPE_PerErr,Daily Deaths IMPE Percent Error mean of medians over updates and calendar months
+DD_LANL_PerErr,Daily Deaths LANL Percent Error mean of medians over updates and calendar months
+DD_YYGU_PerErr,Daily Deaths YYGU Percent Error mean of medians over updates and calendar months
+DD_UCLA_PerErr,Daily Deaths UCLA Percent Error mean of medians over updates and calendar months
+DD_DELP_AbPeEr,Daily Deaths DELP Absolute Percent Error mean of medians over updates and calend
+DD_IHME_AbPeEr,Daily Deaths IHME Absolute Percent Error mean of medians over updates and calend
+DD_IMPE_AbPeEr,Daily Deaths IMPE Absolute Percent Error mean of medians over updates and calend
+DD_LANL_AbPeEr,Daily Deaths LANL Absolute Percent Error mean of medians over updates and calend
+DD_UCLA_AbPeEr,Daily Deaths UCLA Absolute Percent Error mean of medians over updates and calend
+DD_YYGU_AbPeEr,Daily Deaths YYGU Absolute Percent Error mean of medians over updates and calend

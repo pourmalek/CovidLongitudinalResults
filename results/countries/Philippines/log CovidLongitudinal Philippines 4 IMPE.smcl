@@ -1,0 +1,1353 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal2-main/code/countries/Philippines/log CovidLongitudinal Philippines 4 IMPE.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res} 5 Nov 2023, 11:47:08
+{txt}
+{com}. 
+. ***************************************************************************
+. * This is "do CovidLongitudinal Philippines 4 IMPE.do"
+. 
+. * Project: Longitudinal assessment of COVID-19 models 
+. 
+. * Objective: Run calculations for error measures
+.         * for each country ---->> Philippines <<----                                                                 
+. ***************************************************************************
+. 
+. 
+. ** model = IMPE ** <<-- modify 1
+. * lcolor magenta
+. 
+. * run calculations for error - daily deaths: four error types (graphs 3 to 11), updates together
+. 
+. 
+. * input data files: "IMPE Philippines.dta"
+. * output data files: "IMPE Philippines error.dta" (with error measures saved)
+. 
+. * output data dictionary files: "IMPE Philippines error data dictionary.csv"
+. 
+. 
+. * graph 03 Error
+. * graph 04 Absolute Error
+. * graph 05 Percent Error
+. * graph 06 Absolute Percent Error
+. 
+. * graph 07 mean over updates of median error by calendar months
+. * graph 08 Daily deaths, mean over updates of median absolute error by calendar months
+. * graph 09 Daily deaths, mean over updates of median % error by calendar months
+. * graph 10 Daily deaths, mean over updates of median absolute % error by calendar months
+. 
+. * graph 11 Daily deaths, Average MAPE over updates and calendar months
+. 
+. 
+. 
+. 
+. ** graphs:
+. * "graph 03 Philippines IMPE C19 daily deaths error.pdf"
+. * "graph 04 Philippines IMPE C19 daily deaths absolute error.pdf"
+. * "graph 05 Philippines IMPE C19 daily deaths percent error.pdf"
+. * "graph 06 Philippines IMPE C19 daily deaths absolute percent error.pdf"
+. 
+. * "graph 07 Philippines IMPE C19 daily deaths average median error.pdf"
+. * "graph 08 Philippines IMPE C19 daily deaths average median absolute error.pdf"
+. * "graph 09 Philippines IMPE C19 daily deaths average median percent error.pdf"
+. * "graph 10 Philippines IMPE C19 daily deaths average median absolute percent error.pdf"
+. 
+. * "graph 11 Philippines IMPE C19 daily deaths Average MAPE over updates and calendar months.pdf"
+. 
+. 
+. *********************
+. 
+. /*
+> 
+> 
+> CALCULATIONS:
+> 
+> Error = minus (Reference minus Model) 
+> 
+> Absolute error = | minus (Reference minus Model) |
+> 
+> Percent error = 100 * (minus (Reference minus Model)) / Reference
+> 
+> Absolute percent error = 100 * | minus (Reference minus Model) | / Reference
+> 
+> 
+> 
+> 
+> Error = - (Reference - Model)
+> 
+> Absolute error = | - (Reference - Model) |
+> 
+> Percent error = 100 * (- (Reference - Model)) / Reference
+> 
+> Absolute percent error = 100 * | - (Reference - Model)| / Reference
+> 
+> */
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. use "IMPE Philippines.dta", clear 
+{txt}
+{com}. 
+. 
+. 
+. 
+. * gen months time bin
+. 
+. 
+. gen month = month(date)
+{txt}
+{com}. 
+. gen monthstr = ""
+{txt}(1,097 missing values generated)
+
+{com}. replace monthstr = "01" if month == 1
+{txt}variable {bf}{res}monthstr{sf}{txt} was {bf}{res}str1{sf}{txt} now {bf}{res}str2{sf}
+{txt}(94 real changes made)
+
+{com}. replace monthstr = "02" if month == 2
+{txt}(85 real changes made)
+
+{com}. replace monthstr = "03" if month == 3
+{txt}(93 real changes made)
+
+{com}. 
+. replace monthstr = "04" if month == 4
+{txt}(90 real changes made)
+
+{com}. replace monthstr = "05" if month == 5
+{txt}(93 real changes made)
+
+{com}. replace monthstr = "06" if month == 6
+{txt}(90 real changes made)
+
+{com}. 
+. replace monthstr = "07" if month == 7
+{txt}(93 real changes made)
+
+{com}. replace monthstr = "08" if month == 8
+{txt}(93 real changes made)
+
+{com}. replace monthstr = "09" if month == 9
+{txt}(90 real changes made)
+
+{com}. 
+. replace monthstr = "10" if month == 10
+{txt}(93 real changes made)
+
+{com}. replace monthstr = "11" if month == 11
+{txt}(90 real changes made)
+
+{com}. replace monthstr = "12" if month == 12
+{txt}(93 real changes made)
+
+{com}. 
+. 
+. 
+. gen year = year(date)
+{txt}
+{com}. 
+. gen yearstr = ""
+{txt}(1,097 missing values generated)
+
+{com}. replace yearstr = "2020" if year == 2020
+{txt}variable {bf}{res}yearstr{sf}{txt} was {bf}{res}str1{sf}{txt} now {bf}{res}str4{sf}
+{txt}(366 real changes made)
+
+{com}. replace yearstr = "2021" if year == 2021
+{txt}(365 real changes made)
+
+{com}. replace yearstr = "2022" if year == 2022
+{txt}(365 real changes made)
+
+{com}. replace yearstr = "2023" if year == 2023
+{txt}(1 real change made)
+
+{com}. 
+. 
+. egen yearmonth = concat(yearstr monthstr), p(m)
+{txt}
+{com}. 
+. replace yearmonth = "" if yearmonth == "2023m01"
+{txt}(1 real change made)
+
+{com}. 
+. sort date yearmonth 
+{txt}
+{com}. 
+. isid date
+{txt}
+{com}. 
+. label var month "calendar month"
+{txt}
+{com}. 
+. label var monthstr "calendar month string"
+{txt}
+{com}. 
+. label var year "calendar year"
+{txt}
+{com}. 
+. label var yearstr "calendar year string" 
+{txt}
+{com}. 
+. label var yearmonth "calendar year and month"
+{txt}
+{com}. 
+. *
+. 
+. 
+. // <<-- modify 2
+. 
+. local list ///
+> 20200428 ///
+> 20200429 ///
+> 20200430 ///
+> 20200501 ///
+> 20200502 ///
+> 20200503 ///
+> 20200504 ///
+> 20200505 ///
+> 20200506 ///
+> 20200507 ///
+> 20200508 ///
+> 20200509 ///
+> 20200510 ///
+> 20200511 ///
+> 20200512 ///
+> 20200513 ///
+> 20200514 ///
+> 20200515 ///
+> 20200516 ///
+> 20200517 ///
+> 20200519 ///
+> 20200520 ///
+> 20200521 ///
+> 20200522 ///
+> 20200523 ///
+> 20200524 ///
+> 20200525 ///
+> 20200526 ///
+> 20200527 ///
+> 20200528 ///
+> 20200529 ///
+> 20200530 ///
+> 20200531 ///
+> 20200601 ///
+> 20200602 ///
+> 20200603 ///
+> 20200604 ///
+> 20200606 ///
+> 20200609 ///
+> 20200614 ///
+> 20200616 ///
+> 20200619 ///
+> 20200621 ///
+> 20200623 ///
+> 20200626 ///
+> 20200628 ///
+> 20200702 ///
+> 20200703 ///
+> 20200704 ///
+> 20200707 ///
+> 20200711 ///
+> 20200714 ///
+> 20200715 ///
+> 20200718 ///
+> 20200720 ///
+> 20200722 ///
+> 20200725 ///
+> 20200727 ///
+> 20200731 ///
+> 20200808 ///
+> 20200810 ///
+> 20200811 ///
+> 20200813 ///
+> 20200814 ///
+> 20200817 ///
+> 20200823 ///
+> 20200825 ///
+> 20200827 ///
+> 20200831 ///
+> 20200902 ///
+> 20200906 ///
+> 20200908 ///
+> 20200912 ///
+> 20200915 ///
+> 20200919 ///
+> 20200923 ///
+> 20200925 ///
+> 20201003 ///
+> 20201006 ///
+> 20201012 ///
+> 20201019 ///
+> 20201025 ///
+> 20201028 ///
+> 20201101 ///
+> 20201110 ///
+> 20201114 ///
+> 20201118 ///
+> 20201123 ///
+> 20201129 ///
+> 20201204 ///
+> 20201212 ///
+> 20201220 ///
+> 20201226 ///
+> 20210104 ///
+> 20210110 ///
+> 20210112 ///
+> 20210118 ///
+> 20210124 ///
+> 20210130 ///
+> 20210203 ///
+> 20210210 ///
+> 20210217 ///
+> 20210226 ///
+> 20210305 ///
+> 20210312 ///
+> 20210319 ///
+> 20210329 ///
+> 20210406 ///
+> 20210417 ///
+> 20210424 ///
+> 20210510 ///
+> 20210516 ///
+> 20210522 ///
+> 20210527 ///
+> 20210604 ///
+> 20210611 ///
+> 20210618 ///
+> 20210626 ///
+> 20210702 ///
+> 20210709 ///
+> 20210719 ///
+> 20210806 ///
+> 20210819 ///
+> 20210825 ///
+> 20210909 ///
+> 20210924 ///
+> 20211006 ///
+> 20211021 ///
+> 20211027 ///
+> 20211103 ///
+> 20211115 ///
+> 20211121 ///
+> 20211129 ///
+> 20211205 ///
+> 20211213 ///
+> 20211226 ///
+> 20220102 ///
+> 20220120 ///
+> 20220131 ///
+> 20220315 ///
+> 20220530 ///
+> 20220620 ///
+> 20220703 ///
+> 20220712 ///
+> 20220728 ///
+> 20220808 ///
+> 20220901 ///
+> 20221225
+{txt}
+{com}. 
+. 
+. sort date
+{txt}
+{com}. 
+. 
+. * (1) gen error TYPES by calendar months and model updates
+. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         * Running not quietly displays that the Stata is working and has not frozen. 
+. 
+. capture drop DDErrorIMPE`update'
+{txt}  3{com}. gen DDErrorIMPE`update' = - (DayDeaMeSmJOHN - DayDeaMeFoIMPE`update')
+{txt}  4{com}. label var DDErrorIMPE`update' "DayDeaMeFoIMPE`update' error"
+{txt}  5{com}. qui replace DDErrorIMPE`update' = . if DayDeaMeSmJOHN == . // before location was added to the estimates for the country
+{txt}  6{com}. qui replace DDErrorIMPE`update' = . if date == td(01jan2023) // 01jan2023 is not included in this study
+{txt}  7{com}. qui replace DDErrorIMPE`update' = . if date < td(28apr2020) // 28apr2020 is the earliest date of IMPE forecasts for Philippines
+{txt}  8{com}.                                                             // <<-- modify 3
+. capture drop DDAbsErrIMPE`update'
+{txt}  9{com}. gen DDAbsErrIMPE`update' = abs(- (DayDeaMeSmJOHN - DayDeaMeFoIMPE`update'))
+{txt} 10{com}. label var DDAbsErrIMPE`update' "DayDeaMeFoIMPE`update' absolute error"
+{txt} 11{com}. qui replace DDAbsErrIMPE`update' = . if DayDeaMeSmJOHN == . // before location was added to the estimates for the country
+{txt} 12{com}. qui replace DDAbsErrIMPE`update' = . if date == td(01jan2023) // 01jan2023 is not included in this study
+{txt} 13{com}. qui replace DDAbsErrIMPE`update' = . if date < td(28apr2020) // 28apr2020 is the earliest date of IMPE forecasts for Philippines
+{txt} 14{com}. 
+. capture drop DDPerErrIMPE`update'
+{txt} 15{com}. gen DDPerErrIMPE`update' = (100 * (- (DayDeaMeSmJOHN - DayDeaMeFoIMPE`update'))) / DayDeaMeSmJOHN
+{txt} 16{com}. replace DDPerErrIMPE`update' = 0 if DDErrorIMPE`update' == 0
+{txt} 17{com}. label var DDPerErrIMPE`update' "DayDeaMeFoIMPE`update' percent error"
+{txt} 18{com}. qui replace DDPerErrIMPE`update' = . if DayDeaMeSmJOHN == . // before location was added to the estimates for the country
+{txt} 19{com}. qui replace DDPerErrIMPE`update' = . if date == td(01jan2023) // 01jan2023 is not included in this study
+{txt} 20{com}. qui replace DDPerErrIMPE`update' = . if date < td(28apr2020) // 28apr2020 is the earliest date of IMPE forecasts for Philippines
+{txt} 21{com}. 
+. capture drop DDAbPeErIMPE`update'
+{txt} 22{com}. gen DDAbPeErIMPE`update' = (100 * abs(- (DayDeaMeSmJOHN - DayDeaMeFoIMPE`update'))) / DayDeaMeSmJOHN
+{txt} 23{com}. replace DDAbPeErIMPE`update' = 0 if DDAbsErrIMPE`update' == 0
+{txt} 24{com}. label var DDAbPeErIMPE`update' "DayDeaMeFoIMPE`update' absolute percent error"
+{txt} 25{com}. qui replace DDAbPeErIMPE`update' = . if DayDeaMeSmJOHN == . // before location was added to the estimates for the country
+{txt} 26{com}. qui replace DDAbPeErIMPE`update' = . if date == td(01jan2023) // 01jan2023 is not included in this study
+{txt} 27{com}. qui replace DDAbPeErIMPE`update' = . if date < td(28apr2020) // 28apr2020 is the earliest date of IMPE forecasts for Philippines
+{txt} 28{com}. 
+. {c )-}
+{txt}(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(1,068 missing values generated)
+(0 real changes made)
+(1,068 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,008 missing values generated)
+(0 real changes made)
+(1,008 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(1,007 missing values generated)
+(0 real changes made)
+(1,007 missing values generated)
+(0 real changes made)
+(1,089 missing values generated)
+(1,089 missing values generated)
+(1,089 missing values generated)
+(0 real changes made)
+(1,089 missing values generated)
+(0 real changes made)
+
+{com}. *
+. 
+. 
+. 
+. 
+. 
+. * (2) gen MEDIAN of error types by calendar months and updates = _Med1
+. 
+. * Wait note: wait ...
+. 
+. foreach update of local list {c -(}
+{txt}  2{com}.                 
+. capture drop DDErrorIMPE`update'_Med1
+{txt}  3{com}. bysort yearmonth : egen DDErrorIMPE`update'_Med1 = median(DDErrorIMPE`update')
+{txt}  4{com}. label var DDErrorIMPE`update'_Med1 "DayDeaIMPE median error by calendar months and updates"
+{txt}  5{com}. qui replace DDErrorIMPE`update'_Med1 = . if DayDeaMeSmJOHN == . // before location was added to the estimates for the country
+{txt}  6{com}. qui replace DDErrorIMPE`update'_Med1 = . if date == td(01jan2023) // 01jan2023 is not included in this study
+{txt}  7{com}. qui replace DDErrorIMPE`update'_Med1 = . if date < td(28apr2020) // 28apr2020 is the earliest date of IMPE forecasts for Philippines
+{txt}  8{com}. 
+. capture drop DDAbsErrIMPE`update'_Med1
+{txt}  9{com}. bysort yearmonth : egen DDAbsErrIMPE`update'_Med1 = median(DDAbsErrIMPE`update')
+{txt} 10{com}. label var DDAbsErrIMPE`update'_Med1 "DayDeaIMPE median absolute error by calendar months and updates"
+{txt} 11{com}. qui replace DDAbsErrIMPE`update'_Med1 = . if DayDeaMeSmJOHN == . // before location was added to the estimates for the country
+{txt} 12{com}. qui replace DDAbsErrIMPE`update'_Med1 = . if date == td(01jan2023) // 01jan2023 is not included in this study
+{txt} 13{com}. qui replace DDAbsErrIMPE`update'_Med1 = . if date < td(28apr2020) // 28apr2020 is the earliest date of IMPE forecasts for Philippines
+{txt} 14{com}. 
+. capture drop DDPerErrIMPE`update'
+{txt} 15{com}. gen DDPerErrIMPE`update' = (100 * (- (DayDeaMeSmJOHN - DayDeaMeFoIMPE`update'))) / DayDeaMeSmJOHN
+{txt} 16{com}. label var DDPerErrIMPE`update' "DayDeaMeFoIMPE`update' percent error"
+{txt} 17{com}. qui replace DDPerErrIMPE`update'_Med1 = . if DayDeaMeSmJOHN == . // before location was added to the estimates for the country
+{txt} 18{com}. qui replace DDPerErrIMPE`update'_Med1 = . if date == td(01jan2023) // 01jan2023 is not included in this study
+{txt} 19{com}. qui replace DDPerErrIMPE`update'_Med1 = . if date < td(28apr2020) // 28apr2020 is the earliest date of IMPE forecasts for Philippines
+{txt} 20{com}. 
+. capture drop DDAbPeErIMPE`update'
+{txt} 21{com}. gen DDAbPeErIMPE`update' = (100 * abs(- (DayDeaMeSmJOHN - DayDeaMeFoIMPE`update'))) / DayDeaMeSmJOHN
+{txt} 22{com}. label var DDAbPeErIMPE`update' "DayDeaMeFoIMPE`update' absolute percent error" 
+{txt} 23{com}. qui replace DDAbPeErIMPE`update'_Med1 = . if DayDeaMeSmJOHN == . // before location was added to the estimates for the country
+{txt} 24{com}. qui replace DDAbPeErIMPE`update'_Med1 = . if date == td(01jan2023) // 01jan2023 is not included in this study
+{txt} 25{com}. qui replace DDAbPeErIMPE`update'_Med1 = . if date < td(28apr2020) // 28apr2020 is the earliest date of IMPE forecasts for Philippines
+{txt} 26{com}. 
+. {c )-}
+{txt}(1,036 missing values generated)
+(1,036 missing values generated)
+(1,068 missing values generated)
+{err}variable {bf}DDPerErrIMPE20200428_Med1{sf} not found
+{txt}{search r(111), local:r(111);}
+
+end of do-file
+
+{search r(111), local:r(111);}
+
+{com}. line DayDeaMeFoIMPE20200428 date, sort lwidth(thin) lcolor(magenta)
+{res}
+{com}. do "/Users/farshadpourmalek/Downloads/CovidLongitudinal2-main/code/countries/Philippines/do CovidLongitudinal Philippines 2 DELP.do"
+{txt}
+{com}. 
+. clear all
+{res}{txt}
+{com}. 
+. cd "$pathCovidLongitudinal/countries/Philippines"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal2-main/code/countries/Philippines
+{txt}
+{com}. 
+. capture log close 
+{smcl}
+{com}{sf}{ul off}

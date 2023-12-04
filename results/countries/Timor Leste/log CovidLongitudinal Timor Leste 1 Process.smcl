@@ -1,0 +1,2960 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste/log CovidLongitudinal Timor Leste 1 Process.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}26 Nov 2023, 17:22:21
+{txt}
+{com}. 
+. ***************************************************************************
+. * This is "do CovidLongitudinal Timor Leste 1 Process.do"
+. 
+. * Project: Longitudinal assessment of COVID-19 models 
+. 
+. * Objective: Process the reported deaths by JOHN and 
+.         * the estimates by models (DELP, IHME, IMPE, LANL, UCLA, YYGU)
+.         * for each country ---->> Timor Leste <<----                                                                 
+. ***************************************************************************
+. 
+. 
+. 
+. **** "do CovidLongitudinal Timor Leste 1 Process.do"
+. **** Get Daily deaths forecast only: DayDeaMeFo`model'update where `model' is DELP, IHME, IMPE, LANL, UCLA, YYGU
+. 
+. 
+. ** input data files: "$pathCovidLongitudinal/download/`model'/`model' countries long.dta"
+. **                   "$pathCovidLongitudinal/download/JOHN"
+. **                   "$pathCovidLongitudinal/download/`model'"
+. 
+. ** output data files: "`model' Timor Leste.dta"
+. **                   "ALL MODLES Timor Leste.dta"
+. 
+. ** output data dictionary files: "Timor Leste ALL MODELS update dates data dictionary.csv"
+. **                               "`model' Timor Leste data dictionary.csv"
+. **                               "ALL MODLES Timor Leste data dictionary.csv"
+. 
+. ** graphs:
+. ** "graph 02 Timor Leste `model' C19 daily deaths all updates.pdf"
+. ** "graph 02 Timor Leste ALL MODELS C19 daily deaths all updates.pdf"
+. 
+. 
+. 
+. 
+. ************************************************************************
+. 
+. * get update dates on which country available in each model
+. 
+. 
+. local list IMPE LANL
+{txt}
+{com}. 
+. foreach model of local list {c -(}
+{txt}  2{com}. 
+.         use "$pathCovidLongitudinal/download/`model'/`model' countries long.dta", clear 
+{txt}  3{com}.         
+.         di in red "`model'" " Timor Leste absent update_date_block"
+{txt}  4{com}.         
+.         qui keep if loc_grand_name == "Timor Leste"
+{txt}  5{com}.         
+.         keep if absent == 0
+{txt}  6{com}.         
+.         gen model = "`model'"
+{txt}  7{com}.         
+.         order model
+{txt}  8{com}.         
+.         di "`model'"
+{txt}  9{com}.         
+.         di in red `r(N)'
+{txt} 10{com}.         
+.         keep model loc_grand_name absent update_date_block
+{txt} 11{com}.         
+.         order model loc_grand_name absent update_date_block
+{txt} 12{com}.         
+.         tostring update_date_block, gen(update_date_block_string)
+{txt} 13{com}.         
+.         gen slash = " ///"
+{txt} 14{com}.         
+.         gen update_date_block_slash = update_date_block_string + slash
+{txt} 15{com}.         
+.         drop slash
+{txt} 16{com}.         
+.         label var model "epidemic model being studied"
+{txt} 17{com}.         
+.         label var loc_grand_name "country"
+{txt} 18{com}.         
+.         label var absent "this country is absent in this model update"
+{txt} 19{com}.         
+.         label var update_date_block "update date block"
+{txt} 20{com}.         
+.         label var update_date_block_string "update date block string"
+{txt} 21{com}.         
+.         label var update_date_block_slash "update date block slash"
+{txt} 22{com}. 
+.         qui compress
+{txt} 23{com}.         
+.         save "Timor Leste `model' update dates.dta", replace
+{txt} 24{com}. 
+. {c )-}
+{err}IMPE Timor Leste absent update_date_block
+{txt}(82 observations deleted)
+IMPE
+
+update_date_block_string generated as {res:str8}
+{p 0 4 2}
+file {bf}
+Timor Leste IMPE update dates.dta{rm}
+saved
+{p_end}
+{err}LANL Timor Leste absent update_date_block
+{txt}(115 observations deleted)
+LANL
+
+update_date_block_string generated as {res:str8}
+{p 0 4 2}
+file {bf}
+Timor Leste LANL update dates.dta{rm}
+saved
+{p_end}
+
+{com}. *
+. 
+. 
+. 
+. 
+. 
+. 
+. use "Timor Leste IMPE update dates.dta", clear 
+{txt}
+{com}. 
+. local list IMPE LANL
+{txt}
+{com}. 
+. foreach model of local list {c -(}
+{txt}  2{com}.         
+.         append using "Timor Leste `model' update dates.dta"
+{txt}  3{com}.         
+.         duplicates drop
+{txt}  4{com}.         
+. {c )-}
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(66 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+
+{com}. *
+. 
+. save "Timor Leste ALL MODELS update dates.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+Timor Leste ALL MODELS update dates.dta{rm}
+saved
+{p_end}
+
+{com}.         
+. export excel using "Timor Leste ALL MODELS update dates.xlsx", replace firstrow(variables) 
+{res}{txt}file {bf:Timor Leste ALL MODELS update dates.xlsx} saved
+
+{com}. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "Timor Leste ALL MODELS update dates data dictionary.csv", replace 
+{res}{txt}file {bf:Timor Leste ALL MODELS update dates data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. *********************
+. grstyle init
+{res}{txt}
+{com}. 
+. grstyle color background white
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. *********************
+. * gen calendar file
+. 
+. clear
+{txt}
+{com}. 
+. di td(01jan2020) // 21915
+{res}21915
+{txt}
+{com}. 
+. di td(01jan2024) // 23376
+{res}23376
+{txt}
+{com}. 
+. di td(01jan2024) - td(01jan2020) + 1 // 732
+{res}1462
+{txt}
+{com}. 
+. 
+. 
+. set obs 1462
+{txt}{p}
+Number of observations ({bf:_N}) was 0,
+now 1,462.
+{p_end}
+
+{com}. 
+. gen date = .
+{txt}(1,462 missing values generated)
+
+{com}. 
+. replace date = 21915 in 1
+{txt}(1 real change made)
+
+{com}. 
+. replace date = date[_n-1] + 1 in 2/l
+{txt}(1,461 real changes made)
+
+{com}. 
+. replace date = date[_n-1] + 1 in 2/1462
+{txt}(0 real changes made)
+
+{com}. 
+. format date %tdDDMonCCYY
+{txt}
+{com}. 
+. codebook date
+
+{txt}{hline}
+{res}date{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric daily date ({res}float{txt})
+
+{col 18}Range: [{res}21915{txt},{res}23376{txt}]{col 55}Units: {res}1
+{col 8}{txt}Or equivalently: [{res}01jan2020{txt},{res}01jan2024{txt}]{col 55}Units: {res}days
+{col 10}{txt}Unique values: {res}1,462{col 51}{txt}Missing .: {res}0{txt}/{res}1,462
+
+{txt}{col 19}Mean: {res}{ralign 7:22645.5}{txt} = {res}31dec2021{txt}(+ 12 hours)
+{col 14}Std. dev.: {res}{ralign 7:422.187}
+{txt}{col 12}Percentiles: {col 25}{ralign 9:10%}{ralign 11:25%}{ralign 11:50%}{ralign 11:75%}{ralign 11:90%}
+{res}{col 25}{ralign 9:22061}{ralign 11:   22280}{ralign 11: 22645.5}{ralign 11:   23011}{ralign 11:   23230}
+{col 25}{ralign 9:26may2020}{ralign 11:31dec2020}{ralign 11:31dec2021}{ralign 11:01jan2023}{ralign 11:08aug2023}
+{txt}
+{com}. 
+. save "calendar.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+calendar.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * JOHN
+. 
+. cd "$pathCovidLongitudinal/download/JOHN"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/JOHN
+{txt}
+{com}. 
+. use "CovidLongitudinal JOHN.dta", clear 
+{txt}
+{com}. 
+. keep if loc_grand_name == "Timor Leste"
+{txt}(221,763 observations deleted)
+
+{com}. 
+. keep date DayDeaMeSmJOHNTLS
+{txt}
+{com}. 
+. label var date "calendar date"
+{txt}
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. cd "$pathCovidLongitudinal/countries/Timor Leste"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}
+{com}. 
+. save "JOHN Timor Leste.dta", replace 
+{txt}{p 0 4 2}
+file {bf}
+JOHN Timor Leste.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. * graph Timor Leste JOHN daily deaths
+. 
+. twoway ///
+> (line DayDeaMeSmJOHNTLS date, sort lwidth(thick) lcolor(cyan)) ///
+> if date >= td(01jan2020) & date <= td(01jan2023) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.1fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Timor Leste, JOHN", size(medium) color(black)) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Timor Leste JOHN C19 daily deaths reported.pdf", replace
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * DELP
+. 
+. * Timor Leste not included in DELP
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * IHME 
+. 
+. * Timor Leste not included in IHME
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * IMPE
+. 
+. local list ///
+> 20201025 ///
+> 20201028 ///
+> 20201101 ///
+> 20201110 ///
+> 20201114 ///
+> 20201118 ///
+> 20201123 ///
+> 20201129 ///
+> 20201204 ///
+> 20201212 ///
+> 20201220 ///
+> 20201226 ///
+> 20210104 ///
+> 20210110 ///
+> 20210112 ///
+> 20210118 ///
+> 20210124 ///
+> 20210130 ///
+> 20210203 ///
+> 20210210 ///
+> 20210217 ///
+> 20210226 ///
+> 20210305 ///
+> 20210312 ///
+> 20210319 ///
+> 20210329 ///
+> 20210417 ///
+> 20210424 ///
+> 20210510 ///
+> 20210516 ///
+> 20210522 ///
+> 20210527 ///
+> 20210604 ///
+> 20210611 ///
+> 20210618 ///
+> 20210626 ///
+> 20210702 ///
+> 20210709 ///
+> 20210719 ///
+> 20210806 ///
+> 20210819 ///
+> 20210825 ///
+> 20210909 ///
+> 20210924 ///
+> 20211006 ///
+> 20211021 ///
+> 20211027 ///
+> 20211103 ///
+> 20211115 ///
+> 20211121 ///
+> 20211129 ///
+> 20211205 ///
+> 20211213 ///
+> 20211226 ///
+> 20220102 ///
+> 20220120 ///
+> 20220131 ///
+> 20220315 ///
+> 20220530 ///
+> 20220620 ///
+> 20220703 ///
+> 20220712 ///
+> 20220728 ///
+> 20220808 ///
+> 20220901 ///
+> 20221225
+{txt}
+{com}. 
+. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         cd "$pathCovidLongitudinal/download/IMPE"
+{txt}  3{com}.         
+.         di in red "This is IMPE update " `update'
+{txt}  4{com}. 
+.         use "IMPE `update'.dta", clear
+{txt}  5{com}.                 
+.         keep if loc_grand_name == "Timor Leste"
+{txt}  6{com}. 
+.         duplicates drop
+{txt}  7{com}.                 
+.         
+.         
+.         
+.         * gen daily deaths // done in /code/downloads/IMPE/do CovidLongitudinal IMPE.do
+.         
+.         
+.         
+.         
+.         * smooth
+.                 
+.         sort date
+{txt}  8{com}.                         
+.         qui tsset date, daily   
+{txt}  9{com}.                         
+.         qui tssmooth ma DayDeaMeRaIMPE`update'_window = DayDeaMeRaIMPE`update' if DayDeaMeRaIMPE`update' >= 0, window(3 1 3) 
+{txt} 10{com}. 
+.         qui tssmooth ma DayDeaMeSmIMPE`update' = DayDeaMeRaIMPE`update'_window, weights( 1 2 3 <4> 3 2 1) replace
+{txt} 11{com}. 
+.         drop *_window
+{txt} 12{com}.         
+.         label var DayDeaMeSmIMPE`update' "Daily deaths mean smooth IMPE" 
+{txt} 13{com}.         
+.         
+.         
+.         
+.         * gen Daily deaths smooth forecast only
+.                         
+.         clonevar DayDeaMeFoIMPE`update' = DayDeaMeSmIMPE`update' 
+{txt} 14{com}.         
+.         label var DayDeaMeFoIMPE`update' "Daily deaths smooth mean forecast only IMPE"
+{txt} 15{com}.                 
+.         gen update_date`update' = date("`update'", "YMD")
+{txt} 16{com}.                                 
+.         qui replace DayDeaMeFoIMPE`update' = . if date < update_date`update' 
+{txt} 17{com}.         
+.         
+.         
+.         capture drop fit_type death_calibrated v1
+{txt} 18{com}.         
+.         label var loc_grand_name "country"
+{txt} 19{com}.         
+.         label var date "calendar date"
+{txt} 20{com}.         
+.         label var DayDeaMeRaIMPE`update' "Daily deaths mean raw IMPE"
+{txt} 21{com}.         
+.         label var DayDeaMeSmIMPE`update' "Daily deaths mean smooth IMPE"
+{txt} 22{com}.         
+.         label var DayDeaMeFoIMPE`update' "Daily deaths mean smooth forecast only IMPE"
+{txt} 23{com}.         
+.         label var update_date`update' "update date"
+{txt} 24{com}.         
+.         
+.         
+.         
+.         
+.         qui compress    
+{txt} 25{com}.         
+.         cd "$pathCovidLongitudinal/countries/Timor Leste"
+{txt} 26{com}.         
+.         save "IMPE `update' Timor Leste.dta", replace emptyok
+{txt} 27{com}.         
+.         
+.         *
+. 
+.         
+. {c )-}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201025
+{txt}(57,965 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201025 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201028
+{txt}(58,448 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201028 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201101
+{txt}(58,754 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201101 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201110
+{txt}(61,207 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201110 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201114
+{txt}(61,967 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201114 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201118
+{txt}(62,457 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201118 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201123
+{txt}(63,307 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201123 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201129
+{txt}(64,785 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201129 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201204
+{txt}(65,651 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201204 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201212
+{txt}(67,006 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201212 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201220
+{txt}(68,064 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201220 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201226
+{txt}(68,714 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201226 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210104
+{txt}(70,849 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210104 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210110
+{txt}(72,041 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210110 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210112
+{txt}(72,670 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210112 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210118
+{txt}(73,667 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210118 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210124
+{txt}(74,863 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210124 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210130
+{txt}(75,498 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210130 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210203
+{txt}(76,002 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210203 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210210
+{txt}(77,538 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210210 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210217
+{txt}(78,827 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210217 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210226
+{txt}(80,343 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210226 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210305
+{txt}(81,727 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210305 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210312
+{txt}(82,745 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210312 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210319
+{txt}(83,966 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210319 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210329
+{txt}(85,825 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210329 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210417
+{txt}(89,246 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210417 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210424
+{txt}(90,565 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210424 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210510
+{txt}(92,999 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210510 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210516
+{txt}(94,190 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210516 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210522
+{txt}(95,343 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210522 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210527
+{txt}(96,322 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210527 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210604
+{txt}(97,885 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210604 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210611
+{txt}(99,226 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210611 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210618
+{txt}(100,591 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210618 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210626
+{txt}(102,099 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210626 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210702
+{txt}(103,233 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210702 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210709
+{txt}(104,573 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210709 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210719
+{txt}(106,461 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210719 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210806
+{txt}(109,760 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210806 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210819
+{txt}(112,179 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210819 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210825
+{txt}(113,306 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210825 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210909
+{txt}(115,974 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210909 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210924
+{txt}(118,665 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210924 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211006
+{txt}(120,438 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211006 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211021
+{txt}(123,086 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211021 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211027
+{txt}(124,220 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211027 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211103
+{txt}(125,222 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211103 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211115
+{txt}(127,232 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211115 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211121
+{txt}(128,851 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211121 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211129
+{txt}(130,236 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211129 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211205
+{txt}(130,688 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211205 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211213
+{txt}(130,531 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211213 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211226
+{txt}(133,454 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211226 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220102
+{txt}(134,647 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220102 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220120
+{txt}(115,093 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220120 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220131
+{txt}(115,052 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220131 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220315
+{txt}(147,359 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220315 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220530
+{txt}(144,520 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220530 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220620
+{txt}(147,671 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220620 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220703
+{txt}(145,521 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220703 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220712
+{txt}(146,424 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220712 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220728
+{txt}(149,788 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220728 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220808
+{txt}(151,766 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220808 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220901
+{txt}(153,908 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220901 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20221225
+{txt}(174,274 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20221225 Timor Leste.dta{rm}
+saved
+{p_end}
+
+{com}. *
+. 
+. 
+. 
+. 
+. * merge updates
+. 
+. cd "$pathCovidLongitudinal/countries/Timor Leste"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}
+{com}. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         merge m:m date using "IMPE `update' Timor Leste.dta"
+{txt}  3{com}.         
+.         drop _merge
+{txt}  4{com}. 
+. {c )-}
+{res}{txt}{p 0 7 2}
+(variable
+{bf:death_calibrated} was {bf:str4}, now {bf:str5} to accommodate using data's values)
+{p_end}
+
+{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             838
+{txt}{col 9}from master{col 30}{res}             748{txt}  (_merge==1)
+{col 9}from using{col 30}{res}              90{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}               0{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             754
+{txt}{col 9}from master{col 30}{res}             751{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               3{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              87{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             759
+{txt}{col 9}from master{col 30}{res}             755{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               4{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              86{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             773
+{txt}{col 9}from master{col 30}{res}             764{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               9{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              81{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             772
+{txt}{col 9}from master{col 30}{res}             768{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               4{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              86{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             776
+{txt}{col 9}from master{col 30}{res}             772{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               4{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              86{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             782
+{txt}{col 9}from master{col 30}{res}             777{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               5{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              85{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             789
+{txt}{col 9}from master{col 30}{res}             783{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               6{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              84{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             793
+{txt}{col 9}from master{col 30}{res}             788{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               5{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              85{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             794
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               3{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              87{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             791
+{txt}{col 9}from master{col 30}{res}             791{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             725
+{txt}{col 9}from master{col 30}{res}             725{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             156{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             718
+{txt}{col 9}from master{col 30}{res}             718{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             163{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             703
+{txt}{col 9}from master{col 30}{res}             703{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             178{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             698
+{txt}{col 9}from master{col 30}{res}             698{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             183{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             691
+{txt}{col 9}from master{col 30}{res}             691{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             190{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             686
+{txt}{col 9}from master{col 30}{res}             686{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             195{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             679
+{txt}{col 9}from master{col 30}{res}             679{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             202{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             671
+{txt}{col 9}from master{col 30}{res}             671{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             210{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             664
+{txt}{col 9}from master{col 30}{res}             664{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             217{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             658
+{txt}{col 9}from master{col 30}{res}             658{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             223{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             651
+{txt}{col 9}from master{col 30}{res}             651{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             230{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             643
+{txt}{col 9}from master{col 30}{res}             643{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             238{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             633
+{txt}{col 9}from master{col 30}{res}             633{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             248{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             615
+{txt}{col 9}from master{col 30}{res}             615{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             266{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             602
+{txt}{col 9}from master{col 30}{res}             602{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             279{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             596
+{txt}{col 9}from master{col 30}{res}             596{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             285{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             581
+{txt}{col 9}from master{col 30}{res}             581{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             300{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             566
+{txt}{col 9}from master{col 30}{res}             566{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             315{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             554
+{txt}{col 9}from master{col 30}{res}             554{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             327{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             540
+{txt}{col 9}from master{col 30}{res}             540{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             341{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             533
+{txt}{col 9}from master{col 30}{res}             533{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             348{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             526
+{txt}{col 9}from master{col 30}{res}             526{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             355{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             514
+{txt}{col 9}from master{col 30}{res}             514{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             367{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             508
+{txt}{col 9}from master{col 30}{res}             508{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             373{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             500
+{txt}{col 9}from master{col 30}{res}             500{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             381{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             494
+{txt}{col 9}from master{col 30}{res}             494{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             387{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             486
+{txt}{col 9}from master{col 30}{res}             486{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             395{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             479
+{txt}{col 9}from master{col 30}{res}             479{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             402{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             471
+{txt}{col 9}from master{col 30}{res}             471{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             410{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             464
+{txt}{col 9}from master{col 30}{res}             464{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             417{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             438
+{txt}{col 9}from master{col 30}{res}             438{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             443{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             400
+{txt}{col 9}from master{col 30}{res}             400{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             481{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             319
+{txt}{col 9}from master{col 30}{res}             319{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             562{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             368
+{txt}{col 9}from master{col 30}{res}             188{txt}  (_merge==1)
+{col 9}from using{col 30}{res}             180{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             693{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             275
+{txt}{col 9}from master{col 30}{res}             275{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             786{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             266
+{txt}{col 9}from master{col 30}{res}             266{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             795{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             250
+{txt}{col 9}from master{col 30}{res}             250{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             811{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             239
+{txt}{col 9}from master{col 30}{res}             239{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             822{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             428
+{txt}{col 9}from master{col 30}{res}             428{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             633{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             313
+{txt}{col 9}from master{col 30}{res}             313{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             748{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. *       
+. 
+. 
+. capture drop fit_type death_calibrated v1 // IMPE extra vars 
+{txt}
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. save "IMPE Timor Leste.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+IMPE Timor Leste.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. * add JOHN
+. 
+. merge m:1 date using "JOHN Timor Leste.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             112
+{txt}{col 9}from master{col 30}{res}              15{txt}  (_merge==1)
+{col 9}from using{col 30}{res}              97{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}           1,046{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+.         drop if date < td(01jan2020)
+{txt}(0 observations deleted)
+
+{com}. 
+.         drop if date > td(01jan2023) 
+{txt}(82 observations deleted)
+
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. save "IMPE Timor Leste.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+IMPE Timor Leste.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "IMPE Timor Leste data dictionary.csv", replace 
+{res}{txt}file {bf:IMPE Timor Leste data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+. 
+. 
+. 
+. /* foreach update of local list {c -(}
+>         
+>         * graph Timor Leste IMPE daily deaths each update 
+>         
+>         twoway ///
+>         (line DayDeaMeSmJOHNTLS date, sort lwidth(thick) lcolor(cyan)) ///      
+>         (line DayDeaMeFoIMPE`update' date, sort lwidth(thin) lcolor(magenta)) /// 
+>         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
+>         , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+>         xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+>         ytitle(Daily deaths) title("C19 daily deaths, IMPE, update `update'", size(medium) color(black)) ///
+>         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
+>         subtitle("Timor Leste, forecast only") legend(position(6) order(1 "JOHN" 2 "IMPE forecast ") rows(1) size(small)) ///
+>         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
+>         
+>         qui graph export "graph 01 Timor Leste IMPE daily deaths update `update'.pdf", replace  
+> 
+> {c )-}
+> */
+. 
+. 
+. 
+. 
+. * graph Timor Leste IMPE daily deaths all updates
+. 
+. twoway ///
+> (line DayDeaMeSmJOHNTLS date, sort lwidth(thick) lcolor(cyan)) /// 
+> (line DayDeaMeFoIMPE20201025 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201028 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201101 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201114 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201123 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201204 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201212 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201220 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210104 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210112 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210124 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210130 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210203 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210210 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210217 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210305 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210312 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210319 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210329 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210417 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210424 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210510 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210516 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210522 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210527 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210604 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210611 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210618 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210626 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210702 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210709 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210719 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210806 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210819 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210825 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210909 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210924 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211006 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211021 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211027 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211103 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211115 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211121 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211205 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211213 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220102 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220120 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220131 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220315 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220530 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220620 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220703 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220712 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220728 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220808 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220901 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20221225 date, sort lwidth(thin) lcolor(magenta)) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Timor Leste, IMPE, all updates", size(medium) color(black)) ///
+> legend(position(6) order(1 "JOHN" 2 "IMPE forecast ") rows(1) size(small)) legend(region(lcolor(none))) legend(bexpand) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Timor Leste IMPE C19 daily deaths all updates.pdf", replace
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * LANL
+. 
+. local list ///
+> 20210627 ///
+> 20210704 ///
+> 20210711 ///
+> 20210718 ///
+> 20210725 ///
+> 20210801 ///
+> 20210808 ///
+> 20210815 ///
+> 20210822 ///
+> 20210829 ///
+> 20210905 ///
+> 20210912 ///
+> 20210919 ///
+> 20210926
+{txt}
+{com}. 
+. 
+. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         cd "$pathCovidLongitudinal/download/LANL"
+{txt}  3{com}.         
+.         di in red "This is LANL update " `update'
+{txt}  4{com}. 
+.         use "CovidLongitudinal LANL `update'.dta", clear
+{txt}  5{com}.         
+.         keep if loc_grand_name == "Timor Leste" 
+{txt}  6{com}. 
+.         duplicates drop
+{txt}  7{com}.                 
+.         
+.         
+.         
+.         * gen daily deaths // done in /code/downloads/LANL/do CovidLongitudinal LANL.do
+.         
+.         
+.         
+.         * smooth
+.                 
+.         sort loc_grand_name date
+{txt}  8{com}.                         
+.         qui tsset date, daily   
+{txt}  9{com}.                                 
+.         qui tssmooth ma DayDeaMeRaLANL`update'_window = DayDeaMeRaLANL`update' if DayDeaMeRaLANL`update' >= 0, window(3 1 3) 
+{txt} 10{com}. 
+.         qui tssmooth ma DayDeaMeSmLANL`update' = DayDeaMeRaLANL`update'_window, weights( 1 2 3 <4> 3 2 1) replace
+{txt} 11{com}. 
+.         drop *_window
+{txt} 12{com}.         
+.         label var DayDeaMeSmLANL`update' "Daily deaths mean smooth LANL" 
+{txt} 13{com}.         
+.         
+.         
+.         
+.         * gen Daily deaths smooth forecast only 
+.                                 
+.         clonevar DayDeaMeFoLANL`update' = DayDeaMeSmLANL`update' 
+{txt} 14{com}.         
+.         label var DayDeaMeFoLANL`update' "Daily deaths mean smooth forecast only LANL"
+{txt} 15{com}.         
+.         gen update_date`update' = date("`update'", "YMD")
+{txt} 16{com}.                         
+.         replace DayDeaMeFoLANL`update' = . if date < update_date`update' 
+{txt} 17{com}.         
+.         
+.         
+.         label var date "calendar date"
+{txt} 18{com}.         
+.         label var DayDeaMeRaLANL`update' "Daily deaths mean raw LANL"
+{txt} 19{com}.         
+.         label var loc_grand_name "country"
+{txt} 20{com}.         
+.         label var date "calendar date"
+{txt} 21{com}.         
+.         label var update_date`update' "update date"
+{txt} 22{com}.         
+.         qui compress    
+{txt} 23{com}.         
+.         cd "$pathCovidLongitudinal/countries/Timor Leste"
+{txt} 24{com}.         
+.         save "LANL `update' Timor Leste.dta", replace 
+{txt} 25{com}.         
+. 
+. {c )-}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210627
+{txt}(98,783 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(522 real changes made, 522 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210627 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210704
+{txt}(100,572 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(529 real changes made, 529 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210704 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210711
+{txt}(101,790 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(536 real changes made, 536 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210711 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210718
+{txt}(103,008 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(543 real changes made, 543 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210718 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210725
+{txt}(104,226 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(550 real changes made, 550 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210725 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210801
+{txt}(105,444 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(557 real changes made, 557 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210801 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210808
+{txt}(107,888 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(564 real changes made, 564 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210808 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210815
+{txt}(109,120 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(571 real changes made, 571 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210815 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210822
+{txt}(110,352 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(578 real changes made, 578 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210822 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210829
+{txt}(111,584 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(585 real changes made, 585 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210829 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210905
+{txt}(112,816 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(592 real changes made, 592 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210905 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210912
+{txt}(115,344 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(599 real changes made, 599 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210912 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210919
+{txt}(116,590 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(606 real changes made, 606 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210919 Timor Leste.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210926
+{txt}(117,836 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(613 real changes made, 613 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210926 Timor Leste.dta{rm}
+saved
+{p_end}
+
+{com}. *
+. 
+. 
+. 
+. 
+. 
+. * merge updates
+. 
+. cd "$pathCovidLongitudinal/countries/Timor Leste"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}
+{com}. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         merge m:m date using "LANL `update' Timor Leste.dta"
+{txt}  3{com}.         
+.         drop _merge
+{txt}  4{com}. 
+. {c )-}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              91
+{txt}{col 9}from master{col 30}{res}              91{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             571{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              84
+{txt}{col 9}from master{col 30}{res}              84{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             578{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              77
+{txt}{col 9}from master{col 30}{res}              77{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             585{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              70
+{txt}{col 9}from master{col 30}{res}              70{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             592{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              63
+{txt}{col 9}from master{col 30}{res}              63{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             599{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              56
+{txt}{col 9}from master{col 30}{res}              56{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             606{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              49
+{txt}{col 9}from master{col 30}{res}              49{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             613{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              42
+{txt}{col 9}from master{col 30}{res}              42{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             620{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              35
+{txt}{col 9}from master{col 30}{res}              35{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             627{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              28
+{txt}{col 9}from master{col 30}{res}              28{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             634{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              21
+{txt}{col 9}from master{col 30}{res}              21{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             641{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              14
+{txt}{col 9}from master{col 30}{res}              14{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             648{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               7
+{txt}{col 9}from master{col 30}{res}               7{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             655{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}             662{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. *       
+. 
+. qui compress
+{txt}
+{com}. 
+. save "LANL Timor Leste.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+LANL Timor Leste.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. * add JOHN
+. 
+. merge m:1 date using "JOHN Timor Leste.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             481
+{txt}{col 9}from master{col 30}{res}               0{txt}  (_merge==1)
+{col 9}from using{col 30}{res}             481{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             662{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. save "LANL Timor Leste.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+LANL Timor Leste.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "LANL Timor Leste data dictionary.csv", replace 
+{res}{txt}file {bf:LANL Timor Leste data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+. 
+. 
+. 
+. /* foreach update of local list {c -(}
+>         
+>         * graph Timor Leste LANL daily deaths each update 
+>         
+>         twoway ///
+>         (line DayDeaMeSmJOHNTLS date, sort lwidth(thick) lcolor(cyan)) ///      
+>         (line DayDeaMeFoLANL`update' date, sort lwidth(thin) lcolor(brown)) /// 
+>         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
+>         , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+>         xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+>         ytitle(Daily deaths) title("C19 daily deaths, LANL, update `update'", size(medium) color(black)) ///
+>         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
+>         subtitle("Timor Leste, forecast only") legend(position(6) order(1 "JOHN" 2 "LANL forecast ") rows(1) size(small)) ///
+>         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
+>         
+>         qui graph export "graph 01 Timor Leste LANL daily deaths update `update'.pdf", replace  
+> 
+> {c )-}
+> */
+. 
+. 
+. 
+. 
+. * graph Timor Leste LANL daily deaths all updates
+. 
+. twoway ///
+> (line DayDeaMeSmJOHNTLS date, sort lwidth(thick) lcolor(cyan)) /// 
+> (line DayDeaMeFoLANL20210627 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210704 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210711 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210718 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210725 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210801 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210808 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210815 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210822 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210829 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210905 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210912 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210919 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210926 date, sort lwidth(thin) lcolor(brown)) ///
+> if date >= td(01jan2020) & date <= td(01jan2023) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.1fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Timor Leste, LANL, all updates", size(medium) color(black)) ///
+> legend(position(6) order(1 "JOHN" 2 "LANL forecast ") ///
+> rows(1) size(small)) legend(region(lcolor(none))) legend(bexpand) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Timor Leste LANL C19 daily deaths all updates.pdf", replace
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * UCLA
+. * Timor Leste not included in UCLA
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * YYGU
+. * Timor Leste not included in YYGU
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. *************************************************************
+. 
+. * merge models
+. 
+. local list IMPE LANL
+{txt}
+{com}. 
+. use "IMPE Timor Leste.dta", clear
+{txt}
+{com}. 
+. foreach model of local list {c -(}
+{txt}  2{com}. 
+.         merge m:m date loc_grand_name using "`model' Timor Leste.dta", force
+{txt}  3{com}.         
+.         drop _merge
+{txt}  4{com}.         
+.         isid date loc_grand_name, missok
+{txt}  5{com}.         
+. {c )-}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}           1,076{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}           1,089
+{txt}{col 9}from master{col 30}{res}             511{txt}  (_merge==1)
+{col 9}from using{col 30}{res}             578{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             565{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. *
+. 
+. qui compress
+{txt}
+{com}. 
+. save "ALL MODLES Timor Leste.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+ALL MODLES Timor Leste.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "ALL MODLES Timor Leste data dictionary.csv", replace 
+{res}{txt}file {bf:ALL MODLES Timor Leste data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+.         
+. 
+.         
+. 
+. 
+. * graph Timor Leste ALL MODELS daily deaths all updates
+. 
+. twoway ///
+> (line DayDeaMeFoIMPE20201025 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201028 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201101 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201114 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201123 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201204 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201212 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201220 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210104 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210112 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210124 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210130 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210203 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210210 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210217 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210305 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210312 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210319 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210329 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210417 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210424 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210510 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210516 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210522 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210527 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210604 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210611 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210618 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210626 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210627 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210702 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210704 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210709 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210711 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210718 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210719 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210725 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210801 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210806 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210808 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210815 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210819 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210822 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210825 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210829 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210905 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210909 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210912 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210919 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210924 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210926 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20211006 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211021 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211027 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211103 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211115 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211121 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211205 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211213 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220102 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220120 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220131 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220315 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220530 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220620 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220703 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220712 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220728 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220808 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220901 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20221225 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeSmJOHNTLS date, sort lwidth(thick) lcolor(cyan)) /// 
+> if date >= td(01jan2020) & date <= td(01jan2023) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Timor Leste, all models, all updates, forecast only", size(medium) color(black)) ///
+> legend(position(6) order(81 "JOHN" 1 "IMPE" 37 "LANL") ///
+> rows(1) size(small)) legend(region(lcolor(none))) legend(bexpand) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Timor Leste ALL MODELS C19 daily deaths all updates.pdf", replace
+{txt}
+{com}. 
+.         
+. 
+. 
+. 
+. 
+. 
+. 
+. cd "$pathCovidLongitudinal/countries/Timor Leste"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste
+{txt}
+{com}. 
+. 
+. view "log CovidLongitudinal Timor Leste 1 Process.smcl"
+{txt}
+{com}. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Timor Leste/log CovidLongitudinal Timor Leste 1 Process.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}26 Nov 2023, 17:22:31
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

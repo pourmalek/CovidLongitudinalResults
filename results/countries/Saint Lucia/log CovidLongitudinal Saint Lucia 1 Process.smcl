@@ -1,0 +1,3843 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia/log CovidLongitudinal Saint Lucia 1 Process.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}26 Nov 2023, 14:12:13
+{txt}
+{com}. 
+. ***************************************************************************
+. * This is "do CovidLongitudinal Saint Lucia 1 Process.do"
+. 
+. * Project: Longitudinal assessment of COVID-19 models 
+. 
+. * Objective: Process the reported deaths by JOHN and 
+.         * the estimates by models (DELP, IHME, IMPE, LANL, UCLA, YYGU)
+.         * for each country ---->> Saint Lucia <<----                                                                 
+. ***************************************************************************
+. 
+. 
+. 
+. **** "do CovidLongitudinal Saint Lucia 1 Process.do"
+. **** Get Daily deaths forecast only: DayDeaMeFo`model'update where `model' is DELP, IHME, IMPE, LANL, UCLA, YYGU
+. 
+. 
+. ** input data files: "$pathCovidLongitudinal/download/`model'/`model' countries long.dta"
+. **                   "$pathCovidLongitudinal/download/JOHN"
+. **                   "$pathCovidLongitudinal/download/`model'"
+. 
+. ** output data files: "`model' Saint Lucia.dta"
+. **                   "ALL MODLES Saint Lucia.dta"
+. 
+. ** output data dictionary files: "Saint Lucia ALL MODELS update dates data dictionary.csv"
+. **                               "`model' Saint Lucia data dictionary.csv"
+. **                               "ALL MODLES Saint Lucia data dictionary.csv"
+. 
+. ** graphs:
+. ** "graph 02 Saint Lucia `model' C19 daily deaths all updates.pdf"
+. ** "graph 02 Saint Lucia ALL MODELS C19 daily deaths all updates.pdf"
+. 
+. 
+. 
+. 
+. ************************************************************************
+. 
+. * get update dates on which country available in each model
+. 
+. 
+. local list IMPE LANL
+{txt}
+{com}. 
+. foreach model of local list {c -(}
+{txt}  2{com}. 
+.         use "$pathCovidLongitudinal/download/`model'/`model' countries long.dta", clear 
+{txt}  3{com}.         
+.         di in red "`model'" " Saint Lucia absent update_date_block"
+{txt}  4{com}.         
+.         qui keep if loc_grand_name == "Saint Lucia"
+{txt}  5{com}.         
+.         keep if absent == 0
+{txt}  6{com}.         
+.         gen model = "`model'"
+{txt}  7{com}.         
+.         order model
+{txt}  8{com}.         
+.         di "`model'"
+{txt}  9{com}.         
+.         di in red `r(N)'
+{txt} 10{com}.         
+.         keep model loc_grand_name absent update_date_block
+{txt} 11{com}.         
+.         order model loc_grand_name absent update_date_block
+{txt} 12{com}.         
+.         tostring update_date_block, gen(update_date_block_string)
+{txt} 13{com}.         
+.         gen slash = " ///"
+{txt} 14{com}.         
+.         gen update_date_block_slash = update_date_block_string + slash
+{txt} 15{com}.         
+.         drop slash
+{txt} 16{com}.         
+.         label var model "epidemic model being studied"
+{txt} 17{com}.         
+.         label var loc_grand_name "country"
+{txt} 18{com}.         
+.         label var absent "this country is absent in this model update"
+{txt} 19{com}.         
+.         label var update_date_block "update date block"
+{txt} 20{com}.         
+.         label var update_date_block_string "update date block string"
+{txt} 21{com}.         
+.         label var update_date_block_slash "update date block slash"
+{txt} 22{com}. 
+.         qui compress
+{txt} 23{com}.         
+.         save "Saint Lucia `model' update dates.dta", replace
+{txt} 24{com}. 
+. {c )-}
+{err}IMPE Saint Lucia absent update_date_block
+{txt}(81 observations deleted)
+IMPE
+
+update_date_block_string generated as {res:str8}
+{p 0 4 2}
+file {bf}
+Saint Lucia IMPE update dates.dta{rm}
+saved
+{p_end}
+{err}LANL Saint Lucia absent update_date_block
+{txt}(82 observations deleted)
+LANL
+
+update_date_block_string generated as {res:str8}
+{p 0 4 2}
+file {bf}
+Saint Lucia LANL update dates.dta{rm}
+saved
+{p_end}
+
+{com}. *
+. 
+. 
+. 
+. 
+. 
+. 
+. use "Saint Lucia IMPE update dates.dta", clear 
+{txt}
+{com}. 
+. local list IMPE LANL
+{txt}
+{com}. 
+. foreach model of local list {c -(}
+{txt}  2{com}.         
+.         append using "Saint Lucia `model' update dates.dta"
+{txt}  3{com}.         
+.         duplicates drop
+{txt}  4{com}.         
+. {c )-}
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(67 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+
+{com}. *
+. 
+. save "Saint Lucia ALL MODELS update dates.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+Saint Lucia ALL MODELS update dates.dta{rm}
+saved
+{p_end}
+
+{com}.         
+. export excel using "Saint Lucia ALL MODELS update dates.xlsx", replace firstrow(variables) 
+{res}{txt}file {bf:Saint Lucia ALL MODELS update dates.xlsx} saved
+
+{com}. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "Saint Lucia ALL MODELS update dates data dictionary.csv", replace 
+{res}{txt}file {bf:Saint Lucia ALL MODELS update dates data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. *********************
+. grstyle init
+{res}{txt}
+{com}. 
+. grstyle color background white
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. *********************
+. * gen calendar file
+. 
+. clear
+{txt}
+{com}. 
+. di td(01jan2020) // 21915
+{res}21915
+{txt}
+{com}. 
+. di td(01jan2024) // 23376
+{res}23376
+{txt}
+{com}. 
+. di td(01jan2024) - td(01jan2020) + 1 // 732
+{res}1462
+{txt}
+{com}. 
+. 
+. 
+. set obs 1462
+{txt}{p}
+Number of observations ({bf:_N}) was 0,
+now 1,462.
+{p_end}
+
+{com}. 
+. gen date = .
+{txt}(1,462 missing values generated)
+
+{com}. 
+. replace date = 21915 in 1
+{txt}(1 real change made)
+
+{com}. 
+. replace date = date[_n-1] + 1 in 2/l
+{txt}(1,461 real changes made)
+
+{com}. 
+. replace date = date[_n-1] + 1 in 2/1462
+{txt}(0 real changes made)
+
+{com}. 
+. format date %tdDDMonCCYY
+{txt}
+{com}. 
+. codebook date
+
+{txt}{hline}
+{res}date{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric daily date ({res}float{txt})
+
+{col 18}Range: [{res}21915{txt},{res}23376{txt}]{col 55}Units: {res}1
+{col 8}{txt}Or equivalently: [{res}01jan2020{txt},{res}01jan2024{txt}]{col 55}Units: {res}days
+{col 10}{txt}Unique values: {res}1,462{col 51}{txt}Missing .: {res}0{txt}/{res}1,462
+
+{txt}{col 19}Mean: {res}{ralign 7:22645.5}{txt} = {res}31dec2021{txt}(+ 12 hours)
+{col 14}Std. dev.: {res}{ralign 7:422.187}
+{txt}{col 12}Percentiles: {col 25}{ralign 9:10%}{ralign 11:25%}{ralign 11:50%}{ralign 11:75%}{ralign 11:90%}
+{res}{col 25}{ralign 9:22061}{ralign 11:   22280}{ralign 11: 22645.5}{ralign 11:   23011}{ralign 11:   23230}
+{col 25}{ralign 9:26may2020}{ralign 11:31dec2020}{ralign 11:31dec2021}{ralign 11:01jan2023}{ralign 11:08aug2023}
+{txt}
+{com}. 
+. save "calendar.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+calendar.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * JOHN
+. 
+. cd "$pathCovidLongitudinal/download/JOHN"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/JOHN
+{txt}
+{com}. 
+. use "CovidLongitudinal JOHN.dta", clear 
+{txt}
+{com}. 
+. keep if loc_grand_name == "Saint Lucia"
+{txt}(221,763 observations deleted)
+
+{com}. 
+. keep date DayDeaMeSmJOHNLCA
+{txt}
+{com}. 
+. label var date "calendar date"
+{txt}
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. cd "$pathCovidLongitudinal/countries/Saint Lucia"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}
+{com}. 
+. save "JOHN Saint Lucia.dta", replace 
+{txt}{p 0 4 2}
+file {bf}
+JOHN Saint Lucia.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. * graph Saint Lucia JOHN daily deaths
+. 
+. twoway ///
+> (line DayDeaMeSmJOHNLCA date, sort lwidth(thick) lcolor(cyan)) ///
+> if date >= td(01jan2020) & date <= td(01jan2023) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Saint Lucia, JOHN", size(medium) color(black)) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Saint Lucia JOHN C19 daily deaths reported.pdf", replace
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * DELP
+. 
+. * Saint Lucia not included in DELP
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * IHME 
+. 
+. * Saint Lucia not included in IHME
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * IMPE
+. 
+. local list ///
+> 20201025 ///
+> 20201028 ///
+> 20201101 ///
+> 20201110 ///
+> 20201114 ///
+> 20201118 ///
+> 20201123 ///
+> 20201129 ///
+> 20201204 ///
+> 20201212 ///
+> 20201220 ///
+> 20201226 ///
+> 20210104 ///
+> 20210110 ///
+> 20210112 ///
+> 20210118 ///
+> 20210124 ///
+> 20210130 ///
+> 20210203 ///
+> 20210210 ///
+> 20210217 ///
+> 20210226 ///
+> 20210305 ///
+> 20210312 ///
+> 20210319 ///
+> 20210329 ///
+> 20210406 ///
+> 20210417 ///
+> 20210424 ///
+> 20210510 ///
+> 20210516 ///
+> 20210522 ///
+> 20210527 ///
+> 20210604 ///
+> 20210611 ///
+> 20210618 ///
+> 20210626 ///
+> 20210702 ///
+> 20210709 ///
+> 20210719 ///
+> 20210806 ///
+> 20210819 ///
+> 20210825 ///
+> 20210909 ///
+> 20210924 ///
+> 20211006 ///
+> 20211021 ///
+> 20211027 ///
+> 20211103 ///
+> 20211115 ///
+> 20211121 ///
+> 20211129 ///
+> 20211205 ///
+> 20211213 ///
+> 20211226 ///
+> 20220102 ///
+> 20220120 ///
+> 20220131 ///
+> 20220315 ///
+> 20220530 ///
+> 20220620 ///
+> 20220703 ///
+> 20220712 ///
+> 20220728 ///
+> 20220808 ///
+> 20220901 ///
+> 20221225
+{txt}
+{com}. 
+. 
+. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         cd "$pathCovidLongitudinal/download/IMPE"
+{txt}  3{com}.         
+.         di in red "This is IMPE update " `update'
+{txt}  4{com}. 
+.         use "IMPE `update'.dta", clear
+{txt}  5{com}.                 
+.         keep if loc_grand_name == "Saint Lucia"
+{txt}  6{com}. 
+.         duplicates drop
+{txt}  7{com}.                 
+.         
+.         
+.         
+.         * gen daily deaths // done in /code/downloads/IMPE/do CovidLongitudinal IMPE.do
+.         
+.         
+.         
+.         
+.         * smooth
+.                 
+.         sort date
+{txt}  8{com}.                         
+.         qui tsset date, daily   
+{txt}  9{com}.                         
+.         qui tssmooth ma DayDeaMeRaIMPE`update'_window = DayDeaMeRaIMPE`update' if DayDeaMeRaIMPE`update' >= 0, window(3 1 3) 
+{txt} 10{com}. 
+.         qui tssmooth ma DayDeaMeSmIMPE`update' = DayDeaMeRaIMPE`update'_window, weights( 1 2 3 <4> 3 2 1) replace
+{txt} 11{com}. 
+.         drop *_window
+{txt} 12{com}.         
+.         label var DayDeaMeSmIMPE`update' "Daily deaths mean smooth IMPE" 
+{txt} 13{com}.         
+.         
+.         
+.         
+.         * gen Daily deaths smooth forecast only
+.                         
+.         clonevar DayDeaMeFoIMPE`update' = DayDeaMeSmIMPE`update' 
+{txt} 14{com}.         
+.         label var DayDeaMeFoIMPE`update' "Daily deaths smooth mean forecast only IMPE"
+{txt} 15{com}.                 
+.         gen update_date`update' = date("`update'", "YMD")
+{txt} 16{com}.                                 
+.         qui replace DayDeaMeFoIMPE`update' = . if date < update_date`update' 
+{txt} 17{com}.         
+.         
+.         
+.         capture drop fit_type death_calibrated v1
+{txt} 18{com}.         
+.         label var loc_grand_name "country"
+{txt} 19{com}.         
+.         label var date "calendar date"
+{txt} 20{com}.         
+.         label var DayDeaMeRaIMPE`update' "Daily deaths mean raw IMPE"
+{txt} 21{com}.         
+.         label var DayDeaMeSmIMPE`update' "Daily deaths mean smooth IMPE"
+{txt} 22{com}.         
+.         label var DayDeaMeFoIMPE`update' "Daily deaths mean smooth forecast only IMPE"
+{txt} 23{com}.         
+.         label var update_date`update' "update date"
+{txt} 24{com}.         
+.         
+.         
+.         
+.         
+.         qui compress    
+{txt} 25{com}.         
+.         cd "$pathCovidLongitudinal/countries/Saint Lucia"
+{txt} 26{com}.         
+.         save "IMPE `update' Saint Lucia.dta", replace emptyok
+{txt} 27{com}.         
+.         
+.         *
+. 
+.         
+. {c )-}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201025
+{txt}(57,965 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201025 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201028
+{txt}(58,448 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201028 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201101
+{txt}(58,754 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201101 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201110
+{txt}(61,207 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201110 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201114
+{txt}(61,909 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201114 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201118
+{txt}(62,395 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201118 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201123
+{txt}(63,240 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201123 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201129
+{txt}(64,712 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201129 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201204
+{txt}(65,574 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201204 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201212
+{txt}(66,949 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201212 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201220
+{txt}(67,987 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201220 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201226
+{txt}(68,634 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201226 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210104
+{txt}(70,759 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210104 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210110
+{txt}(71,944 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210110 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210112
+{txt}(72,551 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210112 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210118
+{txt}(73,543 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210118 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210124
+{txt}(74,732 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210124 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210130
+{txt}(75,363 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210130 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210203
+{txt}(75,861 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210203 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210210
+{txt}(77,391 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210210 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210217
+{txt}(78,673 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210217 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210226
+{txt}(80,180 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210226 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210305
+{txt}(81,556 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210305 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210312
+{txt}(82,569 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210312 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210319
+{txt}(83,782 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210319 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210329
+{txt}(85,631 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210329 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210406
+{txt}(86,881 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210406 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210417
+{txt}(89,099 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210417 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210424
+{txt}(90,418 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210424 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210510
+{txt}(92,852 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210510 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210516
+{txt}(94,042 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210516 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210522
+{txt}(95,196 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210522 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210527
+{txt}(96,175 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210527 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210604
+{txt}(97,737 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210604 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210611
+{txt}(99,079 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210611 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210618
+{txt}(100,444 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210618 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210626
+{txt}(101,950 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210626 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210702
+{txt}(103,085 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210702 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210709
+{txt}(104,426 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210709 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210719
+{txt}(106,314 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210719 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210806
+{txt}(109,613 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210806 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210819
+{txt}(112,032 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210819 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210825
+{txt}(113,159 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210825 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210909
+{txt}(115,827 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210909 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210924
+{txt}(118,518 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210924 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211006
+{txt}(120,291 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211006 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211021
+{txt}(122,938 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211021 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211027
+{txt}(124,073 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211027 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211103
+{txt}(125,075 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211103 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211115
+{txt}(127,085 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211115 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211121
+{txt}(128,704 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211121 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211129
+{txt}(130,089 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211129 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211205
+{txt}(130,541 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211205 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211213
+{txt}(130,384 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211213 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211226
+{txt}(133,301 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211226 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220102
+{txt}(134,495 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220102 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220120
+{txt}(114,932 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220120 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220131
+{txt}(114,923 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220131 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220315
+{txt}(147,230 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220315 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220530
+{txt}(144,385 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220530 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220620
+{txt}(147,825 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220620 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220703
+{txt}(145,521 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220703 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220712
+{txt}(146,424 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220712 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220728
+{txt}(149,788 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220728 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220808
+{txt}(151,831 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220808 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220901
+{txt}(153,761 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220901 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20221225
+{txt}(174,127 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20221225 Saint Lucia.dta{rm}
+saved
+{p_end}
+
+{com}. *
+. 
+. 
+. 
+. 
+. * merge updates
+. 
+. cd "$pathCovidLongitudinal/countries/Saint Lucia"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}
+{com}. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         merge m:m date using "IMPE `update' Saint Lucia.dta"
+{txt}  3{com}.         
+.         drop _merge
+{txt}  4{com}. 
+. {c )-}
+{res}{txt}{p 0 7 2}
+(variable
+{bf:death_calibrated} was {bf:str4}, now {bf:str5} to accommodate using data's values)
+{p_end}
+
+{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             805
+{txt}{col 9}from master{col 30}{res}             805{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             805
+{txt}{col 9}from master{col 30}{res}             805{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             805
+{txt}{col 9}from master{col 30}{res}             805{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             805
+{txt}{col 9}from master{col 30}{res}             805{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              90{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             795
+{txt}{col 9}from master{col 30}{res}             771{txt}  (_merge==1)
+{col 9}from using{col 30}{res}              24{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             124{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             767
+{txt}{col 9}from master{col 30}{res}             767{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             152{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             762
+{txt}{col 9}from master{col 30}{res}             762{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             157{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             756
+{txt}{col 9}from master{col 30}{res}             756{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             163{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             752
+{txt}{col 9}from master{col 30}{res}             752{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             167{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             772
+{txt}{col 9}from master{col 30}{res}             772{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             147{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             752
+{txt}{col 9}from master{col 30}{res}             752{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             167{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             749
+{txt}{col 9}from master{col 30}{res}             749{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             170{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             739
+{txt}{col 9}from master{col 30}{res}             739{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             180{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             732
+{txt}{col 9}from master{col 30}{res}             732{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             187{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             714
+{txt}{col 9}from master{col 30}{res}             712{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               2{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             207{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             707
+{txt}{col 9}from master{col 30}{res}             707{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             214{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             700
+{txt}{col 9}from master{col 30}{res}             700{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             221{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             696
+{txt}{col 9}from master{col 30}{res}             696{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             225{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             690
+{txt}{col 9}from master{col 30}{res}             690{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             231{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             684
+{txt}{col 9}from master{col 30}{res}             684{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             237{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             677
+{txt}{col 9}from master{col 30}{res}             677{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             244{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             668
+{txt}{col 9}from master{col 30}{res}             668{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             253{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             660
+{txt}{col 9}from master{col 30}{res}             660{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             261{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             655
+{txt}{col 9}from master{col 30}{res}             655{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             266{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             647
+{txt}{col 9}from master{col 30}{res}             647{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             274{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             637
+{txt}{col 9}from master{col 30}{res}             637{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             284{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             629
+{txt}{col 9}from master{col 30}{res}             629{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             292{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             618
+{txt}{col 9}from master{col 30}{res}             618{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             303{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             611
+{txt}{col 9}from master{col 30}{res}             611{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             310{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             596
+{txt}{col 9}from master{col 30}{res}             596{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             325{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             590
+{txt}{col 9}from master{col 30}{res}             590{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             331{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             584
+{txt}{col 9}from master{col 30}{res}             584{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             337{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             579
+{txt}{col 9}from master{col 30}{res}             579{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             342{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             571
+{txt}{col 9}from master{col 30}{res}             571{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             350{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             564
+{txt}{col 9}from master{col 30}{res}             564{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             357{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             557
+{txt}{col 9}from master{col 30}{res}             557{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             364{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             549
+{txt}{col 9}from master{col 30}{res}             549{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             372{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             543
+{txt}{col 9}from master{col 30}{res}             543{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             378{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             536
+{txt}{col 9}from master{col 30}{res}             536{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             385{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             526
+{txt}{col 9}from master{col 30}{res}             526{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             395{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             508
+{txt}{col 9}from master{col 30}{res}             508{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             413{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             495
+{txt}{col 9}from master{col 30}{res}             495{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             426{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             489
+{txt}{col 9}from master{col 30}{res}             489{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             432{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             474
+{txt}{col 9}from master{col 30}{res}             474{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             447{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             459
+{txt}{col 9}from master{col 30}{res}             459{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             462{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             447
+{txt}{col 9}from master{col 30}{res}             447{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             474{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             432
+{txt}{col 9}from master{col 30}{res}             432{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             489{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             426
+{txt}{col 9}from master{col 30}{res}             426{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             495{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             419
+{txt}{col 9}from master{col 30}{res}             419{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             502{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             407
+{txt}{col 9}from master{col 30}{res}             407{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             514{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             401
+{txt}{col 9}from master{col 30}{res}             401{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             520{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             393
+{txt}{col 9}from master{col 30}{res}             393{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             528{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             387
+{txt}{col 9}from master{col 30}{res}             387{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             534{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             379
+{txt}{col 9}from master{col 30}{res}             379{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             542{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             366
+{txt}{col 9}from master{col 30}{res}             366{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             555{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             359
+{txt}{col 9}from master{col 30}{res}             359{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             562{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             343
+{txt}{col 9}from master{col 30}{res}             343{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             578{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             349
+{txt}{col 9}from master{col 30}{res}             349{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             572{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             311
+{txt}{col 9}from master{col 30}{res}             311{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             610{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             224
+{txt}{col 9}from master{col 30}{res}             224{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             697{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             202
+{txt}{col 9}from master{col 30}{res}             202{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             719{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             215
+{txt}{col 9}from master{col 30}{res}             175{txt}  (_merge==1)
+{col 9}from using{col 30}{res}              40{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             746{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             166
+{txt}{col 9}from master{col 30}{res}             166{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             795{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             150
+{txt}{col 9}from master{col 30}{res}             150{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             811{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             204
+{txt}{col 9}from master{col 30}{res}             204{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             757{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             181
+{txt}{col 9}from master{col 30}{res}             181{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             780{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              66
+{txt}{col 9}from master{col 30}{res}              66{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             895{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. *       
+. 
+. 
+. capture drop fit_type death_calibrated v1 // IMPE extra vars 
+{txt}
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. save "IMPE Saint Lucia.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+IMPE Saint Lucia.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. * add JOHN
+. 
+. merge m:1 date using "JOHN Saint Lucia.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             212
+{txt}{col 9}from master{col 30}{res}              15{txt}  (_merge==1)
+{col 9}from using{col 30}{res}             197{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             946{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+.         drop if date < td(01jan2020)
+{txt}(0 observations deleted)
+
+{com}. 
+.         drop if date > td(01jan2023) 
+{txt}(82 observations deleted)
+
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. save "IMPE Saint Lucia.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+IMPE Saint Lucia.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "IMPE Saint Lucia data dictionary.csv", replace 
+{res}{txt}file {bf:IMPE Saint Lucia data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+. 
+. 
+. 
+. /* foreach update of local list {c -(}
+>         
+>         * graph Saint Lucia IMPE daily deaths each update 
+>         
+>         twoway ///
+>         (line DayDeaMeSmJOHNLCA date, sort lwidth(thick) lcolor(cyan)) ///      
+>         (line DayDeaMeFoIMPE`update' date, sort lwidth(thin) lcolor(magenta)) /// 
+>         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
+>         , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+>         xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+>         ytitle(Daily deaths) title("C19 daily deaths, IMPE, update `update'", size(medium) color(black)) ///
+>         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
+>         subtitle("Saint Lucia, forecast only") legend(position(6) order(1 "JOHN" 2 "IMPE forecast ") rows(1) size(small)) ///
+>         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
+>         
+>         qui graph export "graph 01 Saint Lucia IMPE daily deaths update `update'.pdf", replace  
+> 
+> {c )-}
+> */
+. 
+. 
+. 
+. 
+. * graph Saint Lucia IMPE daily deaths all updates
+. 
+. twoway ///
+> (line DayDeaMeSmJOHNLCA date, sort lwidth(thick) lcolor(cyan)) /// 
+> (line DayDeaMeFoIMPE20201025 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201028 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201101 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201114 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201123 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201204 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201212 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201220 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210104 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210112 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210124 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210130 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210203 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210210 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210217 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210305 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210312 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210319 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210329 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210406 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210417 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210424 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210510 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210516 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210522 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210527 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210604 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210611 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210618 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210626 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210702 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210709 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210719 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210806 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210819 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210825 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210909 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210924 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211006 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211021 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211027 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211103 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211115 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211121 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211205 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211213 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220102 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220120 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220131 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220315 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220530 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220620 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220703 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220712 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220728 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220808 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220901 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20221225 date, sort lwidth(thin) lcolor(magenta)) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Saint Lucia, IMPE, all updates", size(medium) color(black)) ///
+> legend(position(6) order(1 "JOHN" 2 "IMPE forecast ") rows(1) size(small)) legend(region(lcolor(none))) legend(bexpand) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Saint Lucia IMPE C19 daily deaths all updates.pdf", replace
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * LANL
+. 
+. local list ///
+> 20210214 ///
+> 20210217 ///
+> 20210221 ///
+> 20210224 ///
+> 20210228 ///
+> 20210303 ///
+> 20210307 ///
+> 20210310 ///
+> 20210314 ///
+> 20210321 ///
+> 20210324 ///
+> 20210328 ///
+> 20210331 ///
+> 20210404 ///
+> 20210407 ///
+> 20210411 ///
+> 20210414 ///
+> 20210418 ///
+> 20210421 ///
+> 20210425 ///
+> 20210428 ///
+> 20210502 ///
+> 20210505 ///
+> 20210509 ///
+> 20210512 ///
+> 20210516 ///
+> 20210519 ///
+> 20210523 ///
+> 20210526 ///
+> 20210602 ///
+> 20210606 ///
+> 20210613 ///
+> 20210620 ///
+> 20210627 ///
+> 20210704 ///
+> 20210711 ///
+> 20210718 ///
+> 20210725 ///
+> 20210801 ///
+> 20210808 ///
+> 20210815 ///
+> 20210822 ///
+> 20210829 ///
+> 20210905 ///
+> 20210912 ///
+> 20210919 ///
+> 20210926
+{txt}
+{com}. 
+. 
+. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         cd "$pathCovidLongitudinal/download/LANL"
+{txt}  3{com}.         
+.         di in red "This is LANL update " `update'
+{txt}  4{com}. 
+.         use "CovidLongitudinal LANL `update'.dta", clear
+{txt}  5{com}.         
+.         keep if loc_grand_name == "Saint Lucia" 
+{txt}  6{com}. 
+.         duplicates drop
+{txt}  7{com}.                 
+.         
+.         
+.         
+.         * gen daily deaths // done in /code/downloads/LANL/do CovidLongitudinal LANL.do
+.         
+.         
+.         
+.         * smooth
+.                 
+.         sort loc_grand_name date
+{txt}  8{com}.                         
+.         qui tsset date, daily   
+{txt}  9{com}.                                 
+.         qui tssmooth ma DayDeaMeRaLANL`update'_window = DayDeaMeRaLANL`update' if DayDeaMeRaLANL`update' >= 0, window(3 1 3) 
+{txt} 10{com}. 
+.         qui tssmooth ma DayDeaMeSmLANL`update' = DayDeaMeRaLANL`update'_window, weights( 1 2 3 <4> 3 2 1) replace
+{txt} 11{com}. 
+.         drop *_window
+{txt} 12{com}.         
+.         label var DayDeaMeSmLANL`update' "Daily deaths mean smooth LANL" 
+{txt} 13{com}.         
+.         
+.         
+.         
+.         * gen Daily deaths smooth forecast only 
+.                                 
+.         clonevar DayDeaMeFoLANL`update' = DayDeaMeSmLANL`update' 
+{txt} 14{com}.         
+.         label var DayDeaMeFoLANL`update' "Daily deaths mean smooth forecast only LANL"
+{txt} 15{com}.         
+.         gen update_date`update' = date("`update'", "YMD")
+{txt} 16{com}.                         
+.         replace DayDeaMeFoLANL`update' = . if date < update_date`update' 
+{txt} 17{com}.         
+.         
+.         
+.         label var date "calendar date"
+{txt} 18{com}.         
+.         label var DayDeaMeRaLANL`update' "Daily deaths mean raw LANL"
+{txt} 19{com}.         
+.         label var loc_grand_name "country"
+{txt} 20{com}.         
+.         label var date "calendar date"
+{txt} 21{com}.         
+.         label var update_date`update' "update date"
+{txt} 22{com}.         
+.         qui compress    
+{txt} 23{com}.         
+.         cd "$pathCovidLongitudinal/countries/Saint Lucia"
+{txt} 24{com}.         
+.         save "LANL `update' Saint Lucia.dta", replace 
+{txt} 25{com}.         
+. 
+. {c )-}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210214
+{txt}(71,832 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(389 real changes made, 389 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210214 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210217
+{txt}(72,765 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(392 real changes made, 392 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210217 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210221
+{txt}(73,425 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(396 real changes made, 396 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210221 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210224
+{txt}(73,920 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(399 real changes made, 399 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210224 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210228
+{txt}(74,580 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(403 real changes made, 403 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210228 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210303
+{txt}(75,075 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(406 real changes made, 406 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210303 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210307
+{txt}(76,194 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(410 real changes made, 410 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210307 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210310
+{txt}(76,692 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(413 real changes made, 413 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210310 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210314
+{txt}(77,822 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(417 real changes made, 417 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210314 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210321
+{txt}(78,991 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(424 real changes made, 424 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210321 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210324
+{txt}(79,492 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(427 real changes made, 427 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210324 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210328
+{txt}(80,640 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(431 real changes made, 431 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210328 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210331
+{txt}(81,144 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(434 real changes made, 434 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210331 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210404
+{txt}(81,816 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(438 real changes made, 438 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210404 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210407
+{txt}(82,810 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(441 real changes made, 441 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210407 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210411
+{txt}(83,980 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(445 real changes made, 445 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210411 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210414
+{txt}(84,490 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(448 real changes made, 448 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210414 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210418
+{txt}(85,170 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(452 real changes made, 452 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210418 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210421
+{txt}(85,680 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(455 real changes made, 455 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210421 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210425
+{txt}(86,360 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(459 real changes made, 459 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210425 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210428
+{txt}(86,870 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(462 real changes made, 462 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210428 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210502
+{txt}(87,550 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(466 real changes made, 466 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210502 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210505
+{txt}(88,060 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(469 real changes made, 469 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210505 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210509
+{txt}(88,740 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(473 real changes made, 473 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210509 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210512
+{txt}(89,250 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(476 real changes made, 476 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210512 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210516
+{txt}(89,930 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(480 real changes made, 480 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210516 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210519
+{txt}(90,440 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(483 real changes made, 483 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210519 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210523
+{txt}(91,656 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(487 real changes made, 487 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210523 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210526
+{txt}(92,169 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(490 real changes made, 490 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210526 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210602
+{txt}(93,366 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(497 real changes made, 497 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210602 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210606
+{txt}(94,050 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(501 real changes made, 501 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210606 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210613
+{txt}(95,247 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(508 real changes made, 508 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210613 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210620
+{txt}(96,444 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(515 real changes made, 515 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210620 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210627
+{txt}(98,783 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(522 real changes made, 522 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210627 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210704
+{txt}(100,572 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(529 real changes made, 529 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210704 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210711
+{txt}(101,790 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(536 real changes made, 536 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210711 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210718
+{txt}(103,008 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(543 real changes made, 543 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210718 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210725
+{txt}(104,226 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(550 real changes made, 550 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210725 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210801
+{txt}(105,444 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(557 real changes made, 557 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210801 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210808
+{txt}(107,888 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(564 real changes made, 564 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210808 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210815
+{txt}(109,120 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(571 real changes made, 571 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210815 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210822
+{txt}(110,352 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(578 real changes made, 578 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210822 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210829
+{txt}(111,584 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(585 real changes made, 585 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210829 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210905
+{txt}(112,816 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(592 real changes made, 592 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210905 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210912
+{txt}(115,344 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(599 real changes made, 599 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210912 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210919
+{txt}(116,590 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(606 real changes made, 606 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210919 Saint Lucia.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210926
+{txt}(117,836 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(613 real changes made, 613 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210926 Saint Lucia.dta{rm}
+saved
+{p_end}
+
+{com}. *
+. 
+. 
+. 
+. 
+. 
+. * merge updates
+. 
+. cd "$pathCovidLongitudinal/countries/Saint Lucia"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}
+{com}. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         merge m:m date using "LANL `update' Saint Lucia.dta"
+{txt}  3{com}.         
+.         drop _merge
+{txt}  4{com}. 
+. {c )-}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             224
+{txt}{col 9}from master{col 30}{res}             224{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             438{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             221
+{txt}{col 9}from master{col 30}{res}             221{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             441{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             217
+{txt}{col 9}from master{col 30}{res}             217{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             445{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             214
+{txt}{col 9}from master{col 30}{res}             214{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             448{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             210
+{txt}{col 9}from master{col 30}{res}             210{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             452{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             207
+{txt}{col 9}from master{col 30}{res}             207{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             455{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             203
+{txt}{col 9}from master{col 30}{res}             203{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             459{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             200
+{txt}{col 9}from master{col 30}{res}             200{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             462{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             196
+{txt}{col 9}from master{col 30}{res}             196{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             466{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             189
+{txt}{col 9}from master{col 30}{res}             189{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             473{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             186
+{txt}{col 9}from master{col 30}{res}             186{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             476{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             182
+{txt}{col 9}from master{col 30}{res}             182{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             480{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             179
+{txt}{col 9}from master{col 30}{res}             179{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             483{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             175
+{txt}{col 9}from master{col 30}{res}             175{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             487{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             172
+{txt}{col 9}from master{col 30}{res}             172{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             490{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             168
+{txt}{col 9}from master{col 30}{res}             168{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             494{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             165
+{txt}{col 9}from master{col 30}{res}             165{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             497{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             161
+{txt}{col 9}from master{col 30}{res}             161{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             501{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             158
+{txt}{col 9}from master{col 30}{res}             158{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             504{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             154
+{txt}{col 9}from master{col 30}{res}             154{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             508{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             151
+{txt}{col 9}from master{col 30}{res}             151{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             511{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             147
+{txt}{col 9}from master{col 30}{res}             147{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             515{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             144
+{txt}{col 9}from master{col 30}{res}             144{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             518{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             140
+{txt}{col 9}from master{col 30}{res}             140{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             522{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             137
+{txt}{col 9}from master{col 30}{res}             137{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             525{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             133
+{txt}{col 9}from master{col 30}{res}             133{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             529{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             130
+{txt}{col 9}from master{col 30}{res}             130{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             532{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             126
+{txt}{col 9}from master{col 30}{res}             126{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             536{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             123
+{txt}{col 9}from master{col 30}{res}             123{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             539{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             116
+{txt}{col 9}from master{col 30}{res}             116{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             546{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             112
+{txt}{col 9}from master{col 30}{res}             112{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             550{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             105
+{txt}{col 9}from master{col 30}{res}             105{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             557{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              98
+{txt}{col 9}from master{col 30}{res}              98{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             564{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              91
+{txt}{col 9}from master{col 30}{res}              91{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             571{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              84
+{txt}{col 9}from master{col 30}{res}              84{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             578{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              77
+{txt}{col 9}from master{col 30}{res}              77{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             585{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              70
+{txt}{col 9}from master{col 30}{res}              70{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             592{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              63
+{txt}{col 9}from master{col 30}{res}              63{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             599{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              56
+{txt}{col 9}from master{col 30}{res}              56{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             606{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              49
+{txt}{col 9}from master{col 30}{res}              49{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             613{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              42
+{txt}{col 9}from master{col 30}{res}              42{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             620{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              35
+{txt}{col 9}from master{col 30}{res}              35{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             627{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              28
+{txt}{col 9}from master{col 30}{res}              28{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             634{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              21
+{txt}{col 9}from master{col 30}{res}              21{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             641{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              14
+{txt}{col 9}from master{col 30}{res}              14{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             648{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               7
+{txt}{col 9}from master{col 30}{res}               7{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             655{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}             662{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. *       
+. 
+. qui compress
+{txt}
+{com}. 
+. save "LANL Saint Lucia.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+LANL Saint Lucia.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. * add JOHN
+. 
+. merge m:1 date using "JOHN Saint Lucia.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             481
+{txt}{col 9}from master{col 30}{res}               0{txt}  (_merge==1)
+{col 9}from using{col 30}{res}             481{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             662{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. save "LANL Saint Lucia.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+LANL Saint Lucia.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "LANL Saint Lucia data dictionary.csv", replace 
+{res}{txt}file {bf:LANL Saint Lucia data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+. 
+. 
+. 
+. /* foreach update of local list {c -(}
+>         
+>         * graph Saint Lucia LANL daily deaths each update 
+>         
+>         twoway ///
+>         (line DayDeaMeSmJOHNLCA date, sort lwidth(thick) lcolor(cyan)) ///      
+>         (line DayDeaMeFoLANL`update' date, sort lwidth(thin) lcolor(brown)) /// 
+>         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
+>         , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+>         xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+>         ytitle(Daily deaths) title("C19 daily deaths, LANL, update `update'", size(medium) color(black)) ///
+>         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
+>         subtitle("Saint Lucia, forecast only") legend(position(6) order(1 "JOHN" 2 "LANL forecast ") rows(1) size(small)) ///
+>         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
+>         
+>         qui graph export "graph 01 Saint Lucia LANL daily deaths update `update'.pdf", replace  
+> 
+> {c )-}
+> */
+. 
+. 
+. 
+. 
+. * graph Saint Lucia LANL daily deaths all updates
+. 
+. twoway ///
+> (line DayDeaMeSmJOHNLCA date, sort lwidth(thick) lcolor(cyan)) /// 
+> (line DayDeaMeFoLANL20210214 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210217 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210221 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210224 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210228 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210303 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210307 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210310 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210314 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210321 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210324 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210328 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210331 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210404 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210407 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210411 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210414 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210418 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210421 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210425 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210428 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210502 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210505 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210509 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210512 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210516 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210519 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210523 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210526 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210602 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210606 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210613 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210620 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210627 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210704 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210711 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210718 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210725 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210801 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210808 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210815 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210822 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210829 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210905 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210912 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210919 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210926 date, sort lwidth(thin) lcolor(brown)) ///
+> if date >= td(01jan2020) & date <= td(01jan2023) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Saint Lucia, LANL, all updates", size(medium) color(black)) ///
+> legend(position(6) order(1 "JOHN" 2 "LANL forecast ") rows(1) size(small)) legend(region(lcolor(none))) legend(bexpand) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Saint Lucia LANL C19 daily deaths all updates.pdf", replace
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * UCLA
+. * Saint Lucia not included in UCLA
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * YYGU
+. * Saint Lucia not included in YYGU
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. *************************************************************
+. 
+. * merge models
+. 
+. local list IMPE LANL
+{txt}
+{com}. 
+. use "IMPE Saint Lucia.dta", clear
+{txt}
+{com}. 
+. foreach model of local list {c -(}
+{txt}  2{com}. 
+.         merge m:m date loc_grand_name using "`model' Saint Lucia.dta", force
+{txt}  3{com}.         
+.         drop _merge
+{txt}  4{com}.         
+.         isid date loc_grand_name, missok
+{txt}  5{com}.         
+. {c )-}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}           1,076{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}           1,289
+{txt}{col 9}from master{col 30}{res}             611{txt}  (_merge==1)
+{col 9}from using{col 30}{res}             678{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             465{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. *
+. 
+. qui compress
+{txt}
+{com}. 
+. save "ALL MODLES Saint Lucia.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+ALL MODLES Saint Lucia.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "ALL MODLES Saint Lucia data dictionary.csv", replace 
+{res}{txt}file {bf:ALL MODLES Saint Lucia data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+.         
+. 
+.         
+. 
+. 
+. * graph Saint Lucia ALL MODELS daily deaths all updates
+. 
+. twoway ///
+> (line DayDeaMeFoIMPE20201025 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201028 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201101 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201114 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201123 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201204 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201212 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201220 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210104 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210112 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210124 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210130 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210203 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210210 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210214 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210217 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210217 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210221 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210224 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210228 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210303 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210305 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210307 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210310 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210312 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210314 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210319 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210321 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210324 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210328 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210329 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210331 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210404 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210406 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210407 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210411 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210414 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210417 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210418 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210421 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210424 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210425 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210428 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210502 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210505 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210509 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210510 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210512 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210516 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210516 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210519 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210522 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210523 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210526 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210527 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210602 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210604 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210606 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210611 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210613 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210618 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210620 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210626 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210627 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210702 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210704 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210709 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210711 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210718 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210719 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210725 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210801 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210806 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210808 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210815 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210819 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210822 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210825 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210829 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210905 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210909 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210912 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210919 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210924 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210926 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20211006 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211021 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211027 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211103 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211115 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211121 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211205 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211213 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220102 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220120 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220131 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220315 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220530 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220620 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220703 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220712 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220728 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220808 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220901 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20221225 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeSmJOHNLCA date, sort lwidth(thick) lcolor(cyan)) /// 
+> if date >= td(01jan2020) & date <= td(01jan2023) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Saint Lucia, all models, all updates, forecast only", size(medium) color(black)) ///
+> legend(position(6) order(115 "JOHN" 1 "IMPE" 21 "LANL") ///
+> rows(1) size(small)) legend(region(lcolor(none))) legend(bexpand) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Saint Lucia ALL MODELS C19 daily deaths all updates.pdf", replace
+{txt}
+{com}. 
+.         
+. 
+. 
+. 
+. 
+. 
+. 
+. cd "$pathCovidLongitudinal/countries/Saint Lucia"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia
+{txt}
+{com}. 
+. 
+. view "log CovidLongitudinal Saint Lucia 1 Process.smcl"
+{txt}
+{com}. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Saint Lucia/log CovidLongitudinal Saint Lucia 1 Process.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}26 Nov 2023, 14:12:25
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

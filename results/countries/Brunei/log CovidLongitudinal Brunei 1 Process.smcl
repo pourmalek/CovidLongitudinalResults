@@ -1,0 +1,3745 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei/log CovidLongitudinal Brunei 1 Process.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}25 Nov 2023, 17:20:46
+{txt}
+{com}. 
+. ***************************************************************************
+. * This is "do CovidLongitudinal Brunei 1 Process.do"
+. 
+. * Project: Longitudinal assessment of COVID-19 models 
+. 
+. * Objective: Process the reported deaths by JOHN and 
+.         * the estimates by models (DELP, IHME, IMPE, LANL, UCLA, YYGU)
+.         * for each country ---->> Brunei <<----                                                                 
+. ***************************************************************************
+. 
+. 
+. 
+. **** "do CovidLongitudinal Brunei 1 Process.do"
+. **** Get Daily deaths forecast only: DayDeaMeFo`model'update where `model' is DELP, IHME, IMPE, LANL, UCLA, YYGU
+. 
+. 
+. ** input data files: "$pathCovidLongitudinal/download/`model'/`model' countries long.dta"
+. **                   "$pathCovidLongitudinal/download/JOHN"
+. **                   "$pathCovidLongitudinal/download/`model'"
+. 
+. ** output data files: "`model' Brunei.dta"
+. **                   "ALL MODLES Brunei.dta"
+. 
+. ** output data dictionary files: "Brunei ALL MODELS update dates data dictionary.csv"
+. **                               "`model' Brunei data dictionary.csv"
+. **                               "ALL MODLES Brunei data dictionary.csv"
+. 
+. ** graphs:
+. ** "graph 02 Brunei `model' C19 daily deaths all updates.pdf"
+. ** "graph 02 Brunei ALL MODELS C19 daily deaths all updates.pdf"
+. 
+. 
+. 
+. 
+. ************************************************************************
+. 
+. * get update dates on which country available in each model
+. 
+. 
+. local list IMPE LANL
+{txt}
+{com}. 
+. foreach model of local list {c -(}
+{txt}  2{com}. 
+.         use "$pathCovidLongitudinal/download/`model'/`model' countries long.dta", clear 
+{txt}  3{com}.         
+.         di in red "`model'" " Brunei absent update_date_block"
+{txt}  4{com}.         
+.         qui keep if loc_grand_name == "Brunei"
+{txt}  5{com}.         
+.         keep if absent == 0
+{txt}  6{com}.         
+.         gen model = "`model'"
+{txt}  7{com}.         
+.         order model
+{txt}  8{com}.         
+.         di "`model'"
+{txt}  9{com}.         
+.         di in red `r(N)'
+{txt} 10{com}.         
+.         keep model loc_grand_name absent update_date_block
+{txt} 11{com}.         
+.         order model loc_grand_name absent update_date_block
+{txt} 12{com}.         
+.         tostring update_date_block, gen(update_date_block_string)
+{txt} 13{com}.         
+.         gen slash = " ///"
+{txt} 14{com}.         
+.         gen update_date_block_slash = update_date_block_string + slash
+{txt} 15{com}.         
+.         drop slash
+{txt} 16{com}.         
+.         label var model "epidemic model being studied"
+{txt} 17{com}.         
+.         label var loc_grand_name "country"
+{txt} 18{com}.         
+.         label var absent "this country is absent in this model update"
+{txt} 19{com}.         
+.         label var update_date_block "update date block"
+{txt} 20{com}.         
+.         label var update_date_block_string "update date block string"
+{txt} 21{com}.         
+.         label var update_date_block_slash "update date block slash"
+{txt} 22{com}. 
+.         qui compress
+{txt} 23{com}.         
+.         save "Brunei `model' update dates.dta", replace
+{txt} 24{com}. 
+. {c )-}
+{err}IMPE Brunei absent update_date_block
+{txt}(39 observations deleted)
+IMPE
+
+update_date_block_string generated as {res:str8}
+{p 0 4 2}
+file {bf}
+Brunei IMPE update dates.dta{rm}
+saved
+{p_end}
+{err}LANL Brunei absent update_date_block
+{txt}(126 observations deleted)
+LANL
+
+update_date_block_string generated as {res:str8}
+{p 0 4 2}
+file {bf}
+Brunei LANL update dates.dta{rm}
+saved
+{p_end}
+
+{com}. *
+. 
+. 
+. 
+. 
+. 
+. 
+. use "Brunei IMPE update dates.dta", clear 
+{txt}
+{com}. 
+. local list IMPE LANL
+{txt}
+{com}. 
+. foreach model of local list {c -(}
+{txt}  2{com}.         
+.         append using "Brunei `model' update dates.dta"
+{txt}  3{com}.         
+.         duplicates drop
+{txt}  4{com}.         
+. {c )-}
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(109 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+
+{com}. *
+. 
+. save "Brunei ALL MODELS update dates.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+Brunei ALL MODELS update dates.dta{rm}
+saved
+{p_end}
+
+{com}.         
+. export excel using "Brunei ALL MODELS update dates.xlsx", replace firstrow(variables) 
+{res}{txt}file {bf:Brunei ALL MODELS update dates.xlsx} saved
+
+{com}. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "Brunei ALL MODELS update dates data dictionary.csv", replace 
+{res}{txt}file {bf:Brunei ALL MODELS update dates data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. *********************
+. grstyle init
+{res}{txt}
+{com}. 
+. grstyle color background white
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. *********************
+. * gen calendar file
+. 
+. clear
+{txt}
+{com}. 
+. di td(01jan2020) // 21915
+{res}21915
+{txt}
+{com}. 
+. di td(01jan2024) // 23376
+{res}23376
+{txt}
+{com}. 
+. di td(01jan2024) - td(01jan2020) + 1 // 732
+{res}1462
+{txt}
+{com}. 
+. 
+. 
+. set obs 1462
+{txt}{p}
+Number of observations ({bf:_N}) was 0,
+now 1,462.
+{p_end}
+
+{com}. 
+. gen date = .
+{txt}(1,462 missing values generated)
+
+{com}. 
+. replace date = 21915 in 1
+{txt}(1 real change made)
+
+{com}. 
+. replace date = date[_n-1] + 1 in 2/l
+{txt}(1,461 real changes made)
+
+{com}. 
+. replace date = date[_n-1] + 1 in 2/1462
+{txt}(0 real changes made)
+
+{com}. 
+. format date %tdDDMonCCYY
+{txt}
+{com}. 
+. codebook date
+
+{txt}{hline}
+{res}date{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric daily date ({res}float{txt})
+
+{col 18}Range: [{res}21915{txt},{res}23376{txt}]{col 55}Units: {res}1
+{col 8}{txt}Or equivalently: [{res}01jan2020{txt},{res}01jan2024{txt}]{col 55}Units: {res}days
+{col 10}{txt}Unique values: {res}1,462{col 51}{txt}Missing .: {res}0{txt}/{res}1,462
+
+{txt}{col 19}Mean: {res}{ralign 7:22645.5}{txt} = {res}31dec2021{txt}(+ 12 hours)
+{col 14}Std. dev.: {res}{ralign 7:422.187}
+{txt}{col 12}Percentiles: {col 25}{ralign 9:10%}{ralign 11:25%}{ralign 11:50%}{ralign 11:75%}{ralign 11:90%}
+{res}{col 25}{ralign 9:22061}{ralign 11:   22280}{ralign 11: 22645.5}{ralign 11:   23011}{ralign 11:   23230}
+{col 25}{ralign 9:26may2020}{ralign 11:31dec2020}{ralign 11:31dec2021}{ralign 11:01jan2023}{ralign 11:08aug2023}
+{txt}
+{com}. 
+. save "calendar.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+calendar.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * JOHN
+. 
+. cd "$pathCovidLongitudinal/download/JOHN"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/JOHN
+{txt}
+{com}. 
+. use "CovidLongitudinal JOHN.dta", clear 
+{txt}
+{com}. 
+. keep if loc_grand_name == "Brunei"
+{txt}(221,763 observations deleted)
+
+{com}. 
+. keep date DayDeaMeSmJOHNBRN
+{txt}
+{com}. 
+. label var date "calendar date"
+{txt}
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. cd "$pathCovidLongitudinal/countries/Brunei"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}
+{com}. 
+. save "JOHN Brunei.dta", replace 
+{txt}{p 0 4 2}
+file {bf}
+JOHN Brunei.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. * graph Brunei JOHN daily deaths
+. 
+. twoway ///
+> (line DayDeaMeSmJOHNBRN date, sort lwidth(thick) lcolor(cyan)) ///
+> if date >= td(01jan2020) & date <= td(01jan2023) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Brunei, JOHN", size(medium) color(black)) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Brunei JOHN C19 daily deaths reported.pdf", replace
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * DELP
+. 
+. * Brunei not included in DELP
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * IHME 
+. 
+. * Brunei not included in IHME
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * IMPE
+. 
+. local list ///
+> 20200601 ///
+> 20200603 ///
+> 20200606 ///
+> 20200614 ///
+> 20200616 ///
+> 20200619 ///
+> 20200623 ///
+> 20200702 ///
+> 20200703 ///
+> 20200704 ///
+> 20200707 ///
+> 20200711 ///
+> 20200714 ///
+> 20200715 ///
+> 20200718 ///
+> 20200720 ///
+> 20200722 ///
+> 20200725 ///
+> 20200727 ///
+> 20200731 ///
+> 20200808 ///
+> 20200810 ///
+> 20200811 ///
+> 20200813 ///
+> 20200814 ///
+> 20200817 ///
+> 20200823 ///
+> 20200825 ///
+> 20200827 ///
+> 20200831 ///
+> 20200902 ///
+> 20200906 ///
+> 20200908 ///
+> 20200912 ///
+> 20200915 ///
+> 20200919 ///
+> 20200923 ///
+> 20200925 ///
+> 20201003 ///
+> 20201006 ///
+> 20201012 ///
+> 20201019 ///
+> 20201025 ///
+> 20201028 ///
+> 20201101 ///
+> 20201110 ///
+> 20201114 ///
+> 20201118 ///
+> 20201123 ///
+> 20201129 ///
+> 20201204 ///
+> 20201212 ///
+> 20201220 ///
+> 20201226 ///
+> 20210104 ///
+> 20210110 ///
+> 20210112 ///
+> 20210118 ///
+> 20210124 ///
+> 20210130 ///
+> 20210203 ///
+> 20210210 ///
+> 20210217 ///
+> 20210226 ///
+> 20210305 ///
+> 20210312 ///
+> 20210319 ///
+> 20210329 ///
+> 20210406 ///
+> 20210417 ///
+> 20210424 ///
+> 20210510 ///
+> 20210516 ///
+> 20210522 ///
+> 20210527 ///
+> 20210604 ///
+> 20210611 ///
+> 20210618 ///
+> 20210626 ///
+> 20210702 ///
+> 20210709 ///
+> 20210719 ///
+> 20210806 ///
+> 20210819 ///
+> 20210825 ///
+> 20210909 ///
+> 20210924 ///
+> 20211006 ///
+> 20211021 ///
+> 20211027 ///
+> 20211103 ///
+> 20211115 ///
+> 20211121 ///
+> 20211129 ///
+> 20211205 ///
+> 20211213 ///
+> 20211226 ///
+> 20220102 ///
+> 20220120 ///
+> 20220131 ///
+> 20220315 ///
+> 20220530 ///
+> 20220620 ///
+> 20220703 ///
+> 20220712 ///
+> 20220728 ///
+> 20220808 ///
+> 20220901 ///
+> 20221225
+{txt}
+{com}. 
+. 
+. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         cd "$pathCovidLongitudinal/download/IMPE"
+{txt}  3{com}.         
+.         di in red "This is IMPE update " `update'
+{txt}  4{com}. 
+.         use "IMPE `update'.dta", clear
+{txt}  5{com}.                 
+.         keep if loc_grand_name == "Brunei"
+{txt}  6{com}. 
+.         duplicates drop
+{txt}  7{com}.                 
+.         
+.         
+.         
+.         * gen daily deaths // done in /code/downloads/IMPE/do CovidLongitudinal IMPE.do
+.         
+.         
+.         
+.         
+.         * smooth
+.                 
+.         sort date
+{txt}  8{com}.                         
+.         qui tsset date, daily   
+{txt}  9{com}.                         
+.         qui tssmooth ma DayDeaMeRaIMPE`update'_window = DayDeaMeRaIMPE`update' if DayDeaMeRaIMPE`update' >= 0, window(3 1 3) 
+{txt} 10{com}. 
+.         qui tssmooth ma DayDeaMeSmIMPE`update' = DayDeaMeRaIMPE`update'_window, weights( 1 2 3 <4> 3 2 1) replace
+{txt} 11{com}. 
+.         drop *_window
+{txt} 12{com}.         
+.         label var DayDeaMeSmIMPE`update' "Daily deaths mean smooth IMPE" 
+{txt} 13{com}.         
+.         
+.         
+.         
+.         * gen Daily deaths smooth forecast only
+.                         
+.         clonevar DayDeaMeFoIMPE`update' = DayDeaMeSmIMPE`update' 
+{txt} 14{com}.         
+.         label var DayDeaMeFoIMPE`update' "Daily deaths smooth mean forecast only IMPE"
+{txt} 15{com}.                 
+.         gen update_date`update' = date("`update'", "YMD")
+{txt} 16{com}.                                 
+.         qui replace DayDeaMeFoIMPE`update' = . if date < update_date`update' 
+{txt} 17{com}.         
+.         
+.         
+.         capture drop fit_type death_calibrated v1
+{txt} 18{com}.         
+.         label var loc_grand_name "country"
+{txt} 19{com}.         
+.         label var date "calendar date"
+{txt} 20{com}.         
+.         label var DayDeaMeRaIMPE`update' "Daily deaths mean raw IMPE"
+{txt} 21{com}.         
+.         label var DayDeaMeSmIMPE`update' "Daily deaths mean smooth IMPE"
+{txt} 22{com}.         
+.         label var DayDeaMeFoIMPE`update' "Daily deaths mean smooth forecast only IMPE"
+{txt} 23{com}.         
+.         label var update_date`update' "update date"
+{txt} 24{com}.         
+.         
+.         
+.         
+.         
+.         qui compress    
+{txt} 25{com}.         
+.         cd "$pathCovidLongitudinal/countries/Brunei"
+{txt} 26{com}.         
+.         save "IMPE `update' Brunei.dta", replace emptyok
+{txt} 27{com}.         
+.         
+.         *
+. 
+.         
+. {c )-}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200601
+{txt}(31,816 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200601 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200603
+{txt}(31,661 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200603 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200606
+{txt}(32,762 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200606 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200614
+{txt}(33,707 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200614 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200616
+{txt}(34,234 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200616 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200619
+{txt}(34,397 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200619 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200623
+{txt}(35,240 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200623 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200702
+{txt}(36,783 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200702 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200703
+{txt}(36,910 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200703 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200704
+{txt}(37,068 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200704 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200707
+{txt}(37,238 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200707 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200711
+{txt}(37,857 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200711 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200714
+{txt}(38,841 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200714 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200715
+{txt}(38,992 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200715 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200718
+{txt}(39,451 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200718 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200720
+{txt}(39,748 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200720 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200722
+{txt}(40,082 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200722 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200725
+{txt}(40,682 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200725 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200727
+{txt}(40,702 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200727 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200731
+{txt}(35,863 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200731 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200808
+{txt}(42,671 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200808 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200810
+{txt}(42,919 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200810 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200811
+{txt}(43,081 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200811 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200813
+{txt}(43,134 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200813 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200814
+{txt}(43,488 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200814 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200817
+{txt}(43,962 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200817 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200823
+{txt}(44,579 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200823 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200825
+{txt}(45,148 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200825 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200827
+{txt}(45,461 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200827 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200831
+{txt}(46,081 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200831 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200902
+{txt}(46,369 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200902 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200906
+{txt}(46,978 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200906 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200908
+{txt}(47,292 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200908 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200912
+{txt}(47,854 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200912 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200915
+{txt}(48,356 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200915 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200919
+{txt}(49,038 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200919 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200923
+{txt}(49,960 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200923 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20200925
+{txt}(50,214 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20200925 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201003
+{txt}(51,479 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201003 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201006
+{txt}(51,657 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201006 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201012
+{txt}(52,563 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201012 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201019
+{txt}(54,080 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201019 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201025
+{txt}(57,770 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201025 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201028
+{txt}(58,251 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201028 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201101
+{txt}(58,552 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201101 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201110
+{txt}(60,995 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201110 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201114
+{txt}(61,753 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201114 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201118
+{txt}(62,239 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201118 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201123
+{txt}(63,083 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201123 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201129
+{txt}(64,555 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201129 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201204
+{txt}(65,417 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201204 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201212
+{txt}(66,764 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201212 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201220
+{txt}(67,814 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201220 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20201226
+{txt}(68,391 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20201226 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210104
+{txt}(70,519 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210104 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210110
+{txt}(71,721 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210110 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210112
+{txt}(72,345 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210112 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210118
+{txt}(73,337 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210118 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210124
+{txt}(74,526 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210124 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210130
+{txt}(75,158 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210130 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210203
+{txt}(75,656 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210203 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210210
+{txt}(77,185 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210210 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210217
+{txt}(78,466 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210217 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210226
+{txt}(79,974 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210226 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210305
+{txt}(81,351 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210305 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210312
+{txt}(82,362 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210312 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210319
+{txt}(83,575 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210319 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210329
+{txt}(85,425 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210329 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210406
+{txt}(86,674 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210406 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210417
+{txt}(88,893 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210417 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210424
+{txt}(90,213 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210424 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210510
+{txt}(92,647 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210510 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210516
+{txt}(93,835 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210516 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210522
+{txt}(94,989 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210522 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210527
+{txt}(95,966 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210527 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210604
+{txt}(97,528 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210604 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210611
+{txt}(98,869 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210611 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210618
+{txt}(100,233 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210618 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210626
+{txt}(101,738 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210626 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210702
+{txt}(102,873 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210702 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210709
+{txt}(104,213 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210709 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210719
+{txt}(106,100 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210719 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210806
+{txt}(109,398 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210806 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210819
+{txt}(111,815 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210819 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210825
+{txt}(112,942 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210825 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210909
+{txt}(115,609 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210909 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20210924
+{txt}(118,300 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20210924 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211006
+{txt}(120,579 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211006 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211021
+{txt}(123,226 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211021 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211027
+{txt}(124,361 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211027 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211103
+{txt}(125,363 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211103 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211115
+{txt}(127,373 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211115 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211121
+{txt}(128,992 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211121 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211129
+{txt}(130,377 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211129 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211205
+{txt}(130,829 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211205 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211213
+{txt}(130,672 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211213 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20211226
+{txt}(133,589 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20211226 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220102
+{txt}(134,783 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220102 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220120
+{txt}(115,218 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220120 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220131
+{txt}(115,192 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220131 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220315
+{txt}(147,494 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220315 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220530
+{txt}(144,663 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220530 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220620
+{txt}(147,699 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220620 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220703
+{txt}(145,521 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220703 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220712
+{txt}(146,424 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220712 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220728
+{txt}(149,788 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220728 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220808
+{txt}(151,766 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220808 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20220901
+{txt}(153,695 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20220901 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/IMPE
+{err}This is IMPE update 20221225
+{txt}(174,061 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+IMPE 20221225 Brunei.dta{rm}
+saved
+{p_end}
+
+{com}. *
+. 
+. 
+. 
+. 
+. * merge updates
+. 
+. cd "$pathCovidLongitudinal/countries/Brunei"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}
+{com}. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         merge m:m date using "IMPE `update' Brunei.dta"
+{txt}  3{com}.         
+.         drop _merge
+{txt}  4{com}. 
+. {c )-}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}           1,062
+{txt}{col 9}from master{col 30}{res}             937{txt}  (_merge==1)
+{col 9}from using{col 30}{res}             125{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              24{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             935
+{txt}{col 9}from master{col 30}{res}             935{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             151{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             932
+{txt}{col 9}from master{col 30}{res}             932{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             154{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             924
+{txt}{col 9}from master{col 30}{res}             924{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             162{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             922
+{txt}{col 9}from master{col 30}{res}             922{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             164{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             919
+{txt}{col 9}from master{col 30}{res}             919{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             167{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             916
+{txt}{col 9}from master{col 30}{res}             916{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             170{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             906
+{txt}{col 9}from master{col 30}{res}             906{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             180{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             905
+{txt}{col 9}from master{col 30}{res}             905{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             181{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             904
+{txt}{col 9}from master{col 30}{res}             904{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             182{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             901
+{txt}{col 9}from master{col 30}{res}             901{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             185{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             898
+{txt}{col 9}from master{col 30}{res}             898{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             188{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             894
+{txt}{col 9}from master{col 30}{res}             894{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             192{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             893
+{txt}{col 9}from master{col 30}{res}             893{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             193{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             890
+{txt}{col 9}from master{col 30}{res}             890{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             196{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             889
+{txt}{col 9}from master{col 30}{res}             889{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             197{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             886
+{txt}{col 9}from master{col 30}{res}             886{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             200{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             883
+{txt}{col 9}from master{col 30}{res}             883{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             203{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             881
+{txt}{col 9}from master{col 30}{res}             881{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             205{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             877
+{txt}{col 9}from master{col 30}{res}             877{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             209{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             869
+{txt}{col 9}from master{col 30}{res}             869{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             217{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             867
+{txt}{col 9}from master{col 30}{res}             867{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             219{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             866
+{txt}{col 9}from master{col 30}{res}             866{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             220{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             864
+{txt}{col 9}from master{col 30}{res}             864{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             222{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             863
+{txt}{col 9}from master{col 30}{res}             863{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             223{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             860
+{txt}{col 9}from master{col 30}{res}             860{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             226{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             854
+{txt}{col 9}from master{col 30}{res}             854{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             232{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             852
+{txt}{col 9}from master{col 30}{res}             852{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             234{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             850
+{txt}{col 9}from master{col 30}{res}             850{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             236{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             846
+{txt}{col 9}from master{col 30}{res}             846{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             240{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             844
+{txt}{col 9}from master{col 30}{res}             844{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             242{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             840
+{txt}{col 9}from master{col 30}{res}             840{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             246{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             838
+{txt}{col 9}from master{col 30}{res}             838{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             248{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             835
+{txt}{col 9}from master{col 30}{res}             835{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             251{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             832
+{txt}{col 9}from master{col 30}{res}             832{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             254{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             827
+{txt}{col 9}from master{col 30}{res}             827{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             259{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             823
+{txt}{col 9}from master{col 30}{res}             823{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             263{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             832
+{txt}{col 9}from master{col 30}{res}             832{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             254{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             826
+{txt}{col 9}from master{col 30}{res}             826{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             260{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             822
+{txt}{col 9}from master{col 30}{res}             822{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             264{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             816
+{txt}{col 9}from master{col 30}{res}             816{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             270{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             808
+{txt}{col 9}from master{col 30}{res}             808{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             278{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             801
+{txt}{col 9}from master{col 30}{res}             801{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             285{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             799
+{txt}{col 9}from master{col 30}{res}             799{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             287{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             794
+{txt}{col 9}from master{col 30}{res}             794{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             292{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             784
+{txt}{col 9}from master{col 30}{res}             784{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             302{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             782
+{txt}{col 9}from master{col 30}{res}             782{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             304{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             778
+{txt}{col 9}from master{col 30}{res}             778{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             308{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             772
+{txt}{col 9}from master{col 30}{res}             772{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             314{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             766
+{txt}{col 9}from master{col 30}{res}             766{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             320{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             762
+{txt}{col 9}from master{col 30}{res}             762{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             324{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             754
+{txt}{col 9}from master{col 30}{res}             754{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             332{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             746
+{txt}{col 9}from master{col 30}{res}             746{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             340{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             785
+{txt}{col 9}from master{col 30}{res}             729{txt}  (_merge==1)
+{col 9}from using{col 30}{res}              56{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             357{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             722
+{txt}{col 9}from master{col 30}{res}             722{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             420{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             732
+{txt}{col 9}from master{col 30}{res}             732{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             410{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             727
+{txt}{col 9}from master{col 30}{res}             727{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             415{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             722
+{txt}{col 9}from master{col 30}{res}             722{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             420{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             715
+{txt}{col 9}from master{col 30}{res}             715{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             427{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             712
+{txt}{col 9}from master{col 30}{res}             712{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             430{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             706
+{txt}{col 9}from master{col 30}{res}             706{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             436{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             699
+{txt}{col 9}from master{col 30}{res}             699{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             443{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             691
+{txt}{col 9}from master{col 30}{res}             691{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             451{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             683
+{txt}{col 9}from master{col 30}{res}             683{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             459{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             676
+{txt}{col 9}from master{col 30}{res}             676{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             466{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             669
+{txt}{col 9}from master{col 30}{res}             669{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             473{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             661
+{txt}{col 9}from master{col 30}{res}             661{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             481{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             652
+{txt}{col 9}from master{col 30}{res}             652{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             490{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             643
+{txt}{col 9}from master{col 30}{res}             643{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             499{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             633
+{txt}{col 9}from master{col 30}{res}             633{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             509{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             627
+{txt}{col 9}from master{col 30}{res}             627{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             515{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             612
+{txt}{col 9}from master{col 30}{res}             612{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             530{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             604
+{txt}{col 9}from master{col 30}{res}             604{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             538{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             598
+{txt}{col 9}from master{col 30}{res}             598{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             544{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             591
+{txt}{col 9}from master{col 30}{res}             591{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             551{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             583
+{txt}{col 9}from master{col 30}{res}             583{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             559{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             575
+{txt}{col 9}from master{col 30}{res}             575{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             567{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             567
+{txt}{col 9}from master{col 30}{res}             567{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             575{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             558
+{txt}{col 9}from master{col 30}{res}             558{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             584{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             552
+{txt}{col 9}from master{col 30}{res}             552{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             590{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             544
+{txt}{col 9}from master{col 30}{res}             544{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             598{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             533
+{txt}{col 9}from master{col 30}{res}             533{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             609{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             514
+{txt}{col 9}from master{col 30}{res}             514{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             628{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             499
+{txt}{col 9}from master{col 30}{res}             499{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             643{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             493
+{txt}{col 9}from master{col 30}{res}             493{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             649{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             477
+{txt}{col 9}from master{col 30}{res}             477{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             665{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             462
+{txt}{col 9}from master{col 30}{res}             462{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             680{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             956
+{txt}{col 9}from master{col 30}{res}             956{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             186{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             941
+{txt}{col 9}from master{col 30}{res}             941{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             201{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             935
+{txt}{col 9}from master{col 30}{res}             935{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             207{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             928
+{txt}{col 9}from master{col 30}{res}             928{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             214{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             916
+{txt}{col 9}from master{col 30}{res}             916{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             226{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             910
+{txt}{col 9}from master{col 30}{res}             910{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             232{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             902
+{txt}{col 9}from master{col 30}{res}             902{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             240{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             896
+{txt}{col 9}from master{col 30}{res}             896{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             246{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             888
+{txt}{col 9}from master{col 30}{res}             888{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             254{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             875
+{txt}{col 9}from master{col 30}{res}             875{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             267{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             868
+{txt}{col 9}from master{col 30}{res}             868{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             274{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             850
+{txt}{col 9}from master{col 30}{res}             850{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             292{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             839
+{txt}{col 9}from master{col 30}{res}             839{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             303{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             796
+{txt}{col 9}from master{col 30}{res}             796{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             346{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             723
+{txt}{col 9}from master{col 30}{res}             723{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             419{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             297
+{txt}{col 9}from master{col 30}{res}             297{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             845{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             356
+{txt}{col 9}from master{col 30}{res}             356{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             786{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             347
+{txt}{col 9}from master{col 30}{res}             347{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             795{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             331
+{txt}{col 9}from master{col 30}{res}             331{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             811{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             320
+{txt}{col 9}from master{col 30}{res}             320{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             822{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             296
+{txt}{col 9}from master{col 30}{res}             296{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             846{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             181
+{txt}{col 9}from master{col 30}{res}             181{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             961{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. *       
+. 
+. 
+. capture drop fit_type death_calibrated v1 // IMPE extra vars 
+{txt}
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. save "IMPE Brunei.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+IMPE Brunei.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. * add JOHN
+. 
+. merge m:1 date using "JOHN Brunei.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              31
+{txt}{col 9}from master{col 30}{res}              15{txt}  (_merge==1)
+{col 9}from using{col 30}{res}              16{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}           1,127{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+.         drop if date < td(01jan2020)
+{txt}(0 observations deleted)
+
+{com}. 
+.         drop if date > td(01jan2023) 
+{txt}(82 observations deleted)
+
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. save "IMPE Brunei.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+IMPE Brunei.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "IMPE Brunei data dictionary.csv", replace 
+{res}{txt}file {bf:IMPE Brunei data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+. 
+. 
+. 
+. /* foreach update of local list {c -(}
+>         
+>         * graph Brunei IMPE daily deaths each update 
+>         
+>         twoway ///
+>         (line DayDeaMeSmJOHNBRN date, sort lwidth(thick) lcolor(cyan)) ///      
+>         (line DayDeaMeFoIMPE`update' date, sort lwidth(thin) lcolor(magenta)) /// 
+>         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
+>         , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+>         xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+>         ytitle(Daily deaths) title("C19 daily deaths, IMPE, update `update'", size(medium) color(black)) ///
+>         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
+>         subtitle("Brunei, forecast only") legend(position(6) order(1 "JOHN" 2 "IMPE forecast ") rows(1) size(small)) ///
+>         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
+>         
+>         qui graph export "graph 01 Brunei IMPE daily deaths update `update'.pdf", replace       
+> 
+> {c )-}
+> */
+. 
+. 
+. 
+. 
+. * graph Brunei IMPE daily deaths all updates
+. 
+. twoway ///
+> (line DayDeaMeSmJOHNBRN date, sort lwidth(thick) lcolor(cyan)) /// 
+> (line DayDeaMeFoIMPE20200601 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200603 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200606 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200614 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200616 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200619 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200623 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200702 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200703 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200704 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200707 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200711 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200714 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200715 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200718 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200720 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200722 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200725 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200727 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200731 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200808 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200810 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200811 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200813 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200814 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200817 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200823 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200825 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200827 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200831 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200902 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200906 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200908 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200912 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200915 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200919 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200923 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200925 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201003 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201006 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201012 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201019 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201025 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201028 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201101 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201114 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201123 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201204 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201212 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201220 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210104 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210112 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210124 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210130 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210203 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210210 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210217 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210305 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210312 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210319 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210329 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210406 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210417 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210424 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210510 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210516 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210522 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210527 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210604 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210611 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210618 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210626 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210702 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210709 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210719 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210806 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210819 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210825 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210909 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210924 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211006 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211021 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211027 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211103 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211115 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211121 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211205 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211213 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220102 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220120 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220131 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220315 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220530 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220620 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220703 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220712 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220728 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220808 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220901 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20221225 date, sort lwidth(thin) lcolor(magenta)) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Brunei, IMPE, all updates", size(medium) color(black)) ///
+> legend(position(6) order(1 "JOHN" 2 "IMPE forecast ") rows(1) size(small)) legend(region(lcolor(none))) legend(bexpand) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Brunei IMPE C19 daily deaths all updates.pdf", replace
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * LANL
+. 
+. local list ///
+> 20210912 ///
+> 20210919 ///
+> 20210926
+{txt}
+{com}. 
+. 
+. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         cd "$pathCovidLongitudinal/download/LANL"
+{txt}  3{com}.         
+.         di in red "This is LANL update " `update'
+{txt}  4{com}. 
+.         use "CovidLongitudinal LANL `update'.dta", clear
+{txt}  5{com}.         
+.         keep if loc_grand_name == "Brunei" 
+{txt}  6{com}. 
+.         duplicates drop
+{txt}  7{com}.                 
+.         
+.         
+.         
+.         * gen daily deaths // done in /code/downloads/LANL/do CovidLongitudinal LANL.do
+.         
+.         
+.         
+.         * smooth
+.                 
+.         sort loc_grand_name date
+{txt}  8{com}.                         
+.         qui tsset date, daily   
+{txt}  9{com}.                                 
+.         qui tssmooth ma DayDeaMeRaLANL`update'_window = DayDeaMeRaLANL`update' if DayDeaMeRaLANL`update' >= 0, window(3 1 3) 
+{txt} 10{com}. 
+.         qui tssmooth ma DayDeaMeSmLANL`update' = DayDeaMeRaLANL`update'_window, weights( 1 2 3 <4> 3 2 1) replace
+{txt} 11{com}. 
+.         drop *_window
+{txt} 12{com}.         
+.         label var DayDeaMeSmLANL`update' "Daily deaths mean smooth LANL" 
+{txt} 13{com}.         
+.         
+.         
+.         
+.         * gen Daily deaths smooth forecast only 
+.                                 
+.         clonevar DayDeaMeFoLANL`update' = DayDeaMeSmLANL`update' 
+{txt} 14{com}.         
+.         label var DayDeaMeFoLANL`update' "Daily deaths mean smooth forecast only LANL"
+{txt} 15{com}.         
+.         gen update_date`update' = date("`update'", "YMD")
+{txt} 16{com}.                         
+.         replace DayDeaMeFoLANL`update' = . if date < update_date`update' 
+{txt} 17{com}.         
+.         
+.         
+.         label var date "calendar date"
+{txt} 18{com}.         
+.         label var DayDeaMeRaLANL`update' "Daily deaths mean raw LANL"
+{txt} 19{com}.         
+.         label var loc_grand_name "country"
+{txt} 20{com}.         
+.         label var date "calendar date"
+{txt} 21{com}.         
+.         label var update_date`update' "update date"
+{txt} 22{com}.         
+.         qui compress    
+{txt} 23{com}.         
+.         cd "$pathCovidLongitudinal/countries/Brunei"
+{txt} 24{com}.         
+.         save "LANL `update' Brunei.dta", replace 
+{txt} 25{com}.         
+. 
+. {c )-}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210912
+{txt}(115,344 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(599 real changes made, 599 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210912 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210919
+{txt}(116,590 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(606 real changes made, 606 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210919 Brunei.dta{rm}
+saved
+{p_end}
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/LANL
+{err}This is LANL update 20210926
+{txt}(117,836 observations deleted)
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(0 observations are duplicates)
+(613 real changes made, 613 to missing)
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}{p 0 4 2}
+file {bf}
+LANL 20210926 Brunei.dta{rm}
+saved
+{p_end}
+
+{com}. *
+. 
+. 
+. 
+. 
+. 
+. * merge updates
+. 
+. cd "$pathCovidLongitudinal/countries/Brunei"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}
+{com}. 
+. foreach update of local list {c -(}
+{txt}  2{com}. 
+.         merge m:m date using "LANL `update' Brunei.dta"
+{txt}  3{com}.         
+.         drop _merge
+{txt}  4{com}. 
+. {c )-}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}              14
+{txt}{col 9}from master{col 30}{res}              14{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             648{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               7
+{txt}{col 9}from master{col 30}{res}               7{txt}  (_merge==1)
+{col 9}from using{col 30}{res}               0{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             655{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}             662{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. *       
+. 
+. qui compress
+{txt}
+{com}. 
+. save "LANL Brunei.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+LANL Brunei.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. * add JOHN
+. 
+. merge m:1 date using "JOHN Brunei.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             481
+{txt}{col 9}from master{col 30}{res}               0{txt}  (_merge==1)
+{col 9}from using{col 30}{res}             481{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             662{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+. qui compress
+{txt}
+{com}. 
+. save "LANL Brunei.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+LANL Brunei.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "LANL Brunei data dictionary.csv", replace 
+{res}{txt}file {bf:LANL Brunei data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+. 
+. 
+. 
+. /* foreach update of local list {c -(}
+>         
+>         * graph Brunei LANL daily deaths each update 
+>         
+>         twoway ///
+>         (line DayDeaMeSmJOHNBRN date, sort lwidth(thick) lcolor(cyan)) ///      
+>         (line DayDeaMeFoLANL`update' date, sort lwidth(thin) lcolor(brown)) /// 
+>         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
+>         , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+>         xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+>         ytitle(Daily deaths) title("C19 daily deaths, LANL, update `update'", size(medium) color(black)) ///
+>         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
+>         subtitle("Brunei, forecast only") legend(position(6) order(1 "JOHN" 2 "LANL forecast ") rows(1) size(small)) ///
+>         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
+>         
+>         qui graph export "graph 01 Brunei LANL daily deaths update `update'.pdf", replace       
+> 
+> {c )-}
+> */
+. 
+. 
+. 
+. 
+. * graph Brunei LANL daily deaths all updates
+. 
+. twoway ///
+> (line DayDeaMeSmJOHNBRN date, sort lwidth(thick) lcolor(cyan)) /// 
+> (line DayDeaMeFoLANL20210912 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210919 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210926 date, sort lwidth(thin) lcolor(brown)) ///
+> if date >= td(01jan2020) & date <= td(01jan2023) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Brunei, LANL, all updates", size(medium) color(black)) ///
+> legend(position(6) order(1 "JOHN" 2 "LANL forecast ") rows(1) size(small)) legend(region(lcolor(none))) legend(bexpand) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Brunei LANL C19 daily deaths all updates.pdf", replace
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * UCLA
+. * Brunei not included in UCLA
+. 
+. 
+. 
+. **************************************************************************
+. 
+. * YYGU
+. * Brunei not included in YYGU
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. 
+. *************************************************************
+. 
+. * merge models
+. 
+. local list IMPE LANL
+{txt}
+{com}. 
+. use "IMPE Brunei.dta", clear
+{txt}
+{com}. 
+. foreach model of local list {c -(}
+{txt}  2{com}. 
+.         merge m:m date loc_grand_name using "`model' Brunei.dta", force
+{txt}  3{com}.         
+.         drop _merge
+{txt}  4{com}.         
+.         isid date loc_grand_name, missok
+{txt}  5{com}.         
+. {c )-}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}           1,076{txt}  (_merge==3)
+{col 5}{hline 41}
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             927
+{txt}{col 9}from master{col 30}{res}             430{txt}  (_merge==1)
+{col 9}from using{col 30}{res}             497{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             646{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. *
+. 
+. qui compress
+{txt}
+{com}. 
+. save "ALL MODLES Brunei.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+ALL MODLES Brunei.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. ******
+. 
+. * create data dictionary
+. 
+. preserve
+{txt}
+{com}. 
+.     describe, replace
+{res}{txt}
+{com}.         
+.     export delimited name varlab using "ALL MODLES Brunei data dictionary.csv", replace 
+{res}{txt}file {bf:ALL MODLES Brunei data dictionary.csv} saved
+
+{com}.         
+. restore
+{txt}
+{com}. 
+.         
+. 
+.         
+. 
+. 
+. * graph Brunei ALL MODELS daily deaths all updates
+. 
+. twoway ///
+> (line DayDeaMeFoIMPE20200601 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200603 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200606 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200614 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200616 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200619 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200623 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200702 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200703 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200704 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200707 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200711 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200714 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200715 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200718 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200720 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200722 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200725 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200727 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200731 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200808 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200810 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200811 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200813 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200814 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200817 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200823 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200825 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200827 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200831 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200902 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200906 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200908 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200912 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200915 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200919 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200923 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20200925 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201003 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201006 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201012 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201019 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201025 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201028 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201101 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201114 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201123 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201204 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201212 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201220 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20201226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210104 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210110 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210112 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210118 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210124 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210130 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210203 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210210 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210217 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210305 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210312 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210319 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210329 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210406 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210417 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210424 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210510 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210516 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210522 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210527 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210604 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210611 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210618 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210626 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210702 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210709 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210719 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210806 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210819 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210825 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20210909 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210912 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoLANL20210919 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20210924 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoLANL20210926 date, sort lwidth(thin) lcolor(brown)) ///
+> (line DayDeaMeFoIMPE20211006 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211021 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211027 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211103 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211115 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211121 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211129 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211205 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211213 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20211226 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220102 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220120 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220131 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220315 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220530 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220620 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220703 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220712 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220728 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220808 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20220901 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeFoIMPE20221225 date, sort lwidth(thin) lcolor(magenta)) ///
+> (line DayDeaMeSmJOHNBRN date, sort lwidth(thick) lcolor(cyan)) /// 
+> if date >= td(01jan2020) & date <= td(01jan2023) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) ///
+> xlabel(, angle(forty_five)) ylabel(, labsize(small) angle(forty_five) format(%30.0fc)) ///
+> ytitle(Daily deaths) title("C19 daily deaths, Brunei, all models, all updates, forecast only", size(medium) color(black)) ///
+> legend(position(6) order(113 "JOHN" 1 "IMPE" 87 "LANL") ///
+> rows(1) size(small)) legend(region(lcolor(none))) legend(bexpand) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. qui graph export "graph 02 Brunei ALL MODELS C19 daily deaths all updates.pdf", replace
+{txt}
+{com}. 
+.         
+. 
+. 
+. 
+. 
+. 
+. 
+. cd "$pathCovidLongitudinal/countries/Brunei"
+{res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei
+{txt}
+{com}. 
+. 
+. view "log CovidLongitudinal Brunei 1 Process.smcl"
+{txt}
+{com}. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Brunei/log CovidLongitudinal Brunei 1 Process.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}25 Nov 2023, 17:20:56
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

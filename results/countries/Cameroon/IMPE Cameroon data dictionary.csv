@@ -1,0 +1,596 @@
+name,varlab
+loc_grand_name,country
+date,calendar date
+DayDeaMeRaIMPE20221225,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20221225,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20221225,Daily deaths mean smooth forecast only IMPE
+update_date20221225,update date
+DayDeaMeRaIMPE20200428,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200428,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200428,Daily deaths mean smooth forecast only IMPE
+update_date20200428,update date
+DayDeaMeRaIMPE20200429,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200429,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200429,Daily deaths mean smooth forecast only IMPE
+update_date20200429,update date
+DayDeaMeRaIMPE20200430,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200430,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200430,Daily deaths mean smooth forecast only IMPE
+update_date20200430,update date
+DayDeaMeRaIMPE20200501,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200501,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200501,Daily deaths mean smooth forecast only IMPE
+update_date20200501,update date
+DayDeaMeRaIMPE20200502,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200502,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200502,Daily deaths mean smooth forecast only IMPE
+update_date20200502,update date
+DayDeaMeRaIMPE20200503,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200503,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200503,Daily deaths mean smooth forecast only IMPE
+update_date20200503,update date
+DayDeaMeRaIMPE20200504,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200504,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200504,Daily deaths mean smooth forecast only IMPE
+update_date20200504,update date
+DayDeaMeRaIMPE20200505,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200505,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200505,Daily deaths mean smooth forecast only IMPE
+update_date20200505,update date
+DayDeaMeRaIMPE20200506,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200506,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200506,Daily deaths mean smooth forecast only IMPE
+update_date20200506,update date
+DayDeaMeRaIMPE20200507,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200507,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200507,Daily deaths mean smooth forecast only IMPE
+update_date20200507,update date
+DayDeaMeRaIMPE20200508,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200508,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200508,Daily deaths mean smooth forecast only IMPE
+update_date20200508,update date
+DayDeaMeRaIMPE20200509,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200509,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200509,Daily deaths mean smooth forecast only IMPE
+update_date20200509,update date
+DayDeaMeRaIMPE20200510,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200510,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200510,Daily deaths mean smooth forecast only IMPE
+update_date20200510,update date
+DayDeaMeRaIMPE20200511,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200511,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200511,Daily deaths mean smooth forecast only IMPE
+update_date20200511,update date
+DayDeaMeRaIMPE20200512,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200512,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200512,Daily deaths mean smooth forecast only IMPE
+update_date20200512,update date
+DayDeaMeRaIMPE20200513,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200513,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200513,Daily deaths mean smooth forecast only IMPE
+update_date20200513,update date
+DayDeaMeRaIMPE20200514,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200514,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200514,Daily deaths mean smooth forecast only IMPE
+update_date20200514,update date
+DayDeaMeRaIMPE20200515,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200515,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200515,Daily deaths mean smooth forecast only IMPE
+update_date20200515,update date
+DayDeaMeRaIMPE20200516,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200516,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200516,Daily deaths mean smooth forecast only IMPE
+update_date20200516,update date
+DayDeaMeRaIMPE20200517,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200517,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200517,Daily deaths mean smooth forecast only IMPE
+update_date20200517,update date
+DayDeaMeRaIMPE20200519,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200519,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200519,Daily deaths mean smooth forecast only IMPE
+update_date20200519,update date
+DayDeaMeRaIMPE20200520,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200520,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200520,Daily deaths mean smooth forecast only IMPE
+update_date20200520,update date
+DayDeaMeRaIMPE20200521,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200521,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200521,Daily deaths mean smooth forecast only IMPE
+update_date20200521,update date
+DayDeaMeRaIMPE20200522,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200522,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200522,Daily deaths mean smooth forecast only IMPE
+update_date20200522,update date
+DayDeaMeRaIMPE20200523,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200523,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200523,Daily deaths mean smooth forecast only IMPE
+update_date20200523,update date
+DayDeaMeRaIMPE20200524,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200524,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200524,Daily deaths mean smooth forecast only IMPE
+update_date20200524,update date
+DayDeaMeRaIMPE20200525,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200525,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200525,Daily deaths mean smooth forecast only IMPE
+update_date20200525,update date
+DayDeaMeRaIMPE20200526,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200526,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200526,Daily deaths mean smooth forecast only IMPE
+update_date20200526,update date
+DayDeaMeRaIMPE20200527,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200527,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200527,Daily deaths mean smooth forecast only IMPE
+update_date20200527,update date
+DayDeaMeRaIMPE20200528,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200528,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200528,Daily deaths mean smooth forecast only IMPE
+update_date20200528,update date
+DayDeaMeRaIMPE20200529,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200529,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200529,Daily deaths mean smooth forecast only IMPE
+update_date20200529,update date
+DayDeaMeRaIMPE20200530,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200530,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200530,Daily deaths mean smooth forecast only IMPE
+update_date20200530,update date
+DayDeaMeRaIMPE20200531,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200531,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200531,Daily deaths mean smooth forecast only IMPE
+update_date20200531,update date
+DayDeaMeRaIMPE20200601,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200601,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200601,Daily deaths mean smooth forecast only IMPE
+update_date20200601,update date
+DayDeaMeRaIMPE20200602,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200602,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200602,Daily deaths mean smooth forecast only IMPE
+update_date20200602,update date
+DayDeaMeRaIMPE20200603,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200603,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200603,Daily deaths mean smooth forecast only IMPE
+update_date20200603,update date
+DayDeaMeRaIMPE20200604,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200604,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200604,Daily deaths mean smooth forecast only IMPE
+update_date20200604,update date
+DayDeaMeRaIMPE20200606,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200606,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200606,Daily deaths mean smooth forecast only IMPE
+update_date20200606,update date
+DayDeaMeRaIMPE20200609,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200609,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200609,Daily deaths mean smooth forecast only IMPE
+update_date20200609,update date
+DayDeaMeRaIMPE20200614,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200614,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200614,Daily deaths mean smooth forecast only IMPE
+update_date20200614,update date
+DayDeaMeRaIMPE20200616,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200616,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200616,Daily deaths mean smooth forecast only IMPE
+update_date20200616,update date
+DayDeaMeRaIMPE20200619,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200619,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200619,Daily deaths mean smooth forecast only IMPE
+update_date20200619,update date
+DayDeaMeRaIMPE20200621,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200621,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200621,Daily deaths mean smooth forecast only IMPE
+update_date20200621,update date
+DayDeaMeRaIMPE20200623,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200623,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200623,Daily deaths mean smooth forecast only IMPE
+update_date20200623,update date
+DayDeaMeRaIMPE20200626,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200626,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200626,Daily deaths mean smooth forecast only IMPE
+update_date20200626,update date
+DayDeaMeRaIMPE20200628,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200628,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200628,Daily deaths mean smooth forecast only IMPE
+update_date20200628,update date
+DayDeaMeRaIMPE20200702,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200702,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200702,Daily deaths mean smooth forecast only IMPE
+update_date20200702,update date
+DayDeaMeRaIMPE20200703,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200703,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200703,Daily deaths mean smooth forecast only IMPE
+update_date20200703,update date
+DayDeaMeRaIMPE20200704,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200704,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200704,Daily deaths mean smooth forecast only IMPE
+update_date20200704,update date
+DayDeaMeRaIMPE20200707,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200707,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200707,Daily deaths mean smooth forecast only IMPE
+update_date20200707,update date
+DayDeaMeRaIMPE20200711,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200711,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200711,Daily deaths mean smooth forecast only IMPE
+update_date20200711,update date
+DayDeaMeRaIMPE20200714,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200714,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200714,Daily deaths mean smooth forecast only IMPE
+update_date20200714,update date
+DayDeaMeRaIMPE20200715,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200715,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200715,Daily deaths mean smooth forecast only IMPE
+update_date20200715,update date
+DayDeaMeRaIMPE20200718,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200718,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200718,Daily deaths mean smooth forecast only IMPE
+update_date20200718,update date
+DayDeaMeRaIMPE20200720,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200720,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200720,Daily deaths mean smooth forecast only IMPE
+update_date20200720,update date
+DayDeaMeRaIMPE20200722,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200722,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200722,Daily deaths mean smooth forecast only IMPE
+update_date20200722,update date
+DayDeaMeRaIMPE20200725,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200725,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200725,Daily deaths mean smooth forecast only IMPE
+update_date20200725,update date
+DayDeaMeRaIMPE20200727,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200727,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200727,Daily deaths mean smooth forecast only IMPE
+update_date20200727,update date
+DayDeaMeRaIMPE20200731,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200731,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200731,Daily deaths mean smooth forecast only IMPE
+update_date20200731,update date
+DayDeaMeRaIMPE20200808,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200808,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200808,Daily deaths mean smooth forecast only IMPE
+update_date20200808,update date
+DayDeaMeRaIMPE20200810,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200810,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200810,Daily deaths mean smooth forecast only IMPE
+update_date20200810,update date
+DayDeaMeRaIMPE20200811,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200811,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200811,Daily deaths mean smooth forecast only IMPE
+update_date20200811,update date
+DayDeaMeRaIMPE20200813,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200813,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200813,Daily deaths mean smooth forecast only IMPE
+update_date20200813,update date
+DayDeaMeRaIMPE20200814,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200814,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200814,Daily deaths mean smooth forecast only IMPE
+update_date20200814,update date
+DayDeaMeRaIMPE20200817,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200817,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200817,Daily deaths mean smooth forecast only IMPE
+update_date20200817,update date
+DayDeaMeRaIMPE20200823,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200823,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200823,Daily deaths mean smooth forecast only IMPE
+update_date20200823,update date
+DayDeaMeRaIMPE20200825,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200825,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200825,Daily deaths mean smooth forecast only IMPE
+update_date20200825,update date
+DayDeaMeRaIMPE20200827,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200827,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200827,Daily deaths mean smooth forecast only IMPE
+update_date20200827,update date
+DayDeaMeRaIMPE20200831,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200831,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200831,Daily deaths mean smooth forecast only IMPE
+update_date20200831,update date
+DayDeaMeRaIMPE20200902,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200902,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200902,Daily deaths mean smooth forecast only IMPE
+update_date20200902,update date
+DayDeaMeRaIMPE20200906,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200906,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200906,Daily deaths mean smooth forecast only IMPE
+update_date20200906,update date
+DayDeaMeRaIMPE20200908,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200908,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200908,Daily deaths mean smooth forecast only IMPE
+update_date20200908,update date
+DayDeaMeRaIMPE20200912,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200912,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200912,Daily deaths mean smooth forecast only IMPE
+update_date20200912,update date
+DayDeaMeRaIMPE20200915,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200915,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200915,Daily deaths mean smooth forecast only IMPE
+update_date20200915,update date
+DayDeaMeRaIMPE20200919,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200919,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200919,Daily deaths mean smooth forecast only IMPE
+update_date20200919,update date
+DayDeaMeRaIMPE20200923,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200923,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200923,Daily deaths mean smooth forecast only IMPE
+update_date20200923,update date
+DayDeaMeRaIMPE20200925,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20200925,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20200925,Daily deaths mean smooth forecast only IMPE
+update_date20200925,update date
+DayDeaMeRaIMPE20201003,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201003,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201003,Daily deaths mean smooth forecast only IMPE
+update_date20201003,update date
+DayDeaMeRaIMPE20201006,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201006,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201006,Daily deaths mean smooth forecast only IMPE
+update_date20201006,update date
+DayDeaMeRaIMPE20201012,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201012,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201012,Daily deaths mean smooth forecast only IMPE
+update_date20201012,update date
+DayDeaMeRaIMPE20201019,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201019,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201019,Daily deaths mean smooth forecast only IMPE
+update_date20201019,update date
+DayDeaMeRaIMPE20201025,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201025,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201025,Daily deaths mean smooth forecast only IMPE
+update_date20201025,update date
+DayDeaMeRaIMPE20201028,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201028,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201028,Daily deaths mean smooth forecast only IMPE
+update_date20201028,update date
+DayDeaMeRaIMPE20201101,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201101,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201101,Daily deaths mean smooth forecast only IMPE
+update_date20201101,update date
+DayDeaMeRaIMPE20201110,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201110,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201110,Daily deaths mean smooth forecast only IMPE
+update_date20201110,update date
+DayDeaMeRaIMPE20201114,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201114,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201114,Daily deaths mean smooth forecast only IMPE
+update_date20201114,update date
+DayDeaMeRaIMPE20201118,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201118,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201118,Daily deaths mean smooth forecast only IMPE
+update_date20201118,update date
+DayDeaMeRaIMPE20201123,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201123,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201123,Daily deaths mean smooth forecast only IMPE
+update_date20201123,update date
+DayDeaMeRaIMPE20201129,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201129,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201129,Daily deaths mean smooth forecast only IMPE
+update_date20201129,update date
+DayDeaMeRaIMPE20201204,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201204,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201204,Daily deaths mean smooth forecast only IMPE
+update_date20201204,update date
+DayDeaMeRaIMPE20201212,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201212,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201212,Daily deaths mean smooth forecast only IMPE
+update_date20201212,update date
+DayDeaMeRaIMPE20201220,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201220,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201220,Daily deaths mean smooth forecast only IMPE
+update_date20201220,update date
+DayDeaMeRaIMPE20201226,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20201226,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20201226,Daily deaths mean smooth forecast only IMPE
+update_date20201226,update date
+DayDeaMeRaIMPE20210104,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210104,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210104,Daily deaths mean smooth forecast only IMPE
+update_date20210104,update date
+DayDeaMeRaIMPE20210110,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210110,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210110,Daily deaths mean smooth forecast only IMPE
+update_date20210110,update date
+DayDeaMeRaIMPE20210112,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210112,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210112,Daily deaths mean smooth forecast only IMPE
+update_date20210112,update date
+DayDeaMeRaIMPE20210118,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210118,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210118,Daily deaths mean smooth forecast only IMPE
+update_date20210118,update date
+DayDeaMeRaIMPE20210124,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210124,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210124,Daily deaths mean smooth forecast only IMPE
+update_date20210124,update date
+DayDeaMeRaIMPE20210130,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210130,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210130,Daily deaths mean smooth forecast only IMPE
+update_date20210130,update date
+DayDeaMeRaIMPE20210203,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210203,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210203,Daily deaths mean smooth forecast only IMPE
+update_date20210203,update date
+DayDeaMeRaIMPE20210210,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210210,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210210,Daily deaths mean smooth forecast only IMPE
+update_date20210210,update date
+DayDeaMeRaIMPE20210217,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210217,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210217,Daily deaths mean smooth forecast only IMPE
+update_date20210217,update date
+DayDeaMeRaIMPE20210226,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210226,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210226,Daily deaths mean smooth forecast only IMPE
+update_date20210226,update date
+DayDeaMeRaIMPE20210305,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210305,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210305,Daily deaths mean smooth forecast only IMPE
+update_date20210305,update date
+DayDeaMeRaIMPE20210312,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210312,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210312,Daily deaths mean smooth forecast only IMPE
+update_date20210312,update date
+DayDeaMeRaIMPE20210319,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210319,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210319,Daily deaths mean smooth forecast only IMPE
+update_date20210319,update date
+DayDeaMeRaIMPE20210329,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210329,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210329,Daily deaths mean smooth forecast only IMPE
+update_date20210329,update date
+DayDeaMeRaIMPE20210406,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210406,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210406,Daily deaths mean smooth forecast only IMPE
+update_date20210406,update date
+DayDeaMeRaIMPE20210417,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210417,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210417,Daily deaths mean smooth forecast only IMPE
+update_date20210417,update date
+DayDeaMeRaIMPE20210424,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210424,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210424,Daily deaths mean smooth forecast only IMPE
+update_date20210424,update date
+DayDeaMeRaIMPE20210510,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210510,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210510,Daily deaths mean smooth forecast only IMPE
+update_date20210510,update date
+DayDeaMeRaIMPE20210516,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210516,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210516,Daily deaths mean smooth forecast only IMPE
+update_date20210516,update date
+DayDeaMeRaIMPE20210522,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210522,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210522,Daily deaths mean smooth forecast only IMPE
+update_date20210522,update date
+DayDeaMeRaIMPE20210527,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210527,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210527,Daily deaths mean smooth forecast only IMPE
+update_date20210527,update date
+DayDeaMeRaIMPE20210604,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210604,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210604,Daily deaths mean smooth forecast only IMPE
+update_date20210604,update date
+DayDeaMeRaIMPE20210611,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210611,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210611,Daily deaths mean smooth forecast only IMPE
+update_date20210611,update date
+DayDeaMeRaIMPE20210618,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210618,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210618,Daily deaths mean smooth forecast only IMPE
+update_date20210618,update date
+DayDeaMeRaIMPE20210626,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210626,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210626,Daily deaths mean smooth forecast only IMPE
+update_date20210626,update date
+DayDeaMeRaIMPE20210702,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210702,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210702,Daily deaths mean smooth forecast only IMPE
+update_date20210702,update date
+DayDeaMeRaIMPE20210709,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210709,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210709,Daily deaths mean smooth forecast only IMPE
+update_date20210709,update date
+DayDeaMeRaIMPE20210719,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210719,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210719,Daily deaths mean smooth forecast only IMPE
+update_date20210719,update date
+DayDeaMeRaIMPE20210806,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210806,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210806,Daily deaths mean smooth forecast only IMPE
+update_date20210806,update date
+DayDeaMeRaIMPE20210819,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210819,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210819,Daily deaths mean smooth forecast only IMPE
+update_date20210819,update date
+DayDeaMeRaIMPE20210825,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210825,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210825,Daily deaths mean smooth forecast only IMPE
+update_date20210825,update date
+DayDeaMeRaIMPE20210909,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210909,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210909,Daily deaths mean smooth forecast only IMPE
+update_date20210909,update date
+DayDeaMeRaIMPE20210924,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20210924,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20210924,Daily deaths mean smooth forecast only IMPE
+update_date20210924,update date
+DayDeaMeRaIMPE20211006,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20211006,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20211006,Daily deaths mean smooth forecast only IMPE
+update_date20211006,update date
+DayDeaMeRaIMPE20211021,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20211021,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20211021,Daily deaths mean smooth forecast only IMPE
+update_date20211021,update date
+DayDeaMeRaIMPE20211027,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20211027,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20211027,Daily deaths mean smooth forecast only IMPE
+update_date20211027,update date
+DayDeaMeRaIMPE20211103,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20211103,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20211103,Daily deaths mean smooth forecast only IMPE
+update_date20211103,update date
+DayDeaMeRaIMPE20211115,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20211115,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20211115,Daily deaths mean smooth forecast only IMPE
+update_date20211115,update date
+DayDeaMeRaIMPE20211121,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20211121,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20211121,Daily deaths mean smooth forecast only IMPE
+update_date20211121,update date
+DayDeaMeRaIMPE20211129,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20211129,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20211129,Daily deaths mean smooth forecast only IMPE
+update_date20211129,update date
+DayDeaMeRaIMPE20211205,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20211205,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20211205,Daily deaths mean smooth forecast only IMPE
+update_date20211205,update date
+DayDeaMeRaIMPE20211213,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20211213,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20211213,Daily deaths mean smooth forecast only IMPE
+update_date20211213,update date
+DayDeaMeRaIMPE20211226,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20211226,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20211226,Daily deaths mean smooth forecast only IMPE
+update_date20211226,update date
+DayDeaMeRaIMPE20220102,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20220102,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20220102,Daily deaths mean smooth forecast only IMPE
+update_date20220102,update date
+DayDeaMeRaIMPE20220120,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20220120,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20220120,Daily deaths mean smooth forecast only IMPE
+update_date20220120,update date
+DayDeaMeRaIMPE20220131,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20220131,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20220131,Daily deaths mean smooth forecast only IMPE
+update_date20220131,update date
+DayDeaMeRaIMPE20220315,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20220315,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20220315,Daily deaths mean smooth forecast only IMPE
+update_date20220315,update date
+DayDeaMeRaIMPE20220530,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20220530,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20220530,Daily deaths mean smooth forecast only IMPE
+update_date20220530,update date
+DayDeaMeRaIMPE20220620,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20220620,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20220620,Daily deaths mean smooth forecast only IMPE
+update_date20220620,update date
+DayDeaMeRaIMPE20220703,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20220703,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20220703,Daily deaths mean smooth forecast only IMPE
+update_date20220703,update date
+DayDeaMeRaIMPE20220712,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20220712,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20220712,Daily deaths mean smooth forecast only IMPE
+update_date20220712,update date
+DayDeaMeRaIMPE20220728,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20220728,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20220728,Daily deaths mean smooth forecast only IMPE
+update_date20220728,update date
+DayDeaMeRaIMPE20220808,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20220808,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20220808,Daily deaths mean smooth forecast only IMPE
+update_date20220808,update date
+DayDeaMeRaIMPE20220901,Daily deaths mean raw IMPE
+DayDeaMeSmIMPE20220901,Daily deaths mean smooth IMPE
+DayDeaMeFoIMPE20220901,Daily deaths mean smooth forecast only IMPE
+update_date20220901,update date
+DayDeaMeSmJOHNCMR,Daily deaths smooth mean JOHN CMR

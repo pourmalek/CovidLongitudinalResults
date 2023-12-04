@@ -1,0 +1,59 @@
+name,varlab
+country,Country name
+iso,Country iso3 code
+country_id_no,Country ID number
+DD_MODELS_Errorr,Average Models Daily Deaths Error mean medians updates months
+DD_MODELS_AbsErr,Average Models Daily Deaths Absolute Error mean medians updates months
+DD_MODELS_PerErr,Average Models Daily Deaths Percent Error mean medians updates months
+DD_MODELS_AbPeEr,Average Models Daily Deaths Absolute Percent Error mean medians updates months
+DD_DELP_Errorr,Daily Deaths DELP Error mean of medians over updates and calendar months
+DD_IHME_Errorr,Daily Deaths IHME Error mean of medians over updates and calendar months
+DD_IMPE_Errorr,Daily Deaths IMPE Error mean of medians over updates and calendar months
+DD_LANL_Errorr,Daily Deaths LANL Error mean of medians over updates and calendar months
+DD_YYGU_Errorr,Daily Deaths YYGU Error mean of medians over updates and calendar months
+DD_UCLA_Errorr,Daily Deaths UCLA Error mean of medians over updates and calendar months
+DD_DELP_AbsErr,Daily Deaths DELP Absolute Error mean of medians over updates and calendar month
+DD_IHME_AbsErr,Daily Deaths IHME Absolute Error mean of medians over updates and calendar month
+DD_IMPE_AbsErr,Daily Deaths IMPE Absolute Error mean of medians over updates and calendar month
+DD_LANL_AbsErr,Daily Deaths LANL Absolute Error mean of medians over updates and calendar month
+DD_YYGU_AbsErr,Daily Deaths YYGU Absolute Error mean of medians over updates and calendar month
+DD_UCLA_AbsErr,Daily Deaths UCLA Absolute Error mean of medians over updates and calendar month
+DD_DELP_PerErr,Daily Deaths DELP Percent Error mean of medians over updates and calendar months
+DD_IHME_PerErr,Daily Deaths IHME Percent Error mean of medians over updates and calendar months
+DD_IMPE_PerErr,Daily Deaths IMPE Percent Error mean of medians over updates and calendar months
+DD_LANL_PerErr,Daily Deaths LANL Percent Error mean of medians over updates and calendar months
+DD_YYGU_PerErr,Daily Deaths YYGU Percent Error mean of medians over updates and calendar months
+DD_UCLA_PerErr,Daily Deaths UCLA Percent Error mean of medians over updates and calendar months
+DD_DELP_AbPeEr,Daily Deaths DELP Absolute Percent Error mean of medians over updates and calend
+DD_IHME_AbPeEr,Daily Deaths IHME Absolute Percent Error mean of medians over updates and calend
+DD_IMPE_AbPeEr,Daily Deaths IMPE Absolute Percent Error mean of medians over updates and calend
+DD_LANL_AbPeEr,Daily Deaths LANL Absolute Percent Error mean of medians over updates and calend
+DD_UCLA_AbPeEr,Daily Deaths UCLA Absolute Percent Error mean of medians over updates and calend
+DD_YYGU_AbPeEr,Daily Deaths YYGU Absolute Percent Error mean of medians over updates and calend
+_ID,Spatial-unit ID
+_merge_errors_loc_grand_order,Matching result from merge
+loc_grand_order,country order
+loc_grand_name,country name
+loc_grand_id,country id number
+loc_grand_name_numlabel,country name number label
+loc_grand_name_snail,country name snail
+loc_grand_iso,country iso3 code
+region,WHO region
+UNFPA2020,country names used in UNFPA 2020 population estimates
+population2020,UNFPA 2020 population estimates
+UNFPA2021,country names used in UNFPA 2021 population estimates
+population2021,UNFPA 2021 population estimates
+UNFPA2022,country names used in UNFPA 2022 population estimates
+population2022,UNFPA 2022 population estimates
+JOHN,country names used in JOHNs Hopkins COVID-19 epidemic data
+DELP,country names used in DELP COVID-19 epidemic model
+IHME,country names used in IHME COVID-19 epidemic model
+IMPE,country names used in IMPE COVID-19 epidemic model
+LANL,country names used in LANL COVID-19 epidemic model
+UCLA,country names used in UCLA COVID-19 epidemic model
+YYGU,country names used in YYGU COVID-19 epidemic model
+modelmix,Presence 1 or absence 0 of country in models DELP IHME IMPE LANL UCLA YYGU
+modelsnumber,Number of models country present in
+mapping,mapping plan
+mappingcolor,mapping color code
+mappingcolormeaning,mapping plan meaning
