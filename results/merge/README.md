@@ -22,4 +22,13 @@
 
 *
 
+[graph 102 b C19 daily deaths, IHME model, Absolute Percent Error, Deciles of IHME](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20102%20b%20C19%20daily%20deaths%2C%20IHME%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20IHME.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/1abe99eb-d020-4797-a94d-004f2d962e9e)
+
+*
+
+
+
+
 
