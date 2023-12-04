@@ -1,4 +1,4 @@
-Descriptive statistics of predicative performance error measures for COVID-19 daily deaths in six international periodically updated epidemic models 2020-2022, at the global level and WHO regions
+**Descriptive statistics of predicative performance error measures for COVID-19 daily deaths in six international periodically updated epidemic models 2020-2022, at the global level and WHO regions**
 
 [Results Summary Statistics.xlsx](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/Results%20Summary%20Statistics.xlsx)
 
