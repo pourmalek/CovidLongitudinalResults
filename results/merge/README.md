@@ -106,5 +106,7 @@ LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/92674221-676a-4ba9-91e0-281f06ff57ea)
 
+UCLA = [University of California Los Angeles model](https://covid19.uclaml.org)
+
 ***
 
