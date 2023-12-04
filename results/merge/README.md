@@ -10,6 +10,12 @@ IHME: Institute for Health Metrics and Evaluation. COVID-19 pandemic model by de
 
 IMPE: Imperial. COVID-19 pandemic model developed by Imperial College, London. https://mrc-ide.github.io/global-lmic-reports/
 
+LANL: Los Alamos National Laboratories. COVID-19 pandemic model developed by Los Alamos National Laboratories, Los Alamos. https://covid-19.bsvgateway.org
+
+UCLA:
+
+YYGU:
+
 *
 
 **Descriptive statistics of predicative performance error measures for COVID-19 daily deaths in six international periodically updated epidemic models 2020-2022, at the global level and WHO regions**
