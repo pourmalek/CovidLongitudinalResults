@@ -86,4 +86,9 @@ LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
 
 ***
 
+[graph 104 a C19 daily deaths, LANL model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20104%20a%20C19%20daily%20deaths%2C%20LANL%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/f1e8ce95-5031-4597-a2c0-cf01b2974b84)
+
+***
 
