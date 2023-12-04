@@ -22,6 +22,7 @@ YYGU: Youyang Gu. COVID-19 Projections Using Machine Learning. https://github.co
 
 ***
 
+
 **Descriptive statistics of predicative performance error measures for COVID-19 daily deaths in six international periodically updated epidemic models 2020-2022, at the global level and WHO regions**
 
 [Results Summary Statistics.xlsx](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/Results%20Summary%20Statistics.xlsx)
@@ -29,6 +30,7 @@ YYGU: Youyang Gu. COVID-19 Projections Using Machine Learning. https://github.co
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/8aee0c55-b91b-4b56-9ae5-85335bbfded2)
 
 ***
+
 
 **Predicative performance error measures for COVID-19 daily deaths in international periodically updated epidemic models 2020-2022 by country** 
 
