@@ -126,6 +126,11 @@ YYGU = [Youyang Gu model](https://covid19-projections.com)
 
 ***
 
+[graph 106 b C19 daily deaths, YYGU model, Absolute Percent Error, Deciles of YYGU](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20106%20b%20C19%20daily%20deaths%2C%20YYGU%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20YYGU.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/31b1ad3f-8ea7-493d-8374-540d01d9e87c)
 
 YYGU = [Youyang Gu model](https://covid19-projections.com)
+
+***
 
