@@ -70,6 +70,11 @@ IHME = [Institute for Health Metrics and Evaluation model, UW](https://covid19.h
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/89f9ff80-daf8-4e17-8277-8b446ed8d9e7)
 
+LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
+
 *
 
 
+LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
+
+*
