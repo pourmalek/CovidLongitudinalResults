@@ -14,7 +14,7 @@ LANL: Los Alamos National Laboratories. COVID-19 pandemic model developed by Los
 
 UCLA: University of California, Los Angeles, Epidemic Model Guided Machine Learning for COVID-19 Forecasts. https://github.com/uclaml/ucla-covid19-forecasts
 
-YYGU:
+YYGU: Youyang Gu. COVID-19 Projections Using Machine Learning. https://github.com/youyanggu/covid19_projections
 
 *
 
