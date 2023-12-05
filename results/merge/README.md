@@ -54,6 +54,7 @@ For each model, two maps are shown that use different color schemes for error me
 
 [graph 101 a C19 daily deaths, DELP model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20101%20a%20C19%20daily%20deaths%2C%20DELP%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/362c62ef-0033-4d14-be1b-3143f11536d3)
 
 DELP =  [DELPHI model, MIT](https://covidanalytics.io/projections)
 
