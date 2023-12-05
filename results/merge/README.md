@@ -34,6 +34,16 @@ Results by WHO region and global:
 
 ***
 
+Results by country:
+
+**Predicative performance error measures for COVID-19 daily deaths in six international periodically updated epidemic models 2020-2022, by country**
+
+[Results Countries.xlsx](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/Results%20Countries.xlsx)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/387a16a5-6bed-436b-a093-a081b53b7e97)
+
+***
+
 
 **Predicative performance error measures for COVID-19 daily deaths in international periodically updated epidemic models 2020-2022 by country** 
 
