@@ -62,6 +62,7 @@ DELP =  [DELPHI model, MIT](https://covidanalytics.io/projections)
 
 [graph 101 b C19 daily deaths, DELP model, Absolute Percent Error, Deciles of DELP](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20101%20b%20C19%20daily%20deaths%2C%20DELP%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20DELP.pdf)
 
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/d9232200-068e-410b-9436-bd32adcd6eab)
 
 DELP =  [DELPHI model, MIT](https://covidanalytics.io/projections)
 
