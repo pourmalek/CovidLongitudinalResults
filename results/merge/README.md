@@ -56,7 +56,7 @@ Note on blank or white areas in maps:
 
 ![white](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/4f85b677-63a7-4e42-ae5e-43c6fad3afe7)
 
-JOHN: Johns Hopkins. The coronavirus resource center, Johns Hopkins University, Baltimore. https://www.arcgis.com/apps/dashboards/bda7594740fd40299423467b48e9ecf6 (Official reports of the countries to the World Health Organization; benchmark)
+JOHN: Johns Hopkins. The coronavirus resource center, Johns Hopkins University, Baltimore. (https://coronavirus.jhu.edu/map.html) (Official reports of the countries to the World Health Organization; benchmark)
 
 ***
 
