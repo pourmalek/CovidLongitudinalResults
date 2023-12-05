@@ -30,7 +30,6 @@ YYGU: Youyang Gu. COVID-19 Projections Using Machine Learning. https://covid19-p
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/2af39626-c572-4009-809d-21b3b3aa96ff)
 
 
-![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/07db996e-adab-43b2-be47-29b773388b9a)
 
 ***
 
