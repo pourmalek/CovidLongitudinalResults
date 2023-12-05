@@ -34,7 +34,7 @@ YYGU: Youyang Gu. COVID-19 Projections Using Machine Learning. https://covid19-p
 
 **Predicative performance error measures for COVID-19 daily deaths in international periodically updated epidemic models 2020-2022 by country** 
 
-Two color schemes for error measures are used for each model: (a) deciles of the individual epidemic model, and (b) deciles of mean of all epidemic models. The first map differentiates countries in each individual model and the second map facilitates comparison across all models. 
+For each model, two maps are shown that use different color schemes for error measures: (a) deciles of mean error measures of all epidemic models, and (b) deciles of error measures of the individual epidemic model. The first map facilitates comparison across all models, but with less color differentiation within the model. The second map differentiates countries within each individual model, but comparison across all models is not facilitated due to different color schemes.
 
 ***
 
