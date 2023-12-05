@@ -70,6 +70,7 @@ DELP =  [DELPHI model, MIT](https://covidanalytics.io/projections)
 
 [graph 102 a C19 daily deaths, IHME model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20102%20a%20C19%20daily%20deaths%2C%20IHME%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/5cfff3a4-123d-4fd8-815b-094783bb6e84)
 
 IHME = [Institute for Health Metrics and Evaluation model, UW](https://covid19.healthdata.org/global?view=cumulative-deaths&tab=trend)
 
