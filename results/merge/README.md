@@ -1,6 +1,6 @@
 Predictive performance of international periodically updated COVID-19 epidemic models - Results
 
-### Descriptive statistics and maps of error measures
+### Error measures results and maps
 
 ***
 
@@ -22,7 +22,7 @@ YYGU: Youyang Gu. COVID-19 Projections Using Machine Learning. https://covid19-p
 
 ***
 
-Results by WHO region and global:
+#### Error measures results by WHO regiona and global:
 
 **Descriptive statistics of predicative performance error measures for COVID-19 daily deaths in six international periodically updated epidemic models 2020-2022, at the global level and WHO regions**
 
@@ -34,7 +34,7 @@ Results by WHO region and global:
 
 ***
 
-Results by country:
+#### Error measures results by country:
 
 **Predicative performance error measures for COVID-19 daily deaths in six international periodically updated epidemic models 2020-2022, by country**
 
@@ -44,6 +44,7 @@ Results by country:
 
 ***
 
+#### Error measures results by country, maps:
 
 **Predicative performance error measures for COVID-19 daily deaths in international periodically updated epidemic models 2020-2022 by country** 
 
