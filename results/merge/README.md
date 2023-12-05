@@ -50,7 +50,8 @@ YYGU: Youyang Gu. COVID-19 Projections Using Machine Learning. https://covid19-p
 
 For each model, two maps are shown that use different color schemes for error measures: (a) deciles of mean error measures of all epidemic models, and (b) deciles of error measures of the individual epidemic model. The first map facilitates comparison across all models, but with less color differentiation within the model. The second map differentiates countries within each individual model, but comparison across all models is not facilitated due to different color schemes.
 
-Note on blank or white areas in maps:
+
+- Note on blank or white areas in maps:
 
 (1) Turkmenistan is shown as blank in maps since Johns Hopkins reported deaths did not include this country. (2) Arunachal Pradesh in northeast and (3) one other area in northwest of India are shown blank (white) in the World Bank shape file used here. (4) Area Abyei between Sudan and South Sudan is also shown blank in the World Bank shape file.
 
