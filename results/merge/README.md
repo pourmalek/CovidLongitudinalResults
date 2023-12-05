@@ -94,6 +94,7 @@ IMPE = [Imperial College model](https://mrc-ide.github.io/global-lmic-reports/)
 
 [graph 103 b C19 daily deaths, IMPE model, Absolute Percent Error, Deciles of IMPE](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20103%20b%20C19%20daily%20deaths%2C%20IMPE%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20IMPE.pdf)
 
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/ab07edf0-5eba-45d8-92b9-16b6ca794e1c)
 
 IMPE = [Imperial College model](https://mrc-ide.github.io/global-lmic-reports/)
 
