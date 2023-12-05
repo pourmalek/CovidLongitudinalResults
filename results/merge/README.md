@@ -40,7 +40,6 @@ For each model, two maps are shown that use different color schemes for error me
 
 [graph 101 a C19 daily deaths, DELP model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20101%20a%20C19%20daily%20deaths%2C%20DELP%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
-![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/cadb646d-5e2a-441c-9449-ee2886cd37e1)
 
 DELP =  [DELPHI model, MIT](https://covidanalytics.io/projections)
 
@@ -48,7 +47,6 @@ DELP =  [DELPHI model, MIT](https://covidanalytics.io/projections)
 
 [graph 101 b C19 daily deaths, DELP model, Absolute Percent Error, Deciles of DELP](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20101%20b%20C19%20daily%20deaths%2C%20DELP%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20DELP.pdf)
 
-![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/a74c50c8-e6dd-4523-8198-cd27b265499e)
 
 DELP =  [DELPHI model, MIT](https://covidanalytics.io/projections)
 
@@ -56,7 +54,6 @@ DELP =  [DELPHI model, MIT](https://covidanalytics.io/projections)
 
 [graph 102 a C19 daily deaths, IHME model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20102%20a%20C19%20daily%20deaths%2C%20IHME%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
-![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/2274261d-05b6-42c8-97aa-20d7d4e549f1)
 
 IHME = [Institute for Health Metrics and Evaluation model, UW](https://covid19.healthdata.org/global?view=cumulative-deaths&tab=trend)
 
@@ -64,7 +61,6 @@ IHME = [Institute for Health Metrics and Evaluation model, UW](https://covid19.h
 
 [graph 102 b C19 daily deaths, IHME model, Absolute Percent Error, Deciles of IHME](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20102%20b%20C19%20daily%20deaths%2C%20IHME%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20IHME.pdf)
 
-![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/1abe99eb-d020-4797-a94d-004f2d962e9e)
 
 IHME = [Institute for Health Metrics and Evaluation model, UW](https://covid19.healthdata.org/global?view=cumulative-deaths&tab=trend)
 
@@ -72,7 +68,6 @@ IHME = [Institute for Health Metrics and Evaluation model, UW](https://covid19.h
 
 [graph 103 a C19 daily deaths, IMPE model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20103%20a%20C19%20daily%20deaths%2C%20IMPE%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
-![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/89f9ff80-daf8-4e17-8277-8b446ed8d9e7)
 
 IMPE = [Imperial College model](https://mrc-ide.github.io/global-lmic-reports/)
 
@@ -80,7 +75,6 @@ IMPE = [Imperial College model](https://mrc-ide.github.io/global-lmic-reports/)
 
 [graph 103 b C19 daily deaths, IMPE model, Absolute Percent Error, Deciles of IMPE](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20103%20b%20C19%20daily%20deaths%2C%20IMPE%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20IMPE.pdf)
 
-![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/79d28bea-1111-480b-b7b8-8321fff6a1e7)
 
 IMPE = [Imperial College model](https://mrc-ide.github.io/global-lmic-reports/)
 
@@ -88,7 +82,6 @@ IMPE = [Imperial College model](https://mrc-ide.github.io/global-lmic-reports/)
 
 [graph 104 a C19 daily deaths, LANL model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20104%20a%20C19%20daily%20deaths%2C%20LANL%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
-![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/f1e8ce95-5031-4597-a2c0-cf01b2974b84)
 
 LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
 
@@ -96,7 +89,6 @@ LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
 
 [graph 104 b C19 daily deaths, LANL model, Absolute Percent Error, Deciles of LANL](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20104%20b%20C19%20daily%20deaths%2C%20LANL%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20LANL.pdf)
 
-![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/56047068-3e59-4d6d-8d5c-ffc779344aa6)
 
 LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
 
@@ -104,7 +96,6 @@ LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
 
 [graph 105 a C19 daily deaths, UCLA model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20105%20a%20C19%20daily%20deaths%2C%20UCLA%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
-![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/92674221-676a-4ba9-91e0-281f06ff57ea)
 
 UCLA = [University of California Los Angeles model](https://covid19.uclaml.org)
 
@@ -112,7 +103,6 @@ UCLA = [University of California Los Angeles model](https://covid19.uclaml.org)
 
 [graph 105 b C19 daily deaths, UCLA model, Absolute Percent Error, Deciles of UCLA](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20105%20b%20C19%20daily%20deaths%2C%20UCLA%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20UCLA.pdf)
 
-![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/55ed1f21-a473-411e-98a3-9e013eb19927)
 
 UCLA = [University of California Los Angeles model](https://covid19.uclaml.org)
 
@@ -120,7 +110,6 @@ UCLA = [University of California Los Angeles model](https://covid19.uclaml.org)
 
 [graph 106 a C19 daily deaths, YYGU model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20106%20a%20C19%20daily%20deaths%2C%20YYGU%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
-![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/80d6931f-a6d2-4bae-b2fb-f5bb37ff6960)
 
 YYGU = [Youyang Gu model](https://covid19-projections.com)
 
@@ -128,7 +117,6 @@ YYGU = [Youyang Gu model](https://covid19-projections.com)
 
 [graph 106 b C19 daily deaths, YYGU model, Absolute Percent Error, Deciles of YYGU](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20106%20b%20C19%20daily%20deaths%2C%20YYGU%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20YYGU.pdf)
 
-![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/31b1ad3f-8ea7-493d-8374-540d01d9e87c)
 
 YYGU = [Youyang Gu model](https://covid19-projections.com)
 
@@ -136,7 +124,6 @@ YYGU = [Youyang Gu model](https://covid19-projections.com)
 
 [graph 107 C19 daily deaths, Mean of models, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20107%20a%20C19%20daily%20deaths%2C%20Mean%20of%20models%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
-![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/47a6f0f7-a358-45e8-b474-8fc4a7f9dab6)
 
 ***
 
