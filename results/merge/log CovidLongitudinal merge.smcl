@@ -3,7 +3,7 @@
       name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/merge/log CovidLongitudinal merge.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res} 4 Dec 2023, 18:20:10
+ {txt}opened on:  {res} 5 Dec 2023, 10:26:45
 {txt}
 {com}. 
 . 
@@ -89,7 +89,6 @@ saved
 {com}. 
 . 
 . 
-. 
 . *****************************************************
 . 
 . * add vars (region) form "loc_grand_name.dta"
@@ -158,9 +157,235 @@ saved
 . 
 . 
 . 
+. *****************************************************
+. 
+. * model-country-update
 . 
 . 
+. local list `" "Afghanistan" "Albania" "Algeria" "Andorra" "Angola" "Antigua and Barbuda" "Argentina" "Armenia" "Australia" "Austria" "Azerbaijan" "Bahamas" "Bahrain" "Bangladesh" "Barbados" "Belarus" "Belgium" "Belize" "Benin" "Bhutan" "Bolivia" "Bosnia and Herzegovina" "Botswana" "Brazil" "Brunei" "Bulgaria" "Burkina Faso" "Burundi" "Cambodia" "Cameroon" "Canada" "Cape Verde" "Central African Republic" "Chad" "Chile" "China" "Colombia" "Comoros" "Congo" "Congo DR" "Costa Rica" "Cote d'Ivoire" "Croatia" "Cuba" "Cyprus" "Czechia" "Denmark" "Djibouti" "Dominican Republic" "Ecuador" "Egypt" "El Salvador" "Equatorial Guinea" "Eritrea" "Estonia" "Eswatini" "Ethiopia" "Fiji" "Finland" "France" "Gabon" "Gambia" "Georgia" "Germany" "Ghana" "Greece" "Grenada" "Guatemala" "Guinea" "Guinea Bissau" "Guyana" "Haiti" "Honduras" "Hungary" "Iceland" "India" "Indonesia" "Iran" "Iraq" "Ireland" "Israel" "Italy" "Jamaica" "Japan" "Jordan" "Kazakhstan" "Kenya" "Kiribati" "Korea North" "Korea South" "Kosovo" "Kuwait" "Kyrgyzstan" "Laos" "Latvia" "Lebanon" "Lesotho" "Liberia" "Libya" "Liechtenstein" "Lithuania" "Luxembourg" "Madagascar" "Malawi" "Malaysia" "Maldives" "Mali" "Malta" "Mauritania" "Mauritius" "Mexico" "Micronesia" "Moldova" "Monaco" "Mongolia" "Montenegro" "Morocco" "Mozambique" "Myanmar" "Namibia" "Nepal" "Netherlands" "New Zealand" "Nicaragua" "Niger" "Nigeria" "North Macedonia" "Norway" "Oman" "Pakistan" "Palestine" "Panama" "Papua New Guinea" "Paraguay" "Peru" "Philippines" "Poland" "Portugal" "Qatar" "Romania" "Russia" "Rwanda" "Saint Lucia" "Saint Vincent and the Grenadines" "Samoa" "San Marino" "Sao Tome and Principe" "Saudi Arabia" "Senegal" "Serbia" "Seychelles" "Sierra Leone" "Singapore" "Slovakia" "Slovenia" "Solomon Islands" "Somalia" "South Africa" "South Sudan" "Spain" "Sri Lanka" "Sudan" "Suriname" "Sweden" "Switzerland" "Syria" "Taiwan" "Tajikistan" "Tanzania" "Thailand" "Timor Leste" "Togo" "Tonga" "Trinidad and Tobago" "Tunisia" "Turkey" "Uganda" "Ukraine" "United Arab Emirates" "United Kingdom" "United States of America" "Uruguay" "Uzbekistan" "Vanuatu" "Venezuela" "Viet Nam" "Yemen" "Zambia" "Zimbabwe" "'
+{txt}
+{com}. 
+. foreach country of local list {c -(}
+{txt}  2{com}.         
+.         qui {c -(}
+{txt}  3{com}.         
+.         cd ..
+{txt}  4{com}.         
+.         cd countries
+{txt}  5{com}.         
+.         cd "`country'"
+{txt}  6{com}.         
+.         use "`country' ALL MODELS update dates.dta", clear
+{txt}  7{com}.         
+.         contract model loc_grand_name
+{txt}  8{com}. 
+.         rename _freq update
+{txt}  9{com}.         
+.         cd ..
+{txt} 10{com}.         
+.         cd ..
+{txt} 11{com}.         
+.         cd merge
+{txt} 12{com}. 
+.         save "`country' model-country-update.dta", replace
+{txt} 13{com}.         
+.         {c )-}
+{txt} 14{com}. {c )-}
+{txt}
+{com}. *
 . 
+. 
+. * use the file for Afghanistan as frame and add each country
+. 
+. use "/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/merge/Afghanistan model-country-update.dta", clear 
+{txt}
+{com}. 
+. foreach country of local list {c -(}
+{txt}  2{com}.         
+.         qui append using "`country' model-country-update.dta"
+{txt}  3{com}. 
+. {c )-}
+{txt}
+{com}. *
+. 
+. duplicates drop // in terms of all variables, that is the first country, Afghanistan, added as frame 
+
+{p 0 4}{txt}Duplicates in terms of {txt} all variables{p_end}
+
+(4 observations deleted)
+
+{com}. 
+. save "model-country-update.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+model-country-update.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. * value of the variable update shows the number of updates for each model-country
+. * e.g. DELP-Afghanistan has 314 updates
+. 
+. 
+. * get model_country_update sum, min, max
+. 
+. summ update
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 6}update {c |}{res}        792    151.8333    89.66654          3        314
+{txt}
+{com}. 
+. di r(sum) // sum or total model_country_update s
+{res}120252
+{txt}
+{com}. 
+. sort update
+{txt}
+{com}. 
+. list in 1 // min model_country_update
+{txt}
+     {c TLC}{hline 7}{c -}{hline 10}{c -}{hline 8}{c TRC}
+     {c |} {res}model   loc_gr~e   update {txt}{c |}
+     {c LT}{hline 7}{c -}{hline 10}{c -}{hline 8}{c RT}
+  1. {c |} {res} LANL     Brunei        3 {txt}{c |}
+     {c BLC}{hline 7}{c -}{hline 10}{c -}{hline 8}{c BRC}
+
+{com}. 
+. gsort - update
+{txt}
+{com}. 
+. list in 1 // max model_country_update
+{txt}
+     {c TLC}{hline 7}{c -}{hline 10}{c -}{hline 8}{c TRC}
+     {c |} {res}model   loc_gr~e   update {txt}{c |}
+     {c LT}{hline 7}{c -}{hline 10}{c -}{hline 8}{c RT}
+  1. {c |} {res} DELP     Russia      314 {txt}{c |}
+     {c BLC}{hline 7}{c -}{hline 10}{c -}{hline 8}{c BRC}
+
+{com}. 
+. 
+. 
+. * get model-countries sum, min, max
+. 
+. preserve 
+{txt}
+{com}. 
+. drop update
+{txt}
+{com}. 
+. contract model
+{res}{txt}
+{com}. 
+. rename _freq country
+{res}{txt}
+{com}. 
+. summ country
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}country {c |}{res}          6         132    66.55524         26        183
+{txt}
+{com}. 
+. display r(sum) // sum or total model-countries or total number of country in all models
+{res}792
+{txt}
+{com}. 
+. sort country
+{txt}
+{com}. 
+. list in 1 // min number of country in all models
+{txt}
+     {c TLC}{hline 7}{c -}{hline 9}{c TRC}
+     {c |} {res}model   country {txt}{c |}
+     {c LT}{hline 7}{c -}{hline 9}{c RT}
+  1. {c |} {res} UCLA        26 {txt}{c |}
+     {c BLC}{hline 7}{c -}{hline 9}{c BRC}
+
+{com}. 
+. gsort - country
+{txt}
+{com}. 
+. list in 1 // max number of country in all models
+{txt}
+     {c TLC}{hline 7}{c -}{hline 9}{c TRC}
+     {c |} {res}model   country {txt}{c |}
+     {c LT}{hline 7}{c -}{hline 9}{c RT}
+  1. {c |} {res} IMPE       183 {txt}{c |}
+     {c BLC}{hline 7}{c -}{hline 9}{c BRC}
+
+{com}. 
+. restore
+{txt}
+{com}. 
+. * get model per country sum, min, max
+. 
+. preserve
+{txt}
+{com}. 
+. drop model
+{txt}
+{com}. 
+. contract loc_grand_name
+{res}{txt}
+{com}. 
+. rename _freq model
+{res}{txt}
+{com}. 
+. summ model
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 7}model {c |}{res}        189    4.190476    1.205358          1          6
+{txt}
+{com}. 
+. display r(sum) // sum or total model per country
+{res}792
+{txt}
+{com}. 
+. sort model
+{txt}
+{com}. 
+. list in 1 // min number of model per country, already knew it is one
+{txt}
+     {c TLC}{hline 17}{c -}{hline 7}{c TRC}
+     {c |} {res} loc_grand_name   model {txt}{c |}
+     {c LT}{hline 17}{c -}{hline 7}{c RT}
+  1. {c |} {res}Solomon Islands       1 {txt}{c |}
+     {c BLC}{hline 17}{c -}{hline 7}{c BRC}
+
+{com}. 
+. gsort - model
+{txt}
+{com}. 
+. list in 1 // max number of model per country, already knew it is six
+{txt}
+     {c TLC}{hline 10}{c -}{hline 7}{c TRC}
+     {c |} {res}loc_gr~e   model {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 7}{c RT}
+  1. {c |} {res}   Spain       6 {txt}{c |}
+     {c BLC}{hline 10}{c -}{hline 7}{c BRC}
+
+{com}. 
+. restore
+{txt}
+{com}. 
+. sort loc_grand_name model
+{txt}
+{com}. 
+. save "model-country-update.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+model-country-update.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. export excel using "model-country-update.xlsx", firstrow(variables) replace
+{res}{txt}file {bf:model-country-update.xlsx} saved
+
+{com}. 
 . 
 . 
 . 
@@ -170,6 +395,9 @@ saved
 . 
 . * Descriptives across 189 countries, by 4 error types and 6 models
 . 
+. use "ALL MODELS all countries error - only error measures across models.dta", clear
+{txt}
+{com}. 
 . * gen Average of Models for Daily Deaths Error, Global and regional
 . egen DD_MODELS_Errorr = rowmean(DD_DELP_Errorr DD_IHME_Errorr DD_IMPE_Errorr DD_LANL_Errorr DD_UCLA_Errorr DD_YYGU_Errorr)
 {txt}
@@ -13716,7 +13944,7 @@ DD_MODELS_AbPeEr sort
 
 {txt}Contains data from {res}world_shp.dta
 {txt} Observations:{res}       526,312                  
-{txt}    Variables:{res}             5                  4 Dec 2023 18:20
+{txt}    Variables:{res}             5                  5 Dec 2023 10:26
 {txt}{hline}
 Variable      Storage   Display    Value
     name         type    format    label      Variable label
@@ -13754,7 +13982,7 @@ saved
 
 {txt}Contains data from {res}world.dta
 {txt} Observations:{res}           251                  
-{txt}    Variables:{res}            55                  4 Dec 2023 18:20
+{txt}    Variables:{res}            55                  5 Dec 2023 10:26
 {txt}{hline}
 Variable      Storage   Display    Value
     name         type    format    label      Variable label
@@ -17499,7 +17727,7 @@ saved
       {txt}name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/merge/log CovidLongitudinal merge.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res} 4 Dec 2023, 18:21:19
+ {txt}closed on:  {res} 5 Dec 2023, 10:27:53
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}
