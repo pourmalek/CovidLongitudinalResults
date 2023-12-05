@@ -86,6 +86,7 @@ IHME = [Institute for Health Metrics and Evaluation model, UW](https://covid19.h
 
 [graph 103 a C19 daily deaths, IMPE model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20103%20a%20C19%20daily%20deaths%2C%20IMPE%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/8dca54ea-60e6-452e-89d3-7cd813d4b61f)
 
 IMPE = [Imperial College model](https://mrc-ide.github.io/global-lmic-reports/)
 
