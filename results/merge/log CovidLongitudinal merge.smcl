@@ -3,7 +3,7 @@
       name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/merge/log CovidLongitudinal merge.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res}27 Nov 2023, 04:17:54
+ {txt}opened on:  {res} 4 Dec 2023, 17:06:41
 {txt}
 {com}. 
 . 
@@ -13716,7 +13716,7 @@ DD_MODELS_AbPeEr sort
 
 {txt}Contains data from {res}world_shp.dta
 {txt} Observations:{res}       526,312                  
-{txt}    Variables:{res}             5                  27 Nov 2023 04:17
+{txt}    Variables:{res}             5                  4 Dec 2023 17:06
 {txt}{hline}
 Variable      Storage   Display    Value
     name         type    format    label      Variable label
@@ -13754,7 +13754,7 @@ saved
 
 {txt}Contains data from {res}world.dta
 {txt} Observations:{res}           251                  
-{txt}    Variables:{res}            55                  27 Nov 2023 04:17
+{txt}    Variables:{res}            55                  4 Dec 2023 17:06
 {txt}{hline}
 Variable      Storage   Display    Value
     name         type    format    label      Variable label
@@ -17074,6 +17074,30 @@ saved
 {txt}
 {com}. 
 . 
+. pctile DD_MODELS_AbPeEr_pct = DD_MODELS_AbPeEr, nq(10)
+{txt}
+{com}. list DD_MODELS_AbPeEr_pct in 1/10
+{txt}
+     {c TLC}{hline 10}{c TRC}
+     {c |} {res}DD_MOD~t {txt}{c |}
+     {c LT}{hline 10}{c RT}
+  1. {c |} {res}96.31408 {txt}{c |}
+  2. {c |} {res} 148.959 {txt}{c |}
+  3. {c |} {res}195.6508 {txt}{c |}
+  4. {c |} {res}296.6008 {txt}{c |}
+  5. {c |} {res}458.3864 {txt}{c |}
+     {c LT}{hline 10}{c RT}
+  6. {c |} {res}809.1472 {txt}{c |}
+  7. {c |} {res}1394.081 {txt}{c |}
+  8. {c |} {res}2695.722 {txt}{c |}
+  9. {c |} {res}5262.583 {txt}{c |}
+ 10. {c |} {res}       . {txt}{c |}
+     {c BLC}{hline 10}{c BRC}
+
+{com}. 
+. drop DD_MODELS_AbPeEr_pct
+{txt}
+{com}. 
 . 
 . 
 . * Graph Map C19 daily deaths, DELP model, Absolute Percent Error
@@ -17090,7 +17114,7 @@ saved
 . * use Deciles of MEANS model
 . 
 . grmap DD_DELP_AbPeEr using world_shp, id(_ID) ///
-> clmethod(custom) clbreaks(0 96.3 149.0 195.7 296.6 449.6 779.5 1367.1 2695.7 5262.6 85149.2) ///
+> clmethod(custom) clbreaks(3.5 96.3 149.0 195.7 296.6 458.4 809.1 1394.1 2695.7 5262.6 23691.6) ///
 > fcolor("`colors'") ocolor(white ..) osize(0.05 ..) ///
 > legstyle(2) legend(pos(7) size(2.8) region(fcolor(gs15))) ///
 > title("C19 daily deaths, DELP model, Absolute Percent Error, 2020-2022", size(4)) 
@@ -17145,7 +17169,7 @@ format
 . * use Deciles of MEANS model
 . 
 . grmap DD_IHME_AbPeEr using world_shp, id(_ID) ///
-> clmethod(custom) clbreaks(0 96.3 149.0 195.7 296.6 449.6 779.5 1367.1 2695.7 5262.6 85149.2) ///
+> clmethod(custom) clbreaks(3.5 96.3 149.0 195.7 296.6 458.4 809.1 1394.1 2695.7 5262.6 23691.6) ///
 > fcolor("`colors'") ocolor(white ..) osize(0.05 ..) ///
 > legstyle(2) legend(pos(7) size(2.8) region(fcolor(gs15))) ///
 > title("C19 daily deaths, IHME model, Absolute Percent Error, 2020-2022", size(4)) 
@@ -17199,7 +17223,7 @@ format
 . * use Deciles of MEANS model
 . 
 . grmap DD_IMPE_AbPeEr using world_shp, id(_ID) ///
-> clmethod(custom) clbreaks(0 96.3 149.0 195.7 296.6 449.6 779.5 1367.1 2695.7 5262.6 85149.2) ///
+> clmethod(custom) clbreaks(3.5 96.3 149.0 195.7 296.6 458.4 809.1 1394.1 2695.7 5262.6 23691.6) ///
 > fcolor("`colors'") ocolor(white ..) osize(0.05 ..) ///
 > legstyle(2) legend(pos(7) size(2.8) region(fcolor(gs15))) ///
 > title("C19 daily deaths, IMPE model, Absolute Percent Error, 2020-2022", size(4)) 
@@ -17253,7 +17277,7 @@ format
 . * use Deciles of MEANS model
 . 
 . grmap DD_LANL_AbPeEr using world_shp, id(_ID) ///
-> clmethod(custom) clbreaks(0 96.3 149.0 195.7 296.6 449.6 779.5 1367.1 2695.7 5262.6 85149.2) ///
+> clmethod(custom) clbreaks(3.5 96.3 149.0 195.7 296.6 458.4 809.1 1394.1 2695.7 5262.6 23691.6) ///
 > fcolor("`colors'") ocolor(white ..) osize(0.05 ..) ///
 > legstyle(2) legend(pos(7) size(2.8) region(fcolor(gs15))) ///
 > title("C19 daily deaths, LANL model, Absolute Percent Error, 2020-2022", size(4)) 
@@ -17306,7 +17330,7 @@ format
 . * use Deciles of MEANS model
 . 
 . grmap DD_UCLA_AbPeEr using world_shp, id(_ID) ///
-> clmethod(custom) clbreaks(0 96.3 149.0 195.7 296.6 449.6 779.5 1367.1 2695.7 5262.6 85149.2) ///
+> clmethod(custom) clbreaks(3.5 96.3 149.0 195.7 296.6 458.4 809.1 1394.1 2695.7 5262.6 23691.6) ///
 > fcolor("`colors'") ocolor(white ..) osize(0.05 ..) ///
 > legstyle(2) legend(pos(7) size(2.8) region(fcolor(gs15))) ///
 > title("C19 daily deaths, UCLA model, Absolute Percent Error, 2020-2022", size(4)) 
@@ -17359,7 +17383,7 @@ format
 . * use Deciles of MEANS model
 . 
 . grmap DD_YYGU_AbPeEr using world_shp, id(_ID) ///
-> clmethod(custom) clbreaks(0 96.3 149.0 195.7 296.6 449.6 779.5 1367.1 2695.7 5262.6 85149.2) ///
+> clmethod(custom) clbreaks(3.5 96.3 149.0 195.7 296.6 458.4 809.1 1394.1 2695.7 5262.6 23691.6) ///
 > fcolor("`colors'") ocolor(white ..) osize(0.05 ..) ///
 > legstyle(2) legend(pos(7) size(2.8) region(fcolor(gs15))) ///
 > title("C19 daily deaths, YYGU model, Absolute Percent Error, 2020-2022", size(4)) 
@@ -17412,7 +17436,7 @@ format
 . * use Deciles of MEANS model
 . 
 . grmap DD_MODELS_AbPeEr using world_shp, id(_ID) ///
-> clmethod(custom) clbreaks(0 96.3 149.0 195.7 296.6 449.6 779.5 1367.1 2695.7 5262.6 85149.2) ///
+> clmethod(custom) clbreaks(3.5 96.3 149.0 195.7 296.6 458.4 809.1 1394.1 2695.7 5262.6 23691.6) ///
 > fcolor("`colors'") ocolor(white ..) osize(0.05 ..) ///
 > legstyle(2) legend(pos(7) size(2.8) region(fcolor(gs15))) ///
 > title("C19 daily deaths, Mean of models, Absolute Percent Error, 2020-2022", size(4)) 
@@ -17467,7 +17491,7 @@ saved
       {txt}name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/merge/log CovidLongitudinal merge.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res}27 Nov 2023, 04:20:29
+ {txt}closed on:  {res} 4 Dec 2023, 17:07:52
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}
