@@ -22,7 +22,7 @@ YYGU: Youyang Gu. COVID-19 Projections Using Machine Learning. https://covid19-p
 
 ***
 
-### Error measures results by WHO regiona and global:
+### Error measures results by WHO region and global:
 
 **Descriptive statistics of predicative performance error measures for COVID-19 daily deaths in six international periodically updated epidemic models 2020-2022, at the global level and WHO regions**
 
