@@ -52,7 +52,7 @@ For each model, two maps are shown that use different color schemes for error me
 
 Note on blank or white areas in maps:
 
-(1) Turkmenistan is shown as blank in maps since [Johns Hopkins](https://www.arcgis.com/apps/dashboards/bda7594740fd40299423467b48e9ecf6) reported deaths did not include this country. (2) Arunachal Pradesh in northeast and (3) one other area in northwest of India are shown blank (white) in the World Bank shape file used here. (4) Area Abyei between Sudan and South Sudan is also shown blank in the World Bank shape file.
+(1) Turkmenistan is shown as blank in maps since [Johns Hopkins]([https://www.arcgis.com/apps/dashboards/bda7594740fd40299423467b48e9ecf6](https://www.arcgis.com/apps/dashboards/bda7594740fd40299423467b48e9ecf6)) reported deaths did not include this country. (2) Arunachal Pradesh in northeast and (3) one other area in northwest of India are shown blank (white) in the World Bank shape file used here. (4) Area Abyei between Sudan and South Sudan is also shown blank in the World Bank shape file.
 
 ![white](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/4f85b677-63a7-4e42-ae5e-43c6fad3afe7)
 
