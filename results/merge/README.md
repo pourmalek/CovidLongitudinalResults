@@ -6,7 +6,7 @@ Predictive performance of international periodically updated COVID-19 epidemic m
 
 International periodically updated COVID-19 pandemic models:
 
-DELP, IHME, IMPE, LANL, UCLA, YYGU
+Abbreviation: DELP, IHME, IMPE, LANL, UCLA, YYGU
 
 DELP: DELPHI. Differential Equations Lead to Predictions of Hospitalizations and Infections. COVID-19 pandemic model named DELPHI developed by Massachusetts Institute of Technology, Cambridge. https://covidanalytics.io/projections
 
