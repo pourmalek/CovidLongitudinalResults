@@ -78,6 +78,7 @@ IHME = [Institute for Health Metrics and Evaluation model, UW](https://covid19.h
 
 [graph 102 b C19 daily deaths, IHME model, Absolute Percent Error, Deciles of IHME](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20102%20b%20C19%20daily%20deaths%2C%20IHME%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20IHME.pdf)
 
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/b8705302-3579-4cf6-9a1a-e5d0987b9ff5)
 
 IHME = [Institute for Health Metrics and Evaluation model, UW](https://covid19.healthdata.org/global?view=cumulative-deaths&tab=trend)
 
