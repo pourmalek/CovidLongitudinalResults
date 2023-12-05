@@ -1,12 +1,12 @@
 Predictive performance of international periodically updated COVID-19 epidemic models - Results
 
-### Descriptive statistics and maps of error measures
+### Error measures results and maps
 
 ***
 
 International periodically updated COVID-19 pandemic models:
 
-DELP, IHME, IMPE, LANL, UCLA, YYGU
+Abbreviation: DELP, IHME, IMPE, LANL, UCLA, YYGU
 
 DELP: DELPHI. Differential Equations Lead to Predictions of Hospitalizations and Infections. COVID-19 pandemic model named DELPHI developed by Massachusetts Institute of Technology, Cambridge. https://covidanalytics.io/projections
 
@@ -22,6 +22,7 @@ YYGU: Youyang Gu. COVID-19 Projections Using Machine Learning. https://covid19-p
 
 ***
 
+### Error measures results by WHO region and global:
 
 **Descriptive statistics of predicative performance error measures for COVID-19 daily deaths in six international periodically updated epidemic models 2020-2022, at the global level and WHO regions**
 
@@ -33,6 +34,17 @@ YYGU: Youyang Gu. COVID-19 Projections Using Machine Learning. https://covid19-p
 
 ***
 
+### Error measures results by country:
+
+**Predicative performance error measures for COVID-19 daily deaths in six international periodically updated epidemic models 2020-2022, by country**
+
+[Results Countries.xlsx](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/Results%20Countries.xlsx)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/387a16a5-6bed-436b-a093-a081b53b7e97)
+
+***
+
+### Error measures results by country, maps:
 
 **Predicative performance error measures for COVID-19 daily deaths in international periodically updated epidemic models 2020-2022 by country** 
 
