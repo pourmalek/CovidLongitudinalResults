@@ -118,6 +118,7 @@ LANL = [Los Alamos National Laboratories model](https://covid-19.bsvgateway.org)
 
 [graph 105 a C19 daily deaths, UCLA model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20105%20a%20C19%20daily%20deaths%2C%20UCLA%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
 
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/f0c3b28b-ee3d-480e-b398-0ae5cffdb8f2)
 
 UCLA = [University of California Los Angeles model](https://covid19.uclaml.org)
 
