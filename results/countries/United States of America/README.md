@@ -1,4 +1,4 @@
-
+https://www.youtube.com/watch?v=MiT9WBugSGE
 
 
 United States of America YYGU - COVID-19 daily deaths forecasts by YYGU model, all updates
