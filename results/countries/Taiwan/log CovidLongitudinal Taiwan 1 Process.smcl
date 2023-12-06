@@ -3,7 +3,7 @@
       name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Taiwan/log CovidLongitudinal Taiwan 1 Process.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res}26 Nov 2023, 17:05:09
+ {txt}opened on:  {res} 6 Dec 2023, 09:31:20
 {txt}
 {com}. 
 . ***************************************************************************
@@ -2912,11 +2912,11 @@ saved
 {com}. 
 . 
 . 
-. /* foreach update of local list {c -(}
->         
->         * graph Taiwan IHME daily deaths each update 
->         
->         twoway ///
+. foreach update of local list {c -(}
+{txt}  2{com}.         
+.         * graph Taiwan IHME daily deaths each update 
+.         
+.         twoway ///
 >         (line DayDeaMeSmJOHNTWN date, sort lwidth(thick) lcolor(cyan)) ///      
 >         (line DayDeaMeFoIHME`update' date, sort lwidth(thin) lcolor(black)) /// 
 >         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
@@ -2926,11 +2926,12 @@ saved
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
 >         subtitle("Taiwan, forecast only") legend(position(6) order(1 "JOHN" 2 "IHME forecast ") rows(1) size(small)) ///
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
->         
->         qui graph export "graph 01 Taiwan IHME daily deaths update `update'.pdf", replace       
-> 
-> {c )-}
-> */
+{txt}  3{com}.         
+.         qui graph export "graph 01 Taiwan IHME daily deaths update `update'.pdf", replace       
+{txt}  4{com}. 
+. {c )-}
+{res}{txt}
+{com}. 
 . 
 . 
 . 
@@ -4690,11 +4691,11 @@ saved
 . 
 . 
 . 
-. /* foreach update of local list {c -(}
->         
->         * graph Taiwan IMPE daily deaths each update 
->         
->         twoway ///
+. foreach update of local list {c -(}
+{txt}  2{com}.         
+.         * graph Taiwan IMPE daily deaths each update 
+.         
+.         twoway ///
 >         (line DayDeaMeSmJOHNTWN date, sort lwidth(thick) lcolor(cyan)) ///      
 >         (line DayDeaMeFoIMPE`update' date, sort lwidth(thin) lcolor(magenta)) /// 
 >         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
@@ -4704,11 +4705,12 @@ saved
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
 >         subtitle("Taiwan, forecast only") legend(position(6) order(1 "JOHN" 2 "IMPE forecast ") rows(1) size(small)) ///
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
->         
->         qui graph export "graph 01 Taiwan IMPE daily deaths update `update'.pdf", replace       
-> 
-> {c )-}
-> */
+{txt}  3{com}.         
+.         qui graph export "graph 01 Taiwan IMPE daily deaths update `update'.pdf", replace       
+{txt}  4{com}. 
+. {c )-}
+{res}{txt}
+{com}. 
 . 
 . 
 . 
@@ -5444,11 +5446,11 @@ saved
 . 
 . 
 . 
-. /* foreach update of local list {c -(}
->         
->         * graph Taiwan LANL daily deaths each update 
->         
->         twoway ///
+. foreach update of local list {c -(}
+{txt}  2{com}.         
+.         * graph Taiwan LANL daily deaths each update 
+.         
+.         twoway ///
 >         (line DayDeaMeSmJOHNTWN date, sort lwidth(thick) lcolor(cyan)) ///      
 >         (line DayDeaMeFoLANL`update' date, sort lwidth(thin) lcolor(brown)) /// 
 >         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
@@ -5458,11 +5460,12 @@ saved
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
 >         subtitle("Taiwan, forecast only") legend(position(6) order(1 "JOHN" 2 "LANL forecast ") rows(1) size(small)) ///
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
->         
->         qui graph export "graph 01 Taiwan LANL daily deaths update `update'.pdf", replace       
-> 
-> {c )-}
-> */
+{txt}  3{com}.         
+.         qui graph export "graph 01 Taiwan LANL daily deaths update `update'.pdf", replace       
+{txt}  4{com}. 
+. {c )-}
+{res}{txt}
+{com}. 
 . 
 . 
 . 
@@ -5802,7 +5805,7 @@ saved
       {txt}name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Taiwan/log CovidLongitudinal Taiwan 1 Process.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res}26 Nov 2023, 17:05:25
+ {txt}closed on:  {res} 6 Dec 2023, 09:32:20
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}
