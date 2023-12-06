@@ -3,7 +3,7 @@
       name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/India/log CovidLongitudinal India 1 Process.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res}25 Nov 2023, 22:19:07
+ {txt}opened on:  {res} 6 Dec 2023, 09:53:07
 {txt}
 {com}. 
 . ***************************************************************************
@@ -11539,11 +11539,11 @@ saved
 {com}. 
 . 
 . 
-. /* foreach update of local list {c -(}
->         
->         * graph India DELP daily deaths each update 
->         
->         twoway ///
+. foreach update of local list {c -(}
+{txt}  2{com}.         
+.         * graph India DELP daily deaths each update 
+.         
+.         twoway ///
 >         (line DayDeaMeSmJOHNIND date, sort lwidth(thick) lcolor(cyan)) ///      
 >         (line DayDeaMeFoDELP`update' date, sort lwidth(thin) lcolor(red)) /// 
 >         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
@@ -11553,11 +11553,12 @@ saved
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
 >         subtitle("India, forecast only") legend(position(6) order(1 "JOHN" 2 "DELP forecast ") rows(1) size(small)) ///
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
->         
->         qui graph export "graph 01 India DELP daily deaths update `update'.pdf", replace        
-> 
-> {c )-}
-> */
+{txt}  3{com}.         
+.         qui graph export "graph 01 India DELP daily deaths update `update'.pdf", replace        
+{txt}  4{com}. 
+. {c )-}
+{res}{txt}
+{com}. 
 . 
 . 
 . 
@@ -14451,11 +14452,11 @@ saved
 {com}. 
 . 
 . 
-. /* foreach update of local list {c -(}
->         
->         * graph India IHME daily deaths each update 
->         
->         twoway ///
+. foreach update of local list {c -(}
+{txt}  2{com}.         
+.         * graph India IHME daily deaths each update 
+.         
+.         twoway ///
 >         (line DayDeaMeSmJOHNIND date, sort lwidth(thick) lcolor(cyan)) ///      
 >         (line DayDeaMeFoIHME`update' date, sort lwidth(thin) lcolor(black)) /// 
 >         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
@@ -14465,11 +14466,12 @@ saved
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
 >         subtitle("India, forecast only") legend(position(6) order(1 "JOHN" 2 "IHME forecast ") rows(1) size(small)) ///
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
->         
->         qui graph export "graph 01 India IHME daily deaths update `update'.pdf", replace        
-> 
-> {c )-}
-> */
+{txt}  3{com}.         
+.         qui graph export "graph 01 India IHME daily deaths update `update'.pdf", replace        
+{txt}  4{com}. 
+. {c )-}
+{res}{txt}
+{com}. 
 . 
 . 
 . 
@@ -18157,11 +18159,11 @@ saved
 . 
 . 
 . 
-. /* foreach update of local list {c -(}
->         
->         * graph India IMPE daily deaths each update 
->         
->         twoway ///
+. foreach update of local list {c -(}
+{txt}  2{com}.         
+.         * graph India IMPE daily deaths each update 
+.         
+.         twoway ///
 >         (line DayDeaMeSmJOHNIND date, sort lwidth(thick) lcolor(cyan)) ///      
 >         (line DayDeaMeFoIMPE`update' date, sort lwidth(thin) lcolor(magenta)) /// 
 >         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
@@ -18171,11 +18173,12 @@ saved
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
 >         subtitle("India, forecast only") legend(position(6) order(1 "JOHN" 2 "IMPE forecast ") rows(1) size(small)) ///
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
->         
->         qui graph export "graph 01 India IMPE daily deaths update `update'.pdf", replace        
-> 
-> {c )-}
-> */
+{txt}  3{com}.         
+.         qui graph export "graph 01 India IMPE daily deaths update `update'.pdf", replace        
+{txt}  4{com}. 
+. {c )-}
+{res}{txt}
+{com}. 
 . 
 . 
 . 
@@ -21587,11 +21590,11 @@ saved
 . 
 . 
 . 
-. /* foreach update of local list {c -(}
->         
->         * graph India LANL daily deaths each update 
->         
->         twoway ///
+. foreach update of local list {c -(}
+{txt}  2{com}.         
+.         * graph India LANL daily deaths each update 
+.         
+.         twoway ///
 >         (line DayDeaMeSmJOHNIND date, sort lwidth(thick) lcolor(cyan)) ///      
 >         (line DayDeaMeFoLANL`update' date, sort lwidth(thin) lcolor(brown)) /// 
 >         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
@@ -21601,11 +21604,12 @@ saved
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
 >         subtitle("India, forecast only") legend(position(6) order(1 "JOHN" 2 "LANL forecast ") rows(1) size(small)) ///
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
->         
->         qui graph export "graph 01 India LANL daily deaths update `update'.pdf", replace        
-> 
-> {c )-}
-> */
+{txt}  3{com}.         
+.         qui graph export "graph 01 India LANL daily deaths update `update'.pdf", replace        
+{txt}  4{com}. 
+. {c )-}
+{res}{txt}
+{com}. 
 . 
 . 
 . 
@@ -22649,11 +22653,11 @@ saved
 {com}. 
 . 
 . 
-. /* foreach update of local list {c -(}
->         
->         * graph India UCLA daily deaths each update 
->         
->         twoway ///
+. foreach update of local list {c -(}
+{txt}  2{com}.         
+.         * graph India UCLA daily deaths each update 
+.         
+.         twoway ///
 >         (line DayDeaMeSmJOHNIND date, sort lwidth(thick) lcolor(cyan)) ///      
 >         (line DayDeaMeFoUCLA`update' date, sort lwidth(thin) lcolor(blue)) /// 
 >         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
@@ -22663,11 +22667,12 @@ saved
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
 >         subtitle("India, forecast only") legend(position(6) order(1 "JOHN" 2 "UCLA forecast ") rows(1) size(small)) ///
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
->         
->         qui graph export "graph 01 India UCLA daily deaths update `update'.pdf", replace        
-> 
-> {c )-}
-> */
+{txt}  3{com}.         
+.         qui graph export "graph 01 India UCLA daily deaths update `update'.pdf", replace        
+{txt}  4{com}. 
+. {c )-}
+{res}{txt}
+{com}. 
 . 
 . 
 . * graph India UCLA daily deaths all updates
@@ -27891,11 +27896,11 @@ saved
 . 
 . 
 . 
-. /* foreach update of local list {c -(}
->         
->         * graph India YYGU daily deaths each update 
->         
->         twoway ///
+. foreach update of local list {c -(}
+{txt}  2{com}.         
+.         * graph India YYGU daily deaths each update 
+.         
+.         twoway ///
 >         (line DayDeaMeSmJOHNIND date, sort lwidth(thick) lcolor(cyan)) ///      
 >         (line DayDeaMeFoYYGU`update' date, sort lwidth(thin) lcolor(gold)) /// 
 >         if date >= td(01Jan2020) & date <= td(01Jan2023) ///
@@ -27905,11 +27910,12 @@ saved
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) legend(region(lcolor(none))) legend(bexpand) ///
 >         subtitle("India, forecast only") legend(position(6) order(1 "JOHN" 2 "YYGU forecast ") rows(1) size(small)) ///
 >         xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2)) 
->         
->         qui graph export "graph 01 India YYGU daily deaths update `update'.pdf", replace        
-> 
-> {c )-}
-> */
+{txt}  3{com}.         
+.         qui graph export "graph 01 India YYGU daily deaths update `update'.pdf", replace        
+{txt}  4{com}. 
+. {c )-}
+{res}{txt}
+{com}. 
 . 
 . 
 . 
@@ -29124,7 +29130,7 @@ saved
       {txt}name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/India/log CovidLongitudinal India 1 Process.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res}25 Nov 2023, 22:19:56
+ {txt}closed on:  {res} 6 Dec 2023, 09:58:40
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}
