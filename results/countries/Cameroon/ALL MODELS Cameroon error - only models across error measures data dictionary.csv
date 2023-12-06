@@ -1,6 +1,0 @@
-name,varlab
-model,epidemic model being studied
-DDErrorr,Daily deaths Error mean of medians over updates and calendar months
-DDAbsErr,Daily deaths Absolute Error mean of medians over updates and calendar months
-DDPerErr,Daily deaths Percent Error mean of medians over updates and calendar months
-DDAbPeEr,Daily deaths Absolute Percent Error mean of medians over updates and calendar mo
