@@ -3,7 +3,7 @@
       name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/merge/log CovidLongitudinal merge.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res} 5 Dec 2023, 10:26:45
+ {txt}opened on:  {res} 5 Dec 2023, 16:33:21
 {txt}
 {com}. 
 . 
@@ -261,7 +261,7 @@ saved
      {c TLC}{hline 7}{c -}{hline 10}{c -}{hline 8}{c TRC}
      {c |} {res}model   loc_gr~e   update {txt}{c |}
      {c LT}{hline 7}{c -}{hline 10}{c -}{hline 8}{c RT}
-  1. {c |} {res} DELP     Russia      314 {txt}{c |}
+  1. {c |} {res} DELP    Nigeria      314 {txt}{c |}
      {c BLC}{hline 7}{c -}{hline 10}{c -}{hline 8}{c BRC}
 
 {com}. 
@@ -349,11 +349,11 @@ saved
 {com}. 
 . list in 1 // min number of model per country, already knew it is one
 {txt}
-     {c TLC}{hline 17}{c -}{hline 7}{c TRC}
-     {c |} {res} loc_grand_name   model {txt}{c |}
-     {c LT}{hline 17}{c -}{hline 7}{c RT}
-  1. {c |} {res}Solomon Islands       1 {txt}{c |}
-     {c BLC}{hline 17}{c -}{hline 7}{c BRC}
+     {c TLC}{hline 12}{c -}{hline 7}{c TRC}
+     {c |} {res}loc_gran~e   model {txt}{c |}
+     {c LT}{hline 12}{c -}{hline 7}{c RT}
+  1. {c |} {res}Micronesia       1 {txt}{c |}
+     {c BLC}{hline 12}{c -}{hline 7}{c BRC}
 
 {com}. 
 . gsort - model
@@ -364,7 +364,7 @@ saved
      {c TLC}{hline 10}{c -}{hline 7}{c TRC}
      {c |} {res}loc_gr~e   model {txt}{c |}
      {c LT}{hline 10}{c -}{hline 7}{c RT}
-  1. {c |} {res}   Spain       6 {txt}{c |}
+  1. {c |} {res} Ecuador       6 {txt}{c |}
      {c BLC}{hline 10}{c -}{hline 7}{c BRC}
 
 {com}. 
@@ -373,6 +373,96 @@ saved
 {com}. 
 . sort loc_grand_name model
 {txt}
+{com}. 
+. reshape wide update, i(loc_grand_name) j(model) string
+{txt}(j = DELP IHME IMPE LANL UCLA YYGU)
+
+Data{col 36}Long{col 43}->{col 48}Wide
+{hline 77}
+Number of observations     {res}         792   {txt}->   {res}189         
+{txt}Number of variables        {res}           3   {txt}->   {res}7           
+{txt}j variable (6 values)             {res}model   {txt}->   (dropped)
+xij variables:
+                                 {res}update   {txt}->   {res}updateDELP updateIHME ... updateYYGU
+{txt}{hline 77}
+
+{com}. 
+. rename (updateDELP updateIHME updateIMPE updateLANL updateUCLA updateYYGU) ///
+>        (DELP_update_num IHME_update_num IMPE_update_num LANL_update_num UCLA_update_num YYGU_update_num)
+{res}{txt}
+{com}.            
+. label var DELP_update_num "DELP number of updates for this country"
+{txt}
+{com}. label var IHME_update_num "IHME number of updates for this country"
+{txt}
+{com}. label var IMPE_update_num "IMPE number of updates for this country"
+{txt}
+{com}. label var LANL_update_num "LANL number of updates for this country"
+{txt}
+{com}. label var UCLA_update_num "UCLA number of updates for this country"
+{txt}
+{com}. label var YYGU_update_num "YYGU number of updates for this country"
+{txt}
+{com}. 
+. egen MEANS_update_num = rowtotal(DELP_update_num IHME_update_num IMPE_update_num LANL_update_num UCLA_update_num YYGU_update_num)
+{txt}
+{com}. label var MEANS_update_num "Mean of models' number of updates for this country"
+{txt}
+{com}. 
+. preserve
+{txt}
+{com}. 
+. collapse (sum) DELP_update_num IHME_update_num IMPE_update_num LANL_update_num UCLA_update_num YYGU_update_num ///
+> MEANS_update_num
+{res}{txt}
+{com}. 
+. gen loc_grand_name = "SUM"
+{txt}
+{com}. 
+. order loc_grand_name 
+{txt}
+{com}. 
+. save "model-country-update sum.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+model-country-update sum.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. restore
+{txt}
+{com}. 
+. append using "model-country-update sum.dta"
+{txt}{p 0 7 2}
+(variable
+{bf:DELP_update_num} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:IHME_update_num} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:IMPE_update_num} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:LANL_update_num} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:UCLA_update_num} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:YYGU_update_num} was {bf:int}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 7 2}
+(variable
+{bf:MEANS_update_num} was {bf:float}, now {bf:double} to accommodate using data's values)
+{p_end}
+
 {com}. 
 . save "model-country-update.dta", replace
 {txt}{p 0 4 2}
@@ -386,6 +476,7 @@ saved
 {res}{txt}file {bf:model-country-update.xlsx} saved
 
 {com}. 
+. 
 . 
 . 
 . 
@@ -13944,7 +14035,7 @@ DD_MODELS_AbPeEr sort
 
 {txt}Contains data from {res}world_shp.dta
 {txt} Observations:{res}       526,312                  
-{txt}    Variables:{res}             5                  5 Dec 2023 10:26
+{txt}    Variables:{res}             5                  5 Dec 2023 16:33
 {txt}{hline}
 Variable      Storage   Display    Value
     name         type    format    label      Variable label
@@ -13982,7 +14073,7 @@ saved
 
 {txt}Contains data from {res}world.dta
 {txt} Observations:{res}           251                  
-{txt}    Variables:{res}            55                  5 Dec 2023 10:26
+{txt}    Variables:{res}            55                  5 Dec 2023 16:33
 {txt}{hline}
 Variable      Storage   Display    Value
     name         type    format    label      Variable label
@@ -17727,7 +17818,7 @@ saved
       {txt}name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/merge/log CovidLongitudinal merge.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res} 5 Dec 2023, 10:27:53
+ {txt}closed on:  {res} 5 Dec 2023, 16:34:29
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}
