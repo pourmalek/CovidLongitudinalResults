@@ -51,7 +51,7 @@ https://youtu.be/6xvEpewVUHA
 United Kingdom YYGU - COVID-19 daily deaths forecasts by YYGU model, all updates
 
 Video of 
-https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/United%20Kingdom/graph%2001%20United%20Kingdom%20YYGU%20daily%20deaths%20AL%20updates.pdf
+
 
 is here: 
 https://youtu.be/RuYnyYcBt64 
