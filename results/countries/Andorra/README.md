@@ -14,4 +14,6 @@ Selected graphs:
 
 [Andorra, C19 daily deaths, average of error measures across models, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Andorra/graph%2013b%20Andorra%20ALL%20MODELS%20C19%20daily%20deaths%2C%20error%20measures%20across%20models.pdf)
 
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/5d4dd1f0-738d-4b2d-9884-5503e187f56f)
+
 ***
