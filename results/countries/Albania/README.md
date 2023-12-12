@@ -1,4 +1,4 @@
-[Albania ALL graphs]()
+[Albania ALL graphs](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Albania/graph%2002%20Albania%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
 
 ***
 
