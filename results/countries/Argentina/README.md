@@ -1,4 +1,4 @@
-[Argentina ALL graphs]
+[Argentina ALL graphs](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Argentina/graph%2000%20Argentina%20ALL%20graphs.pdf)
 
 
 ***
