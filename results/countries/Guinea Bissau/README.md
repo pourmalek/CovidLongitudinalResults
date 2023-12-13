@@ -14,5 +14,6 @@ Selected graphs:
 
 [Guinea Bissau, C19 daily deaths, average of error measures across models, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Guinea%20Bissau/graph%2013b%20Guinea%20Bissau%20ALL%20MODELS%20C19%20daily%20deaths%2C%20error%20measures%20across%20models.pdf)
 
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/b3294f39-eeeb-4797-9c69-ba5d05922712)
 
 ***
