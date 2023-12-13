@@ -8,7 +8,7 @@ See final results [here](https://github.com/pourmalek/CovidLongitudinalResults/t
 
 ***
 
-Model name abbreviations
+Models included in this study: Abbreviation, name, link
 
 DELP: [DELPHI](https://covidanalytics.io/projections ) ||
 IHME: [Institute for Health Metrics and Evaluation](https://covid19.healthdata.org ) ||
