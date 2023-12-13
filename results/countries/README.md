@@ -1,4 +1,86 @@
-Countries with COVID-19 daily deaths forecasts by models, all updates
+Two set of graphs are selcted for countries' results here:
+
+[(a) Country, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/README.md#country-c19-daily-deaths-all-models-all-updates-forecast-only)
+
+[(b) Country, C19 daily deaths, forecasts by each model, all updates (PDF and video)](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/README.md#countries-with-covid-19-daily-deaths-forecasts-by-models-all-updates)
+
+****
+
+### Country, C19 daily deaths, all models, all updates, forecast only
+
+****
+
+[Afghanistan, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Afghanistan/graph%2002%20Afghanistan%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/31f26789-3d12-49ec-a54e-c9cc2f38c306)
+
+[Albania, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Albania/graph%2002%20Albania%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/57d30dac-1d8a-4dde-bfdd-a2ba914cb2a8)
+
+***
+
+[Algeria, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Algeria/graph%2002%20Algeria%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/7b26e1f5-e743-4c75-8f24-1d5b98184d8c)
+
+***
+
+[Andorra, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Andorra/graph%2002%20Andorra%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/cc92969a-6807-4c96-aadf-c89fe28bd643)
+
+***
+
+[Angola, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Angola/graph%2002%20Angola%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/19ac6f9e-4193-4a41-be52-b5912469da43)
+
+***
+
+[Antigua and Barbuda, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Antigua%20and%20Barbuda/graph%2002%20Antigua%20and%20Barbuda%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/d6139099-d10f-461f-a459-92961a7c65a0)
+
+***
+
+[Argentina, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Argentina/graph%2002%20Argentina%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/ebad0cd2-37f3-4519-bfa9-6fa06689c7fa)
+
+***
+
+[Armenia, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Armenia/graph%2002%20Armenia%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/365f0543-64bf-4cbb-bed4-4b01b2fa460c)
+
+***
+
+[Australia, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Australia/graph%2002%20Australia%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/781c8eb5-bb1f-4112-a385-6bf3a5e2fc48)
+
+***
+
+[Austria, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Austria/graph%2002%20Austria%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/7c595b63-534b-410d-81ba-18613abdec21)
+
+***
+
+[Azerbaijan, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Azerbaijan/graph%2002%20Azerbaijan%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/5096da30-f5b3-4912-97be-bd4dca461379)
+
+***
+
+************************
+
+Additional graphs:
+
+****
+
+### Countries with COVID-19 daily deaths forecasts by models, all updates
 
 Argentina
 Canada
