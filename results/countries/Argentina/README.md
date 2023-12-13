@@ -22,6 +22,7 @@ Selected graphs:
 Additional graphs:
 
 ***
+
 Argentina DELP - COVID-19 daily deaths forecasts by DELP model, all updates
 
 Video of 
