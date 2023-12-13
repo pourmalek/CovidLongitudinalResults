@@ -1,4 +1,4 @@
-Two set of graphs are selcted for countries' results:
+Two set of graphs are selcted for countries' results here:
 
 [(a) Country, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/README.md#country-c19-daily-deaths-all-models-all-updates-forecast-only)
 
