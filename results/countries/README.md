@@ -31,6 +31,42 @@
 
 ***
 
+[Antigua and Barbuda, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Antigua%20and%20Barbuda/graph%2002%20Antigua%20and%20Barbuda%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/d6139099-d10f-461f-a459-92961a7c65a0)
+
+***
+
+[Argentina, C19 daily deaths, average of error measures across models, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Argentina/graph%2013b%20Argentina%20ALL%20MODELS%20C19%20daily%20deaths%2C%20error%20measures%20across%20models.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/2457809b-0697-4077-b639-df78700a90e9)
+
+***
+
+[Armenia, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Armenia/graph%2002%20Armenia%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/365f0543-64bf-4cbb-bed4-4b01b2fa460c)
+
+***
+
+[Australia, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Australia/graph%2002%20Australia%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/781c8eb5-bb1f-4112-a385-6bf3a5e2fc48)
+
+***
+
+[Austria, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Austria/graph%2002%20Austria%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/7c595b63-534b-410d-81ba-18613abdec21)
+
+***
+
+[Azerbaijan, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Azerbaijan/graph%2002%20Azerbaijan%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/5096da30-f5b3-4912-97be-bd4dca461379)
+
+***
+
 ************************
 
 Additional graphs:
