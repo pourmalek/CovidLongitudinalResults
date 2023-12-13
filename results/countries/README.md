@@ -2,7 +2,7 @@ Two set of graphs are selcted for countries' results:
 
 [(a) Country, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/README.md#country-c19-daily-deaths-all-models-all-updates-forecast-only)
 
-(b) Country, C19 daily deaths, forecasts by each model, all updates (PDF and video)
+[(b) Country, C19 daily deaths, forecasts by each model, all updates (PDF and video)](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/README.md#countries-with-covid-19-daily-deaths-forecasts-by-models-all-updates)
 
 ****
 
