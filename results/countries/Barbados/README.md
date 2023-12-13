@@ -1,4 +1,4 @@
-[Barbados ALL graphs]()
+[Barbados ALL graphs](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Barbados/graph%2000%20Barbados%20ALL%20graphs.pdf)
 
 ***
 
@@ -6,10 +6,14 @@ Selected graphs:
 
 ***
 
-[Barbados, C19 daily deaths, all models, all updates, forecast only]()
+[Barbados, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Barbados/graph%2002%20Barbados%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/a27344e0-b989-4c93-be36-075fef8f153e)
 
 ***
 
 [Barbados, C19 daily deaths, average of error measures across models, forecast only]()
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/3131bb5b-5504-4c8d-a86a-80cba5fb877c)
 
 ***
