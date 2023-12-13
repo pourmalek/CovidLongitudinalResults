@@ -1,5 +1,4 @@
-https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Ghana/graph%2000%20Ghana%20ALL%20graphs.pdf
-[Ghana ALL graphs]()
+[Ghana ALL graphs](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Ghana/graph%2000%20Ghana%20ALL%20graphs.pdf)
 
 ***
 
