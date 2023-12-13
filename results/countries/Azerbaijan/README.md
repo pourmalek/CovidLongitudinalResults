@@ -1,4 +1,4 @@
-[Azerbaijan ALL graphs]
+[Azerbaijan ALL graphs](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Azerbaijan/graph%2000%20Azerbaijan%20ALL%20graphs.pdf)
 
 ***
 
