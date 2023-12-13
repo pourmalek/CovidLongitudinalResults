@@ -1,4 +1,4 @@
-[Cameroon ALL graphs]
+[Cameroon ALL graphs](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Albania/graph%2000%20Albania%20ALL%20graphs.pdf)
 
 ***
 
