@@ -4,7 +4,7 @@ Additional graphs:
 
 ****
 
-### Countries with COVID-19 daily deaths forecasts by models, all updates
+#### Countries with COVID-19 daily deaths forecasts by models, all updates
 
 Argentina
 Canada
