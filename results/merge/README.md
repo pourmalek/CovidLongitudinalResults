@@ -76,6 +76,15 @@ C19 daily deaths, EACH model, Absolute Percent Error vs Error, 2020-2022
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/e524ed65-79e1-4403-9f9c-a66b93971b0b)
 
+***
+
+[graph 21 C19 daily deaths, IHME model, Absolute Percent Error vs Error, 2020-2022](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2021%20C19%20daily%20deaths%2C%20IHME%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/bc8a8cda-0f4c-484f-b2f2-460940927759)
+
+***
+
+[graph 22 C19 daily deaths, IHME model, Absolute Percent Error vs Error, 2020-2022, y log]()
 
 ***
 ***
