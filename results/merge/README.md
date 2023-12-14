@@ -88,7 +88,33 @@ C19 daily deaths, EACH model, Absolute Percent Error vs Error, 2020-2022
 
 ***
 
-[graph 22 C19 daily deaths, IHME model, Absolute Percent Error vs Error, 2020-2022, y log]()
+[graph 22 C19 daily deaths, IHME model, Absolute Percent Error vs Error, 2020-2022, y log](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2022%20C19%20daily%20deaths%2C%20IHME%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20log.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/fa351f54-4915-4c61-965e-ba68771d9c17)
+
+***
+
+[graph 23 C19 daily deaths, IHME model, Absolute Percent Error vs Error, 2020-2022, y capped](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2023%20C19%20daily%20deaths%2C%20IHME%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20capped.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/211ebc4c-205a-46ed-bb7a-b0f8b52621a6)
+
+***
+
+[graph 31 C19 daily deaths, IMPE model, Absolute Percent Error vs Error, 2020-2022](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2031%20C19%20daily%20deaths%2C%20IMPE%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/ec721d25-a5a9-4f0e-a688-a3f4c5266c78)
+
+***
+
+[graph 32 C19 daily deaths, IMPE model, Absolute Percent Error vs Error, 2020-2022, y log](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2032%20C19%20daily%20deaths%2C%20IMPE%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20log.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/131a8382-3bb9-4450-81d1-9e186a8f8a39)
+
+***
+
+[graph 33 C19 daily deaths, IMPE model, Absolute Percent Error vs Error, 2020-2022, y capped](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2033%20C19%20daily%20deaths%2C%20IMPE%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20capped.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/cb5be9d4-9e1a-4717-9663-a430c1aa04e1)
 
 ***
 ***
