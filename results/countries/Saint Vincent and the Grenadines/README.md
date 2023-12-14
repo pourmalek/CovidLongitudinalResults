@@ -6,7 +6,7 @@ Selected graphs:
 
 ***
 
-[Saint Vincent and the Grenadines, C19 daily deaths, all models, all updates, forecast only]
+[Saint Vincent and the Grenadines, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Saint%20Vincent%20and%20the%20Grenadines/graph%2002%20Saint%20Vincent%20and%20the%20Grenadines%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/f2c710c9-82c1-4b08-86b7-4f4282111876)
 
