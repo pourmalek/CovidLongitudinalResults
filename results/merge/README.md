@@ -4,7 +4,7 @@ Predictive performance of international periodically updated COVID-19 epidemic m
 
 [Error measures results by country](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/README.md#error-measures-results-by-country)
 
-[Error measures graphs]()
+[Error measures graphs](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/README.md#error-measures-graphs)
 
 [Error measures results by country, maps]()
 
