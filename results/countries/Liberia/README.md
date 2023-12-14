@@ -12,7 +12,8 @@ Selected graphs:
 
 ***
 
-[Liberia, C19 daily deaths, average of error measures across models, forecast only]()
+[Liberia, C19 daily deaths, average of error measures across models, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Liberia/graph%2013b%20Liberia%20ALL%20MODELS%20C19%20daily%20deaths%2C%20error%20measures%20across%20models.pdf)
 
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/b0ab7823-94d2-414a-b743-3566da747b16)
 
 ***
