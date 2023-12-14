@@ -152,7 +152,53 @@ C19 daily deaths, EACH model, Absolute Percent Error vs Error, 2020-2022
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/3319e639-fc63-4bf0-9c52-e43d208f845b)
 
+***
 
+[graph 61 C19 daily deaths, YYGU model, Absolute Percent Error vs Error, 2020-2022](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2061%20C19%20daily%20deaths%2C%20YYGU%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/c5f46707-20b6-4ec8-a54e-25b7c0078032)
+
+***
+
+[graph 62 C19 daily deaths, YYGU model, Absolute Percent Error vs Error, 2020-2022, y log](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2062%20C19%20daily%20deaths%2C%20YYGU%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20log.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/5ff49f52-de06-4ea8-b343-1e973eb6a081)
+
+***
+
+[graph 63 C19 daily deaths, YYGU model, Absolute Percent Error vs Error, 2020-2022, y capped](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2063%20C19%20daily%20deaths%2C%20YYGU%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20capped.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/c32fed21-5124-4789-9046-d298f8373985)
+
+***
+
+[graph 71 C19 daily deaths, mean of models, Absolute Percent Error vs Error, 2020-2022](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2071%20C19%20daily%20deaths%2C%20mean%20of%20models%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/620ecf36-6c58-4268-a449-9c5a4763f6b6)
+
+***
+
+[graph 72 C19 daily deaths, mean of models, Absolute Percent Error vs Error, 2020-2022, y log](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2072%20C19%20daily%20deaths%2C%20mean%20of%20models%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20log.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/4f9263c1-7df8-48c1-8b6e-cb3c5eace3a1)
+
+***
+
+[graph 73 C19 daily deaths, mean of models, Absolute Percent Error vs Error, 2020-2022, y capped](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2073%20C19%20daily%20deaths%2C%20mean%20of%20models%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20capped.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/7227698d-fab0-4c93-88ce-d5d847c0bb64)
+
+***
+
+[graph 81 C19 daily deaths, all models, Absolute Percent Error vs Error, 2020-2022](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2081%20C19%20daily%20deaths%2C%20all%20models%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/8e49270d-f8ba-409c-8d21-91db1e9043ee)
+
+***
+
+[graph 83 C19 daily deaths, all models, Absolute Percent Error vs Error, 2020-2022, y capped](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2083%20C19%20daily%20deaths%2C%20all%20models%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20capped.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/fa58d003-ffe9-4f1d-88e0-19c15ba41dad)
 
 ***
 ***
