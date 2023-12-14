@@ -60,6 +60,10 @@ YYGU: Youyang Gu. COVID-19 Projections Using Machine Learning. https://covid19-p
 
 C19 daily deaths, EACH model, Absolute Percent Error vs Error, 2020-2022
 
+ (Plain, y log, y capped)
+
+***
+
 [graph 11 C19 daily deaths, DELP model, Absolute Percent Error vs Error, 2020-2022](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2011%20C19%20daily%20deaths%2C%20DELP%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022.pdf)
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/0c1d90aa-f335-455f-a0b8-d9a92f1c7c56)
