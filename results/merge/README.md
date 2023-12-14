@@ -1,6 +1,12 @@
 Predictive performance of international periodically updated COVID-19 epidemic models - Results
 
-https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/README.md#error-measures-results-and-maps
+[Error measures results by WHO region and global]()
+
+[Error measures results by country]()
+
+[Error measures graphs]()
+
+[Error measures results by country, maps]()
 
 ***
 ***
