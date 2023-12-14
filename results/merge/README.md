@@ -53,6 +53,18 @@ C19 daily deaths, EACH model, Absolute Percent Error vs Error, 2020-2022
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/0c1d90aa-f335-455f-a0b8-d9a92f1c7c56)
 
+***
+
+[graph 12 C19 daily deaths, DELP model, Absolute Percent Error vs Error, 2020-2022, y log](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2012%20C19%20daily%20deaths%2C%20DELP%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20log.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/7b2d68f2-8634-43f8-8d33-9c1efc5b102c)
+
+***
+
+[graph 13 C19 daily deaths, DELP model, Absolute Percent Error vs Error, 2020-2022, y capped](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2013%20C19%20daily%20deaths%2C%20DELP%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20capped.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/e524ed65-79e1-4403-9f9c-a66b93971b0b)
+
 
 ***
 ***
