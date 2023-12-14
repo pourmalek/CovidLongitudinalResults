@@ -6,8 +6,9 @@ Selected graphs:
 
 ***
 
-[Lebanon, C19 daily deaths, all models, all updates, forecast only]()
+[Lebanon, C19 daily deaths, all models, all updates, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Lebanon/graph%2002%20Lebanon%20ALL%20MODELS%20C19%20daily%20deaths%20all%20updates.pdf)
 
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/0ed07af4-a703-4de9-94ba-f1886bd15911)
 
 ***
 
