@@ -117,6 +117,44 @@ C19 daily deaths, EACH model, Absolute Percent Error vs Error, 2020-2022
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/cb5be9d4-9e1a-4717-9663-a430c1aa04e1)
 
 ***
+
+[graph 41 C19 daily deaths, LANL model, Absolute Percent Error vs Error, 2020-2022](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2041%20C19%20daily%20deaths%2C%20LANL%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/a43e8131-60af-49b0-ba64-6e531b86dcde)
+
+***
+
+[graph 42 C19 daily deaths, LANL model, Absolute Percent Error vs Error, 2020-2022, y log](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2042%20C19%20daily%20deaths%2C%20LANL%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20log.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/8e72bb0c-a0e4-4f3b-bc5b-5cbf471f66bd)
+
+***
+
+[graph 43 C19 daily deaths, LANL model, Absolute Percent Error vs Error, 2020-2022, y capped](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2043%20C19%20daily%20deaths%2C%20LANL%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20capped.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/370f87c1-51e0-42dd-b01f-3e691da235b2)
+
+***
+
+[graph 51 C19 daily deaths, UCLA model, Absolute Percent Error vs Error, 2020-2022](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2051%20C19%20daily%20deaths%2C%20UCLA%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/1fe813d2-3382-4870-814f-c9f400bbbf6c)
+
+***
+
+[graph 52 C19 daily deaths, UCLA model, Absolute Percent Error vs Error, 2020-2022, y log](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2052%20C19%20daily%20deaths%2C%20UCLA%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20log.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/d75716fe-e1cb-4da9-9ffe-ea9c5f689cb6)
+
+***
+
+[graph 53 C19 daily deaths, UCLA model, Absolute Percent Error vs Error, 2020-2022, y capped](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%2053%20C19%20daily%20deaths%2C%20UCLA%20model%2C%20Absolute%20Percent%20Error%20vs%20Error%2C%202020-2022%2C%20y%20capped.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/3319e639-fc63-4bf0-9c52-e43d208f845b)
+
+
+
+***
 ***
 
 ### Error measures results by country, maps:
