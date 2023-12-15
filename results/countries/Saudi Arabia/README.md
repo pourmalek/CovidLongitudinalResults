@@ -12,7 +12,7 @@ Selected graphs:
 
 ***
 
-[Saudi Arabia, C19 daily deaths, average of error measures across models, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Saudi%20Arabia/graph%2013a%20Saudi%20Arabia%20ALL%20MODELS%20C19%20daily%20deaths%2C%20models%20across%20error%20measures.pdf)
+[Saudi Arabia, C19 daily deaths, average of error measures across models, forecast only]()
 
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/527afc8e-9462-452e-81b1-9ec569365255)
 
