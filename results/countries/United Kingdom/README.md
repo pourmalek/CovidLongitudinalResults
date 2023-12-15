@@ -17,3 +17,7 @@ Selected graphs:
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/909d17e9-af6f-458b-9abc-49da7f44454c)
 
 ***
+
+Additional graphs:
+
+***
