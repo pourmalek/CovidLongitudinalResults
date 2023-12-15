@@ -17,3 +17,36 @@ Selected graphs:
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/261c68d9-5019-4bac-9a26-715c61433674)
 
 ***
+
+Additional graphs:
+
+***
+
+Taiwan IHME - COVID-19 daily deaths forecasts by IHME model, all updates
+
+Video of 
+https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Taiwan/graph%2001%20Taiwan%20IHME%20daily%20deaths%20ALL%20updates.pdf
+
+is here:
+https://youtu.be/UDf7bycI8xQ 
+
+***
+
+Taiwan IMPE - COVID-19 daily deaths forecasts by IMPE model, all updates
+Video of 
+https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Taiwan/graph%2001%20Taiwan%20IMPE%20daily%20deaths%20ALL%20updates.pdf
+
+is here:
+https://youtu.be/e5WVc-MMgYI 
+
+***
+
+Taiwan LANL - COVID-19 daily deaths forecasts by LANL model, all updates
+
+Video of 
+https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Taiwan/graph%2001%20Taiwan%20LANL%20daily%20deaths%20ALL%20updates.pdf
+
+is here:
+https://youtu.be/4K-Kc5cg-4U 
+
+******
