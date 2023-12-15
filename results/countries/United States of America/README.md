@@ -18,7 +18,9 @@ Selected graphs:
 
 ***
 
-Selected graphs:
+Additional graphs:
+
+***
 
 United States of America DELP - COVID-19 daily deaths forecasts by DELP model, all updates
 
