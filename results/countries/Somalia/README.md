@@ -14,6 +14,6 @@ Selected graphs:
 
 [Somalia, C19 daily deaths, average of error measures across models, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Somalia/graph%2013b%20Somalia%20ALL%20MODELS%20C19%20daily%20deaths%2C%20error%20measures%20across%20models.pdf)
 
-![Uploading image.png…]()
+
 
 ***
