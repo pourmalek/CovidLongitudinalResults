@@ -12,7 +12,8 @@ Selected graphs:
 
 ***
 
-[South Sudan, C19 daily deaths, average of error measures across models, forecast only]()
+[South Sudan, C19 daily deaths, average of error measures across models, forecast only](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/South%20Sudan/graph%2013b%20South%20Sudan%20ALL%20MODELS%20C19%20daily%20deaths%2C%20error%20measures%20across%20models.pdf)
 
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/72a4ff33-ae9d-4ac4-a86e-bcbc0c7d4470)
 
 ***
