@@ -82,3 +82,5 @@ is here:
 https://youtu.be/nhZzi5XyPMs 
 
 ***
+
+[C19 daily deaths, Argentina, all models, forecast days, all updates]()
