@@ -1,0 +1,1422 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/log CovidLongitudinal Argentina days.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}17 Dec 2023, 12:36:44
+{txt}
+{com}. 
+. ***************************************************************************
+. * This is "do CovidLongitudinal Argentina days.do"
+. 
+. * Project: Longitudinal assessment of COVID-19 models 
+. 
+. * Objective: Assess the number of forecast days into future by models
+.         * for each country ---->> Argentina <<----                                                                 
+. ***************************************************************************
+. 
+. 
+. * Assess the number of forecast days into future by models, create graphs
+. 
+. 
+. 
+. ** input data files: "Argentina `model' days.dta" 
+. 
+. ** output data files: "Argentina days.dta"
+. 
+. 
+. 
+. 
+. 
+. * gen calendar file
+. 
+. clear
+{txt}
+{com}. 
+. di td(01jan2020) // 21915
+{res}21915
+{txt}
+{com}. 
+. di td(01jan2023) // 23011
+{res}23011
+{txt}
+{com}. 
+. di td(01jan2023) - td(01jan2020) + 1 // 1097
+{res}1097
+{txt}
+{com}. 
+. 
+. 
+. set obs 1097
+{txt}{p}
+Number of observations ({bf:_N}) was 0,
+now 1,097.
+{p_end}
+
+{com}. 
+. gen date = .
+{txt}(1,097 missing values generated)
+
+{com}. 
+. replace date = 21915 in 1
+{txt}(1 real change made)
+
+{com}. 
+. replace date = date[_n-1] + 1 in 2/l
+{txt}(1,096 real changes made)
+
+{com}. 
+. replace date = date[_n-1] + 1 in 2/732
+{txt}(0 real changes made)
+
+{com}. 
+. format date %tdDDMonCCYY
+{txt}
+{com}. 
+. codebook date
+
+{txt}{hline}
+{res}date{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric daily date ({res}float{txt})
+
+{col 18}Range: [{res}21915{txt},{res}23011{txt}]{col 55}Units: {res}1
+{col 8}{txt}Or equivalently: [{res}01jan2020{txt},{res}01jan2023{txt}]{col 55}Units: {res}days
+{col 10}{txt}Unique values: {res}1,097{col 51}{txt}Missing .: {res}0{txt}/{res}1,097
+
+{txt}{col 19}Mean: {res}{ralign 7:22463}{txt} = {res}02jul2021{txt}
+{col 14}Std. dev.: {res}{ralign 7:316.821}
+{txt}{col 12}Percentiles: {col 25}{ralign 9:10%}{ralign 11:25%}{ralign 11:50%}{ralign 11:75%}{ralign 11:90%}
+{res}{col 25}{ralign 9:22024}{ralign 11:   22189}{ralign 11:   22463}{ralign 11:   22737}{ralign 11:   22902}
+{col 25}{ralign 9:19apr2020}{ralign 11:01oct2020}{ralign 11:02jul2021}{ralign 11:02apr2022}{ralign 11:14sep2022}
+{txt}
+{com}. 
+. save "calendar.dta", replace 
+{txt}{p 0 4 2}
+file {bf}
+calendar.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. *
+. 
+. grstyle init
+{res}{txt}
+{com}. 
+. grstyle color background white
+{txt}
+{com}. 
+. 
+. ssc install fillmissing
+{txt}checking {hilite:fillmissing} consistency and verifying not already installed...
+all files already exist and are up to date.
+
+{com}. 
+. 
+. 
+. 
+. 
+. * DELP 
+. 
+. use "Argentina DELP days.dta", clear
+{txt}
+{com}. 
+. fillmissing loc_grand_name
+{txt}(1,277 real changes made)
+
+{com}. 
+. keep loc_grand_name *_days
+{txt}
+{com}. 
+. keep in 1
+{txt}(1,461 observations deleted)
+
+{com}. 
+. gen i = _n
+{txt}
+{com}. 
+. foreach var in DayDeaMeFoDELP20200417_days-DayDeaMeFoDELP20220915_days {c -(}
+{txt}  2{com}.         
+.         renvars `var', trim(22)
+{txt}  3{com}. 
+. {c )-}
+{txt}
+{com}. *
+. 
+. 
+. reshape long DayDeaMeFoDELP, i(i) j(j)
+{txt}(j = 20200417 20200424 20200501 20200509 20200517 20200524 20200531 20200607 20200614 20200621 20200628 20200704 20200718 20200723 20200801 20200815 20200829 20200912 20200926 20201008 20201022 20201105 20201119 20201203 20201217 20201231 20210114 20210128 20210211 20210225 20210311 20210325 20210408 20210422 20210506 20210520 20210603 20210610 20210617 20210624 20210701 20210708 20210715 20210722 20210729 20210805 20210812 20210819 20210826 20210902 20210909 20210916 20210923 20210930 20211007 20211014 20211021 20211028 20211104 20211111 20211118 20211125 20211202 20211209 20211216 20211223 20211230 20220106 20220113 20220114 20220115 20220116 20220117 20220118 20220119 20220120 20220121 20220122 20220123 20220124 20220125 20220126 20220127 20220128 20220129 20220130 20220131 20220201 20220202 20220203 20220204 20220205 20220206 20220207 20220208 20220209 20220210 20220211 20220212 20220213 20220214 20220215 20220216 20220217 20220218 20220219 20220220 20220221 20220222 20220223 20220224 20220225 20220226 20220227 20220228 20220301 20220302 20220303 20220304 20220305 20220306 20220307 20220308 20220309 20220310 20220311 20220312 20220313 20220314 20220315 20220316 20220317 20220318 20220319 20220320 20220321 20220322 20220323 20220324 20220325 20220326 20220327 20220328 20220329 20220330 20220331 20220401 20220402 20220403 20220404 20220405 20220406 20220407 20220408 20220409 20220410 20220411 20220412 20220413 20220414 20220415 20220416 20220417 20220418 20220419 20220420 20220421 20220422 20220423 20220424 20220425 20220426 20220427 20220428 20220429 20220430 20220501 20220502 20220503 20220504 20220505 20220506 20220507 20220508 20220509 20220510 20220511 20220512 20220513 20220514 20220515 20220516 20220517 20220518 20220519 20220520 20220521 20220522 20220523 20220524 20220525 20220526 20220527 20220528 20220529 20220530 20220531 20220601 20220602 20220603 20220604 20220605 20220606 20220607 20220608 20220609 20220610 20220611 20220612 20220613 20220614 20220615 20220616 20220617 20220618 20220619 20220620 20220621 20220622 20220623 20220624 20220625 20220626 20220627 20220628 20220629 20220630 20220701 20220702 20220703 20220704 20220705 20220706 20220707 20220708 20220709 20220710 20220711 20220712 20220713 20220714 20220715 20220716 20220717 20220718 20220719 20220720 20220721 20220722 20220723 20220724 20220725 20220726 20220727 20220728 20220729 20220730 20220731 20220801 20220802 20220803 20220804 20220805 20220806 20220807 20220808 20220809 20220810 20220811 20220812 20220813 20220814 20220815 20220816 20220817 20220818 20220819 20220820 20220821 20220822 20220823 20220824 20220825 20220826 20220827 20220828 20220829 20220830 20220831 20220901 20220902 20220903 20220904 20220905 20220906 20220907 20220908 20220909 20220910 20220911 20220912 20220913 20220914 20220915)
+
+Data{col 36}Wide{col 43}->{col 48}Long
+{hline 77}
+Number of observations     {res}           1   {txt}->   {res}314         
+{txt}Number of variables        {res}         316   {txt}->   {res}4           
+{txt}j variable (314 values)                   ->   {res}j
+{txt}xij variables:
+{res}DayDeaMeFoDELP20200417 DayDeaMeFoDELP20200424 ... DayDeaMeFoDELP20220915{txt}->{res}DayDeaMeFoDELP
+{txt}{hline 77}
+
+{com}. 
+. drop i
+{txt}
+{com}. 
+. rename j DELP_update
+{res}{txt}
+{com}. label var DELP_update "DELP update date"
+{txt}
+{com}. 
+. rename DayDeaMeFoDELP DELP_days
+{res}{txt}
+{com}. label var DELP_days "DELP forecast days"
+{txt}
+{com}. 
+. gen DELP_update_num = _n
+{txt}
+{com}. label var DELP_update_num "DELP update number"
+{txt}
+{com}. 
+. 
+. * gen calendar date 
+. 
+. clonevar this = DELP_update
+{txt}
+{com}. 
+. tostring this, replace
+{txt}this was {res:long} now {res:str8}
+
+{com}. 
+. gen date = date(this, "YMD")
+{txt}
+{com}. 
+. drop this
+{txt}
+{com}. 
+. format date %tdDDMonCCYY
+{txt}
+{com}. codebook date
+
+{txt}{hline}
+{res}date{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric daily date ({res}float{txt})
+
+{col 18}Range: [{res}22022{txt},{res}22903{txt}]{col 55}Units: {res}1
+{col 8}{txt}Or equivalently: [{res}17apr2020{txt},{res}15sep2022{txt}]{col 55}Units: {res}days
+{col 10}{txt}Unique values: {res}314{col 51}{txt}Missing .: {res}0{txt}/{res}314
+
+{txt}{col 19}Mean: {res}{ralign 7:22689}{txt} = {res}13feb2022{txt}(+ 1 hour)
+{col 14}Std. dev.: {res}{ralign 7:207.477}
+{txt}{col 12}Percentiles: {col 25}{ralign 9:10%}{ralign 11:25%}{ralign 11:50%}{ralign 11:75%}{ralign 11:90%}
+{res}{col 25}{ralign 9:22364}{ralign 11:   22668}{ralign 11: 22746.5}{ralign 11:   22825}{ralign 11:   22872}
+{col 25}{ralign 9:25mar2021}{ralign 11:23jan2022}{ralign 11:11apr2022}{ralign 11:29jun2022}{ralign 11:15aug2022}
+{txt}
+{com}. 
+. 
+. merge 1:1 date using "calendar.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             783
+{txt}{col 9}from master{col 30}{res}               0{txt}  (_merge==1)
+{col 9}from using{col 30}{res}             783{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             314{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+. order date
+{txt}
+{com}. 
+. sort date
+{txt}
+{com}. 
+. 
+. save "Argentina DELP days long.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+Argentina DELP days long.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. * graph forecast days
+. 
+. twoway (connected DELP_days DELP_update_num, sort) ///
+> , xtitle(Update number) xlabel(, grid) xlabel(, grid) ///
+> ytitle(Forecast days) title("C19 daily deaths, Argentina, DELP model, forecast days, all updates", size(medium) color(black)) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. graph export "graph 201 C19 daily deaths, Argentina, DELP model, forecast days, all updates.pdf", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/graph 201 C19 daily deaths, Argentina, DELP model, forecast days, all updates.pdf{rm}
+saved as
+PDF
+format
+{p_end}
+
+{com}. 
+. 
+. summ DELP_days
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 3}DELP_days {c |}{res}        314    60.95223    23.45864          1        109
+{txt}
+{com}. 
+. tabstat DELP_days, ///
+> columns(statistics) statistics(mean sd median iqr min max r n) varwidth(16) 
+
+{txt}{ralign 16:Variable} {...}
+{c |}      Mean        SD       p50       IQR       Min       Max
+{hline 17}{c +}{hline 60}
+{ralign 16:DELP_days} {...}
+{c |}{...}
+ {res} 60.95223  23.45864        61        33         1       109
+{txt}{hline 17}{c BT}{hline 60}
+
+{ralign 16:Variable} {...}
+{c |}     Range         N
+{hline 17}{c +}{hline 20}
+{ralign 16:DELP_days} {...}
+{c |}{...}
+ {res}      108       314
+{txt}{hline 17}{c BT}{hline 20}
+
+{com}. 
+. 
+. histogram DELP_days ///
+> , xtitle(Forecast days) ///
+> title("C19 daily deaths, Argentina, DELP model, forecast days, all updates", size(medium) color(black)) 
+{txt}(bin={res}17{txt}, start={res}1{txt}, width={res}6.3529412{txt})
+{res}{txt}
+{com}. 
+. graph export "graph 201 b C19 daily deaths, Argentina, DELP model, forecast days, all updates histogram.pdf", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/graph 201 b C19 daily deaths, Argentina, DELP model, forecast days, all updates histogram.pdf{rm}
+saved as
+PDF
+format
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. * IHME 
+. 
+. use "Argentina IHME days.dta", clear
+{txt}
+{com}. 
+. fillmissing loc_grand_name
+{txt}(400 real changes made)
+
+{com}. 
+. keep loc_grand_name *_days
+{txt}
+{com}. 
+. keep in 1
+{txt}(1,480 observations deleted)
+
+{com}. 
+. gen i = _n
+{txt}
+{com}. 
+. foreach var in DayDeaMeFoIHME20200512_days-DayDeaMeFoIHME20221216_days {c -(}
+{txt}  2{com}.         
+.         renvars `var', trim(22)
+{txt}  3{com}. 
+. {c )-}
+{txt}
+{com}. *
+. 
+. 
+. reshape long DayDeaMeFoIHME, i(i) j(j)
+{txt}(j = 20200512 20200520 20200525 20200526 20200529 20200605 20200608 20200610 20200615 20200625 20200629 20200707 20200714 20200722 20200730 20200806 20200821 20200827 20200903 20200911 20200918 20200924 20201002 20201009 20201015 20201022 20201029 20201112 20201119 20201203 20201210 20201217 20201223 20210115 20210122 20210128 20210204 20210212 20210220 20210225 20210306 20210311 20210317 20210325 20210401 20210409 20210416 20210423 20210506 20210514 20210521 20210528 20210604 20210610 20210618 20210625 20210702 20210715 20210723 20210730 20210806 20210820 20210826 20210902 20210910 20210916 20210923 20210930 20211015 20211021 20211104 20211119 20211221 20220108 20220114 20220121 20220204 20220218 20220321 20220408 20220506 20220610 20220719 20220912 20221024 20221118 20221216)
+
+Data{col 36}Wide{col 43}->{col 48}Long
+{hline 77}
+Number of observations     {res}           1   {txt}->   {res}87          
+{txt}Number of variables        {res}          89   {txt}->   {res}4           
+{txt}j variable (87 values)                    ->   {res}j
+{txt}xij variables:
+{res}DayDeaMeFoIHME20200512 DayDeaMeFoIHME20200520 ... DayDeaMeFoIHME20221216{txt}->{res}DayDeaMeFoIHME
+{txt}{hline 77}
+
+{com}. 
+. drop i
+{txt}
+{com}. 
+. 
+. rename j IHME_update
+{res}{txt}
+{com}. label var IHME_update "IHME update date"
+{txt}
+{com}. 
+. rename DayDeaMeFoIHME IHME_days
+{res}{txt}
+{com}. label var IHME_days "IHME forecast days"
+{txt}
+{com}. 
+. gen IHME_update_num = _n
+{txt}
+{com}. label var IHME_update_num "IHME update number"
+{txt}
+{com}. 
+. * gen calendar date 
+. 
+. clonevar this = IHME_update
+{txt}
+{com}. 
+. tostring this, replace
+{txt}this was {res:long} now {res:str8}
+
+{com}. 
+. gen date = date(this, "YMD")
+{txt}
+{com}. 
+. drop this
+{txt}
+{com}. 
+. format date %tdDDMonCCYY
+{txt}
+{com}. codebook date
+
+{txt}{hline}
+{res}date{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric daily date ({res}float{txt})
+
+{col 18}Range: [{res}22047{txt},{res}22995{txt}]{col 55}Units: {res}1
+{col 8}{txt}Or equivalently: [{res}12may2020{txt},{res}16dec2022{txt}]{col 55}Units: {res}days
+{col 10}{txt}Unique values: {res}87{col 51}{txt}Missing .: {res}0{txt}/{res}87
+
+{txt}{col 19}Mean: {res}{ralign 7:22386.7}{txt} = {res}16apr2021{txt}(+ 18 hours)
+{col 14}Std. dev.: {res}{ralign 7:240.309}
+{txt}{col 12}Percentiles: {col 25}{ralign 9:10%}{ralign 11:25%}{ralign 11:50%}{ralign 11:75%}{ralign 11:90%}
+{res}{col 25}{ralign 9:22081}{ralign 11:   22182}{ralign 11:   22364}{ralign 11:   22539}{ralign 11:   22725}
+{col 25}{ralign 9:15jun2020}{ralign 11:24sep2020}{ralign 11:25mar2021}{ralign 11:16sep2021}{ralign 11:21mar2022}
+{txt}
+{com}. 
+. 
+. merge 1:1 date using "calendar.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}           1,010
+{txt}{col 9}from master{col 30}{res}               0{txt}  (_merge==1)
+{col 9}from using{col 30}{res}           1,010{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              87{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+. order date
+{txt}
+{com}. 
+. sort date
+{txt}
+{com}. 
+. save "Argentina IHME days long.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+Argentina IHME days long.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. * graph forecast days
+. 
+. twoway (connected IHME_days IHME_update_num, sort) ///
+> , xtitle(Update number) xlabel(, grid) xlabel(, grid) ///
+> ytitle(Forecast days) title("C19 daily deaths, Argentina, IHME model, forecast days, all updates", size(medium) color(black)) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. graph export "graph 202 C19 daily deaths, Argentina, IHME model, forecast days, all updates.pdf", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/graph 202 C19 daily deaths, Argentina, IHME model, forecast days, all updates.pdf{rm}
+saved as
+PDF
+format
+{p_end}
+
+{com}. 
+. 
+. * Exclude the last three updates for IHME Argentina from descriptives of Forecast days 
+. * because they extended beyond 23-01-01
+. 
+. 
+. summ IHME_days if IHME_update_num < 85
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 3}IHME_days {c |}{res}         84    102.3929    13.51217         51        121
+{txt}
+{com}. 
+. tabstat IHME_days if IHME_update_num < 85, ///
+> columns(statistics) statistics(mean sd median iqr min max r n) varwidth(16) 
+
+{txt}{ralign 16:Variable} {...}
+{c |}      Mean        SD       p50       IQR       Min       Max
+{hline 17}{c +}{hline 60}
+{ralign 16:IHME_days} {...}
+{c |}{...}
+ {res} 102.3929  13.51217     103.5        14        51       121
+{txt}{hline 17}{c BT}{hline 60}
+
+{ralign 16:Variable} {...}
+{c |}     Range         N
+{hline 17}{c +}{hline 20}
+{ralign 16:IHME_days} {...}
+{c |}{...}
+ {res}       70        84
+{txt}{hline 17}{c BT}{hline 20}
+
+{com}. 
+. 
+. histogram IHME_days if IHME_update_num < 85 ///
+> , xtitle(Forecast days) ///
+> title("C19 daily deaths, Argentina, IHME model, forecast days, all updates", size(medium) color(black)) 
+{txt}(bin={res}9{txt}, start={res}51{txt}, width={res}7.7777778{txt})
+{res}{txt}
+{com}. 
+. graph export "graph 202 b C19 daily deaths, Argentina, IHME model, forecast days, all updates histogram.pdf", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/graph 202 b C19 daily deaths, Argentina, IHME model, forecast days, all updates histogram.pdf{rm}
+saved as
+PDF
+format
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. 
+. * IMPE 
+. 
+. use "Argentina IMPE days.dta", clear
+{txt}
+{com}. 
+. fillmissing loc_grand_name
+{txt}(0 real changes made)
+
+{com}. 
+. keep loc_grand_name *_days
+{txt}
+{com}. 
+. keep in 1
+{txt}(1,081 observations deleted)
+
+{com}. 
+. gen i = _n
+{txt}
+{com}. 
+. foreach var in DayDeaMeFoIMPE20200428_days-DayDeaMeFoIMPE20221225_days {c -(}
+{txt}  2{com}.         
+.         renvars `var', trim(22)
+{txt}  3{com}. 
+. {c )-}
+{txt}
+{com}. *
+. 
+. 
+. reshape long DayDeaMeFoIMPE, i(i) j(j)
+{txt}(j = 20200428 20200429 20200430 20200501 20200502 20200503 20200504 20200505 20200506 20200507 20200508 20200509 20200510 20200511 20200512 20200513 20200514 20200515 20200516 20200517 20200519 20200520 20200521 20200522 20200523 20200524 20200525 20200526 20200527 20200528 20200529 20200530 20200531 20200601 20200602 20200603 20200604 20200606 20200609 20200614 20200616 20200619 20200621 20200623 20200626 20200628 20200702 20200703 20200704 20200707 20200711 20200714 20200715 20200718 20200720 20200722 20200725 20200727 20200731 20200808 20200810 20200811 20200813 20200814 20200817 20200823 20200825 20200827 20200831 20200902 20200906 20200908 20200912 20200915 20200919 20200923 20200925 20201003 20201006 20201012 20201019 20201025 20201028 20201101 20201110 20201114 20201118 20201123 20201129 20201204 20201212 20201220 20201226 20210104 20210110 20210112 20210118 20210124 20210130 20210203 20210210 20210217 20210226 20210305 20210312 20210319 20210329 20210406 20210417 20210424 20210510 20210516 20210522 20210527 20210604 20210611 20210618 20210626 20210702 20210709 20210719 20210806 20210819 20210825 20210909 20210924 20211006 20211021 20211027 20211103 20211115 20211121 20211129 20211205 20211213 20211226 20220102 20220120 20220131 20220315 20220530 20220620 20220703 20220712 20220728 20220808 20220901 20221225)
+
+Data{col 36}Wide{col 43}->{col 48}Long
+{hline 77}
+Number of observations     {res}           1   {txt}->   {res}148         
+{txt}Number of variables        {res}         150   {txt}->   {res}4           
+{txt}j variable (148 values)                   ->   {res}j
+{txt}xij variables:
+{res}DayDeaMeFoIMPE20200428 DayDeaMeFoIMPE20200429 ... DayDeaMeFoIMPE20221225{txt}->{res}DayDeaMeFoIMPE
+{txt}{hline 77}
+
+{com}. 
+. drop i
+{txt}
+{com}. 
+. 
+. rename j IMPE_update
+{res}{txt}
+{com}. label var IMPE_update "IMPE update date"
+{txt}
+{com}. 
+. rename DayDeaMeFoIMPE IMPE_days
+{res}{txt}
+{com}. label var IMPE_days "IMPE forecast days"
+{txt}
+{com}. 
+. gen IMPE_update_num = _n
+{txt}
+{com}. label var IMPE_update_num "IMPE update number"
+{txt}
+{com}. 
+. * gen calendar date 
+. 
+. clonevar this = IMPE_update
+{txt}
+{com}. 
+. tostring this, replace
+{txt}this was {res:long} now {res:str8}
+
+{com}. 
+. gen date = date(this, "YMD")
+{txt}
+{com}. 
+. drop this
+{txt}
+{com}. 
+. format date %tdDDMonCCYY
+{txt}
+{com}. codebook date
+
+{txt}{hline}
+{res}date{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric daily date ({res}float{txt})
+
+{col 18}Range: [{res}22033{txt},{res}23004{txt}]{col 55}Units: {res}1
+{col 8}{txt}Or equivalently: [{res}28apr2020{txt},{res}25dec2022{txt}]{col 55}Units: {res}days
+{col 10}{txt}Unique values: {res}148{col 51}{txt}Missing .: {res}0{txt}/{res}148
+
+{txt}{col 19}Mean: {res}{ralign 7:22265.9}{txt} = {res}16dec2020{txt}(+ 21 hours)
+{col 14}Std. dev.: {res}{ralign 7:233.34}
+{txt}{col 12}Percentiles: {col 25}{ralign 9:10%}{ralign 11:25%}{ralign 11:50%}{ralign 11:75%}{ralign 11:90%}
+{res}{col 25}{ralign 9:22047}{ralign 11:   22071}{ralign 11:   22175}{ralign 11:   22413}{ralign 11:   22619}
+{col 25}{ralign 9:12may2020}{ralign 11:05jun2020}{ralign 11:17sep2020}{ralign 11:13may2021}{ralign 11:05dec2021}
+{txt}
+{com}. 
+. 
+. merge 1:1 date using "calendar.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             949
+{txt}{col 9}from master{col 30}{res}               0{txt}  (_merge==1)
+{col 9}from using{col 30}{res}             949{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             148{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+. order date
+{txt}
+{com}. 
+. sort date
+{txt}
+{com}. 
+. 
+. save "Argentina IMPE days long.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+Argentina IMPE days long.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. * graph forecast days
+. 
+. twoway (connected IMPE_days IMPE_update_num, sort) ///
+> , xtitle(Update number) xlabel(, grid) xlabel(, grid) ///
+> ytitle(Forecast days) title("C19 daily deaths, Argentina, IMPE model, forecast days, all updates", size(medium) color(black)) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. graph export "graph 203 C19 daily deaths, Argentina, IMPE model, forecast days, all updates.pdf", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/graph 203 C19 daily deaths, Argentina, IMPE model, forecast days, all updates.pdf{rm}
+saved as
+PDF
+format
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. * Exclude the last update for IMPE Argentina from descriptives of Forecast days 
+. * because that update extended beyond 23-01-01
+. 
+. summ IMPE_days if IMPE_update_num < 148
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 3}IMPE_days {c |}{res}        147    76.72109    25.25915         29         90
+{txt}
+{com}. 
+. tabstat IMPE_days if IMPE_update_num < 148, ///
+> columns(statistics) statistics(mean sd median iqr min max r n) varwidth(16) 
+
+{txt}{ralign 16:Variable} {...}
+{c |}      Mean        SD       p50       IQR       Min       Max
+{hline 17}{c +}{hline 60}
+{ralign 16:IMPE_days} {...}
+{c |}{...}
+ {res} 76.72109  25.25915        90         0        29        90
+{txt}{hline 17}{c BT}{hline 60}
+
+{ralign 16:Variable} {...}
+{c |}     Range         N
+{hline 17}{c +}{hline 20}
+{ralign 16:IMPE_days} {...}
+{c |}{...}
+ {res}       61       147
+{txt}{hline 17}{c BT}{hline 20}
+
+{com}. 
+. 
+. histogram IMPE_days if IMPE_update_num < 148 ///
+> , xtitle(Forecast days) ///
+> title("C19 daily deaths, Argentina, IMPE model, forecast days, all updates", size(medium) color(black)) 
+{txt}(bin={res}12{txt}, start={res}29{txt}, width={res}5.0833333{txt})
+{res}{txt}
+{com}. 
+. graph export "graph 203 b C19 daily deaths, Argentina, IMPE model, forecast days, all updates histogram.pdf", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/graph 203 b C19 daily deaths, Argentina, IMPE model, forecast days, all updates histogram.pdf{rm}
+saved as
+PDF
+format
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. 
+. * LANL 
+. 
+. use "Argentina LANL days.dta", clear
+{txt}
+{com}. 
+. fillmissing loc_grand_name
+{txt}(481 real changes made)
+
+{com}. 
+. keep loc_grand_name *_days
+{txt}
+{com}. 
+. keep in 1
+{txt}(1,142 observations deleted)
+
+{com}. 
+. gen i = _n
+{txt}
+{com}. 
+. foreach var in DayDeaMeFoLANL20200426_days-DayDeaMeFoLANL20210926_days {c -(}
+{txt}  2{com}.         
+.         renvars `var', trim(22)
+{txt}  3{com}. 
+. {c )-}
+{txt}
+{com}. *
+. 
+. 
+. reshape long DayDeaMeFoLANL, i(i) j(j)
+{txt}(j = 20200426 20200429 20200503 20200506 20200510 20200513 20200517 20200520 20200524 20200527 20200531 20200603 20200607 20200610 20200613 20200617 20200621 20200623 20200628 20200701 20200705 20200708 20200712 20200715 20200719 20200722 20200726 20200729 20200802 20200805 20200809 20200812 20200816 20200819 20200823 20200826 20200830 20200902 20200906 20200909 20200913 20200916 20200920 20200923 20200927 20200930 20201004 20201007 20201011 20201014 20201018 20201021 20201025 20201028 20201101 20201104 20201108 20201111 20201115 20201118 20201122 20201125 20201129 20201202 20201206 20201209 20201213 20201216 20201220 20201223 20210103 20210105 20210110 20210113 20210117 20210120 20210124 20210127 20210131 20210203 20210207 20210210 20210214 20210217 20210221 20210224 20210228 20210303 20210307 20210310 20210314 20210321 20210324 20210328 20210331 20210404 20210407 20210411 20210414 20210418 20210421 20210425 20210428 20210502 20210505 20210509 20210512 20210516 20210519 20210523 20210526 20210602 20210606 20210613 20210620 20210627 20210704 20210711 20210718 20210725 20210801 20210808 20210815 20210822 20210829 20210905 20210912 20210919 20210926)
+
+Data{col 36}Wide{col 43}->{col 48}Long
+{hline 77}
+Number of observations     {res}           1   {txt}->   {res}129         
+{txt}Number of variables        {res}         131   {txt}->   {res}4           
+{txt}j variable (129 values)                   ->   {res}j
+{txt}xij variables:
+{res}DayDeaMeFoLANL20200426 DayDeaMeFoLANL20200429 ... DayDeaMeFoLANL20210926{txt}->{res}DayDeaMeFoLANL
+{txt}{hline 77}
+
+{com}. 
+. drop i
+{txt}
+{com}. 
+. rename j LANL_update
+{res}{txt}
+{com}. label var LANL_update "LANL update date"
+{txt}
+{com}. 
+. rename DayDeaMeFoLANL LANL_days
+{res}{txt}
+{com}. label var LANL_days "LANL forecast days"
+{txt}
+{com}. 
+. gen LANL_update_num = _n
+{txt}
+{com}. label var LANL_update_num "LANL update number"
+{txt}
+{com}. 
+. * gen calendar date 
+. 
+. clonevar this = LANL_update
+{txt}
+{com}. 
+. tostring this, replace
+{txt}this was {res:long} now {res:str8}
+
+{com}. 
+. gen date = date(this, "YMD")
+{txt}
+{com}. 
+. drop this
+{txt}
+{com}. 
+. format date %tdDDMonCCYY
+{txt}
+{com}. codebook date
+
+{txt}{hline}
+{res}date{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric daily date ({res}float{txt})
+
+{col 18}Range: [{res}22031{txt},{res}22549{txt}]{col 55}Units: {res}1
+{col 8}{txt}Or equivalently: [{res}26apr2020{txt},{res}26sep2021{txt}]{col 55}Units: {res}days
+{col 10}{txt}Unique values: {res}129{col 51}{txt}Missing .: {res}0{txt}/{res}129
+
+{txt}{col 19}Mean: {res}{ralign 7:22263.2}{txt} = {res}14dec2020{txt}(+ 4 hours)
+{col 14}Std. dev.: {res}{ralign 7:142.184}
+{txt}{col 12}Percentiles: {col 25}{ralign 9:10%}{ralign 11:25%}{ralign 11:50%}{ralign 11:75%}{ralign 11:90%}
+{res}{col 25}{ralign 9:22073}{ralign 11:   22143}{ralign 11:   22255}{ralign 11:   22377}{ralign 11:   22465}
+{col 25}{ralign 9:07jun2020}{ralign 11:16aug2020}{ralign 11:06dec2020}{ralign 11:07apr2021}{ralign 11:04jul2021}
+{txt}
+{com}. 
+. 
+. merge 1:1 date using "calendar.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             968
+{txt}{col 9}from master{col 30}{res}               0{txt}  (_merge==1)
+{col 9}from using{col 30}{res}             968{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             129{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+. order date
+{txt}
+{com}. 
+. sort date
+{txt}
+{com}. 
+. save "Argentina LANL days long.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+Argentina LANL days long.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. * graph forecast days
+. 
+. twoway (connected LANL_days LANL_update_num, sort) ///
+> , xtitle(Update number) xlabel(, grid) xlabel(, grid) ///
+> ytitle(Forecast days) title("C19 daily deaths, Argentina, LANL model, forecast days, all updates", size(medium) color(black)) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. graph export "graph 204 C19 daily deaths, Argentina, LANL model, forecast days, all updates.pdf", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/graph 204 C19 daily deaths, Argentina, LANL model, forecast days, all updates.pdf{rm}
+saved as
+PDF
+format
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. summ LANL_days
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 3}LANL_days {c |}{res}        129          49           0         49         49
+{txt}
+{com}. 
+. tabstat LANL_days, ///
+> columns(statistics) statistics(mean sd median iqr min max r n) varwidth(16) 
+
+{txt}{ralign 16:Variable} {...}
+{c |}      Mean        SD       p50       IQR       Min       Max
+{hline 17}{c +}{hline 60}
+{ralign 16:LANL_days} {...}
+{c |}{...}
+ {res}       49         0        49         0        49        49
+{txt}{hline 17}{c BT}{hline 60}
+
+{ralign 16:Variable} {...}
+{c |}     Range         N
+{hline 17}{c +}{hline 20}
+{ralign 16:LANL_days} {...}
+{c |}{...}
+ {res}        0       129
+{txt}{hline 17}{c BT}{hline 20}
+
+{com}. 
+. 
+. histogram LANL_days ///
+> , xtitle(Forecast days) ///
+> title("C19 daily deaths, Argentina, LANL model, forecast days, all updates", size(medium) color(black)) 
+{txt}(bin={res}1{txt}, start={res}49{txt}, width={res}1{txt})
+{res}{txt}
+{com}. 
+. graph export "graph 204 b C19 daily deaths, Argentina, LANL model, forecast days, all updates histogram.pdf", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/graph 204 b C19 daily deaths, Argentina, LANL model, forecast days, all updates histogram.pdf{rm}
+saved as
+PDF
+format
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. 
+. 
+. * UCLA 
+. 
+. use "Argentina UCLA days.dta", clear
+{txt}
+{com}. 
+. fillmissing loc_grand_name
+{txt}(777 real changes made)
+
+{com}. 
+. keep loc_grand_name *_days
+{txt}
+{com}. 
+. keep in 1
+{txt}(1,142 observations deleted)
+
+{com}. 
+. gen i = _n
+{txt}
+{com}. 
+. foreach var in DayDeaMeFoUCLA20210103_days-DayDeaMeFoUCLA20211220_days  {c -(}
+{txt}  2{com}.         
+.         renvars `var', trim(22)
+{txt}  3{com}. 
+. {c )-}
+{txt}
+{com}. *
+. 
+. 
+. reshape long DayDeaMeFoUCLA, i(i) j(j)
+{txt}(j = 20210103 20210110 20210206 20210307 20210315 20210328 20210404 20210712 20210719 20210726 20210802 20210809 20210816 20210823 20210830 20210906 20210913 20210920 20210927 20211004 20211011 20211018 20211025 20211101 20211108 20211122 20211129 20211206 20211213 20211220)
+
+Data{col 36}Wide{col 43}->{col 48}Long
+{hline 77}
+Number of observations     {res}           1   {txt}->   {res}30          
+{txt}Number of variables        {res}          32   {txt}->   {res}4           
+{txt}j variable (30 values)                    ->   {res}j
+{txt}xij variables:
+{res}DayDeaMeFoUCLA20210103 DayDeaMeFoUCLA20210110 ... DayDeaMeFoUCLA20211220{txt}->{res}DayDeaMeFoUCLA
+{txt}{hline 77}
+
+{com}. 
+. drop i
+{txt}
+{com}. 
+. rename j UCLA_update
+{res}{txt}
+{com}. label var UCLA_update "UCLA update date"
+{txt}
+{com}. 
+. rename DayDeaMeFoUCLA UCLA_days
+{res}{txt}
+{com}. label var UCLA_days "UCLA forecast days"
+{txt}
+{com}. 
+. gen UCLA_update_num = _n
+{txt}
+{com}. label var UCLA_update_num "UCLA update number"
+{txt}
+{com}. 
+. * gen calendar date 
+. 
+. clonevar this = UCLA_update
+{txt}
+{com}. 
+. tostring this, replace
+{txt}this was {res:long} now {res:str8}
+
+{com}. 
+. gen date = date(this, "YMD")
+{txt}
+{com}. 
+. drop this
+{txt}
+{com}. 
+. format date %tdDDMonCCYY
+{txt}
+{com}. codebook date
+
+{txt}{hline}
+{res}date{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric daily date ({res}float{txt})
+
+{col 18}Range: [{res}22283{txt},{res}22634{txt}]{col 55}Units: {res}1
+{col 8}{txt}Or equivalently: [{res}03jan2021{txt},{res}20dec2021{txt}]{col 55}Units: {res}days
+{col 10}{txt}Unique values: {res}30{col 51}{txt}Missing .: {res}0{txt}/{res}30
+
+{txt}{col 19}Mean: {res}{ralign 7:22500.5}{txt} = {res}08aug2021{txt}(+ 13 hours)
+{col 14}Std. dev.: {res}{ralign 7:104.8}
+{txt}{col 12}Percentiles: {col 25}{ralign 9:10%}{ralign 11:25%}{ralign 11:50%}{ralign 11:75%}{ralign 11:90%}
+{res}{col 25}{ralign 9:22331.5}{ralign 11:   22473}{ralign 11: 22525.5}{ralign 11:   22578}{ralign 11: 22616.5}
+{col 25}{ralign 9:20feb2021}{ralign 11:12jul2021}{ralign 11:02sep2021}{ralign 11:25oct2021}{ralign 11:02dec2021}
+{txt}
+{com}. 
+. 
+. merge 1:1 date using "calendar.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}           1,067
+{txt}{col 9}from master{col 30}{res}               0{txt}  (_merge==1)
+{col 9}from using{col 30}{res}           1,067{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}              30{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+. order date
+{txt}
+{com}. 
+. sort date
+{txt}
+{com}. 
+. save "Argentina UCLA days long.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+Argentina UCLA days long.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. * graph forecast days
+. 
+. twoway (connected UCLA_days UCLA_update_num, sort) ///
+> , xtitle(Update number) xlabel(, grid) xlabel(, grid) ///
+> ytitle(Forecast days) title("C19 daily deaths, Argentina, UCLA model, forecast days, all updates", size(medium) color(black)) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. graph export "graph 205 C19 daily deaths, Argentina, UCLA model, forecast days, all updates.pdf", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/graph 205 C19 daily deaths, Argentina, UCLA model, forecast days, all updates.pdf{rm}
+saved as
+PDF
+format
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. summ UCLA_days
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 3}UCLA_days {c |}{res}         30    23.33333    43.01831          0        100
+{txt}
+{com}. 
+. tabstat UCLA_days, ///
+> columns(statistics) statistics(mean sd median iqr min max r n) varwidth(16) 
+
+{txt}{ralign 16:Variable} {...}
+{c |}      Mean        SD       p50       IQR       Min       Max
+{hline 17}{c +}{hline 60}
+{ralign 16:UCLA_days} {...}
+{c |}{...}
+ {res} 23.33333  43.01831         0         0         0       100
+{txt}{hline 17}{c BT}{hline 60}
+
+{ralign 16:Variable} {...}
+{c |}     Range         N
+{hline 17}{c +}{hline 20}
+{ralign 16:UCLA_days} {...}
+{c |}{...}
+ {res}      100        30
+{txt}{hline 17}{c BT}{hline 20}
+
+{com}. 
+. 
+. histogram UCLA_days ///
+> , xtitle(Forecast days) ///
+> title("C19 daily deaths, Argentina, UCLA model, forecast days, all updates", size(medium) color(black)) 
+{txt}(bin={res}5{txt}, start={res}0{txt}, width={res}20{txt})
+{res}{txt}
+{com}. 
+. graph export "graph 205 b C19 daily deaths, Argentina, UCLA model, forecast days, all updates histogram.pdf", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/graph 205 b C19 daily deaths, Argentina, UCLA model, forecast days, all updates histogram.pdf{rm}
+saved as
+PDF
+format
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. 
+. * YYGU 
+. 
+. use "Argentina YYGU days.dta", clear
+{txt}
+{com}. 
+. fillmissing loc_grand_name
+{txt}(880 real changes made)
+
+{com}. 
+. keep loc_grand_name *_days
+{txt}
+{com}. 
+. keep in 1
+{txt}(1,142 observations deleted)
+
+{com}. 
+. gen i = _n
+{txt}
+{com}. 
+. foreach var in DayDeaMeFoYYGU20200512_days-DayDeaMeFoYYGU20201005_days  {c -(}
+{txt}  2{com}.         
+.         renvars `var', trim(22)
+{txt}  3{com}. 
+. {c )-}
+{txt}
+{com}. *
+. 
+. 
+. reshape long DayDeaMeFoYYGU, i(i) j(j)
+{txt}(j = 20200512 20200513 20200514 20200515 20200516 20200517 20200518 20200519 20200520 20200521 20200522 20200523 20200524 20200525 20200526 20200527 20200528 20200529 20200530 20200531 20200601 20200602 20200603 20200604 20200605 20200606 20200607 20200608 20200609 20200610 20200611 20200612 20200613 20200614 20200615 20200616 20200617 20200618 20200619 20200620 20200621 20200622 20200623 20200624 20200625 20200626 20200627 20200628 20200629 20200630 20200701 20200702 20200703 20200704 20200705 20200706 20200707 20200708 20200709 20200710 20200711 20200712 20200713 20200714 20200715 20200716 20200717 20200718 20200719 20200720 20200721 20200722 20200723 20200724 20200725 20200726 20200727 20200728 20200729 20200730 20200731 20200801 20200802 20200803 20200804 20200805 20200806 20200807 20200808 20200809 20200810 20200811 20200812 20200813 20200814 20200815 20200816 20200817 20200818 20200819 20200820 20200821 20200822 20200823 20200824 20200825 20200826 20200827 20200828 20200829 20200830 20200831 20200901 20200902 20200903 20200904 20200905 20200906 20200907 20200908 20200909 20200910 20200911 20200912 20200913 20200914 20200915 20200916 20200917 20200918 20200919 20200920 20200921 20200922 20200923 20200924 20200925 20200926 20200927 20200928 20200929 20200930 20201001 20201002 20201003 20201004 20201005)
+
+Data{col 36}Wide{col 43}->{col 48}Long
+{hline 77}
+Number of observations     {res}           1   {txt}->   {res}147         
+{txt}Number of variables        {res}         149   {txt}->   {res}4           
+{txt}j variable (147 values)                   ->   {res}j
+{txt}xij variables:
+{res}DayDeaMeFoYYGU20200512 DayDeaMeFoYYGU20200513 ... DayDeaMeFoYYGU20201005{txt}->{res}DayDeaMeFoYYGU
+{txt}{hline 77}
+
+{com}. 
+. drop i
+{txt}
+{com}. 
+. rename j YYGU_update
+{res}{txt}
+{com}. label var YYGU_update "YYGU update date"
+{txt}
+{com}. 
+. rename DayDeaMeFoYYGU YYGU_days
+{res}{txt}
+{com}. label var YYGU_days "YYGU forecast days"
+{txt}
+{com}. 
+. gen YYGU_update_num = _n
+{txt}
+{com}. label var YYGU_update_num "YYGU update number"
+{txt}
+{com}. 
+. * gen calendar date 
+. 
+. clonevar this = YYGU_update
+{txt}
+{com}. 
+. tostring this, replace
+{txt}this was {res:long} now {res:str8}
+
+{com}. 
+. gen date = date(this, "YMD")
+{txt}
+{com}. 
+. drop this
+{txt}
+{com}. 
+. format date %tdDDMonCCYY
+{txt}
+{com}. codebook date
+
+{txt}{hline}
+{res}date{right:(unlabeled)}
+{txt}{hline}
+
+{col 19}Type: Numeric daily date ({res}float{txt})
+
+{col 18}Range: [{res}22047{txt},{res}22193{txt}]{col 55}Units: {res}1
+{col 8}{txt}Or equivalently: [{res}12may2020{txt},{res}05oct2020{txt}]{col 55}Units: {res}days
+{col 10}{txt}Unique values: {res}147{col 51}{txt}Missing .: {res}0{txt}/{res}147
+
+{txt}{col 19}Mean: {res}{ralign 7:22120}{txt} = {res}24jul2020{txt}
+{col 14}Std. dev.: {res}{ralign 7:42.5793}
+{txt}{col 12}Percentiles: {col 25}{ralign 9:10%}{ralign 11:25%}{ralign 11:50%}{ralign 11:75%}{ralign 11:90%}
+{res}{col 25}{ralign 9:22061}{ralign 11:   22083}{ralign 11:   22120}{ralign 11:   22157}{ralign 11:   22179}
+{col 25}{ralign 9:26may2020}{ralign 11:17jun2020}{ralign 11:24jul2020}{ralign 11:30aug2020}{ralign 11:21sep2020}
+{txt}
+{com}. 
+. 
+. merge 1:1 date using "calendar.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}             950
+{txt}{col 9}from master{col 30}{res}               0{txt}  (_merge==1)
+{col 9}from using{col 30}{res}             950{txt}  (_merge==2)
+
+{col 5}Matched{col 30}{res}             147{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+. order date
+{txt}
+{com}. 
+. sort date
+{txt}
+{com}. 
+. 
+. save "Argentina YYGU days long.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+Argentina YYGU days long.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. * graph forecast days
+. 
+. twoway (connected YYGU_days YYGU_update_num, sort) ///
+> , xtitle(Update number) xlabel(, grid) xlabel(, grid) ///
+> ytitle(Forecast days) title("C19 daily deaths, Argentina, YYGU model, forecast days, all updates", size(medium) color(black)) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. graph export "graph 206 C19 daily deaths, Argentina, YYGU model, forecast days, all updates.pdf", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/graph 206 C19 daily deaths, Argentina, YYGU model, forecast days, all updates.pdf{rm}
+saved as
+PDF
+format
+{p_end}
+
+{com}. 
+. 
+. 
+. summ YYGU_days
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 3}YYGU_days {c |}{res}        147    80.79592    23.94856         28        118
+{txt}
+{com}. 
+. tabstat YYGU_days, ///
+> columns(statistics) statistics(mean sd median iqr min max r n) varwidth(16) 
+
+{txt}{ralign 16:Variable} {...}
+{c |}      Mean        SD       p50       IQR       Min       Max
+{hline 17}{c +}{hline 60}
+{ralign 16:YYGU_days} {...}
+{c |}{...}
+ {res} 80.79592  23.94856        86        35        28       118
+{txt}{hline 17}{c BT}{hline 60}
+
+{ralign 16:Variable} {...}
+{c |}     Range         N
+{hline 17}{c +}{hline 20}
+{ralign 16:YYGU_days} {...}
+{c |}{...}
+ {res}       90       147
+{txt}{hline 17}{c BT}{hline 20}
+
+{com}. 
+. 
+. histogram YYGU_days ///
+> , xtitle(Forecast days) ///
+> title("C19 daily deaths, Argentina, YYGU model, forecast days, all updates", size(medium) color(black)) 
+{txt}(bin={res}12{txt}, start={res}28{txt}, width={res}7.5{txt})
+{res}{txt}
+{com}. 
+. graph export "graph 206 b C19 daily deaths, Argentina, YYGU model, forecast days, all updates histogram.pdf", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/graph 206 b C19 daily deaths, Argentina, YYGU model, forecast days, all updates histogram.pdf{rm}
+saved as
+PDF
+format
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. 
+. use "Argentina DELP days long.dta", clear 
+{txt}
+{com}. 
+. merge 1:1 date using "Argentina IHME days long.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}           1,097{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+. merge 1:1 date using "Argentina IMPE days long.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}           1,097{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+. merge 1:1 date using "Argentina LANL days long.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}           1,097{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+. merge 1:1 date using "Argentina UCLA days long.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}           1,097{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+. merge 1:1 date using "Argentina YYGU days long.dta"
+{res}
+{txt}{col 5}Result{col 33}Number of obs
+{col 5}{hline 41}
+{col 5}Not matched{col 30}{res}               0
+{txt}{col 5}Matched{col 30}{res}           1,097{txt}  (_merge==3)
+{col 5}{hline 41}
+
+{com}. 
+. drop _merge
+{txt}
+{com}. 
+. save "Argentina days long.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+Argentina days long.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. * graph forecast days
+. 
+. twoway (connected DELP_days date, sort mcolor(red) lcolor(red)) ///
+> (connected IHME_days date, sort mcolor(black) lcolor(black)) ///
+> (connected IMPE_days date, sort mcolor(magenta) lcolor(magenta)) ///
+> (connected LANL_days date, sort mcolor(brown) lcolor(brown)) ///
+> (connected UCLA_days date, sort mcolor(blue) lcolor(blue)) ///
+> (connected YYGU_days date, sort mcolor(gold) lcolor(gold)) ///
+> , xtitle(Date) xlabel(#12, format(%tdYY-NN-DD) labsize(small)) xlabel(, grid) xlabel(, grid) xlabel(, angle(forty_five)) ///
+> ytitle(Forecast days) title("C19 daily deaths, Argentina, all models, forecast days, all updates", size(medium) color(black)) ///
+> legend(position(6) order(1 "DELP" 2 "IHME" 3 "IMPE" 4 "LANL" 5 "UCLA" 6 "YYGU") ///
+> rows(1) size(small)) legend(region(lcolor(none))) legend(bexpand) ///
+> xscale(lwidth(vthin) lcolor(gray*.2)) yscale(lwidth(vthin) lcolor(gray*.2))
+{res}{txt}
+{com}. 
+. graph export "graph 210 C19 daily deaths, Argentina, all models, forecast days, all updates.pdf", replace
+{txt}{p 0 4 2}
+file {bf}
+/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/graph 210 C19 daily deaths, Argentina, all models, forecast days, all updates.pdf{rm}
+saved as
+PDF
+format
+{p_end}
+
+{com}. 
+. 
+. 
+.  
+. 
+. 
+. view "log CovidLongitudinal Argentina days.smcl"
+{txt}
+{com}. 
+. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/log CovidLongitudinal Argentina days.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}17 Dec 2023, 12:36:51
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
