@@ -82,5 +82,11 @@ is here:
 https://youtu.be/nhZzi5XyPMs 
 
 ***
+***
 
-[C19 daily deaths, Argentina, all models, forecast days, all updates]()
+Additional graph:
+
+[C19 daily deaths, Argentina, all models, forecast days, all updates](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/countries/Argentina/graph%20210%20C19%20daily%20deaths%2C%20Argentina%2C%20all%20models%2C%20forecast%20days%2C%20all%20updates.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/90282840-2b54-447e-88a2-9f2e2c790775)
+
