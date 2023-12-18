@@ -3,7 +3,7 @@
       name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/UCLA/log CovidLongitudinal UCLA.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res}25 Nov 2023, 05:08:43
+ {txt}opened on:  {res}18 Dec 2023, 15:12:26
 {txt}
 {com}. 
 . ***************************************************************************
@@ -178,7 +178,7 @@
 . 
 . foreach update of local list {c -(}
 {txt}  2{com}. 
-. di in red "This is UCLA update 2021-" "`update'"
+. di in red "This is UCLA update 2020-" "`update'"
 {txt}  3{com}. 
 . capture shell rm -r  "pred_world_`update'.csv"
 {txt}  4{com}. 
@@ -212,9 +212,9 @@
 {txt} 22{com}. 
 . replace update = subinstr(update, "-", "",.)
 {txt} 23{com}. 
-. gen year2021 = "2021"
+. gen year2020 = "2020"
 {txt} 24{com}. 
-. gen updatenew = year2021 + update
+. gen updatenew = year2020 + update
 {txt} 25{com}. 
 . drop update
 {txt} 26{com}. 
@@ -241,7 +241,7 @@
 > graph export "DayDeaMeRaUCLA USA `update'.pdf", replace */
 . 
 . {c )-}
-{err}This is UCLA update 2021-01-03
+{err}This is UCLA update 2020-01-03
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -265,11 +265,16 @@
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200103.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210103.dta{rm}
+CovidLongitudinal UCLA 20200103.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-01-10
+{err}This is UCLA update 2020-01-10
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -293,11 +298,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200110.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210110.dta{rm}
+CovidLongitudinal UCLA 20200110.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-02-06
+{err}This is UCLA update 2020-02-06
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -321,11 +331,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200206.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210206.dta{rm}
+CovidLongitudinal UCLA 20200206.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-03-07
+{err}This is UCLA update 2020-03-07
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -349,11 +364,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200307.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210307.dta{rm}
+CovidLongitudinal UCLA 20200307.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-03-15
+{err}This is UCLA update 2020-03-15
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -377,11 +397,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200315.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210315.dta{rm}
+CovidLongitudinal UCLA 20200315.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-03-28
+{err}This is UCLA update 2020-03-28
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -405,11 +430,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200328.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210328.dta{rm}
+CovidLongitudinal UCLA 20200328.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-04-04
+{err}This is UCLA update 2020-04-04
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -433,11 +463,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200404.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210404.dta{rm}
+CovidLongitudinal UCLA 20200404.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-07-12
+{err}This is UCLA update 2020-07-12
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -461,11 +496,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200712.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210712.dta{rm}
+CovidLongitudinal UCLA 20200712.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-07-19
+{err}This is UCLA update 2020-07-19
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -489,11 +529,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200719.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210719.dta{rm}
+CovidLongitudinal UCLA 20200719.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-07-26
+{err}This is UCLA update 2020-07-26
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -517,11 +562,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200726.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210726.dta{rm}
+CovidLongitudinal UCLA 20200726.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-08-02
+{err}This is UCLA update 2020-08-02
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -545,11 +595,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200802.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210802.dta{rm}
+CovidLongitudinal UCLA 20200802.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-08-09
+{err}This is UCLA update 2020-08-09
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -573,11 +628,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200809.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210809.dta{rm}
+CovidLongitudinal UCLA 20200809.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-08-16
+{err}This is UCLA update 2020-08-16
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -601,11 +661,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200816.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210816.dta{rm}
+CovidLongitudinal UCLA 20200816.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-08-23
+{err}This is UCLA update 2020-08-23
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -629,11 +694,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200823.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210823.dta{rm}
+CovidLongitudinal UCLA 20200823.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-08-30
+{err}This is UCLA update 2020-08-30
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -657,11 +727,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200830.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210830.dta{rm}
+CovidLongitudinal UCLA 20200830.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-09-06
+{err}This is UCLA update 2020-09-06
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -685,11 +760,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200906.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210906.dta{rm}
+CovidLongitudinal UCLA 20200906.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-09-13
+{err}This is UCLA update 2020-09-13
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -713,11 +793,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200913.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210913.dta{rm}
+CovidLongitudinal UCLA 20200913.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-09-20
+{err}This is UCLA update 2020-09-20
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -741,11 +826,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200920.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210920.dta{rm}
+CovidLongitudinal UCLA 20200920.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-09-27
+{err}This is UCLA update 2020-09-27
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -769,11 +859,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200927.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210927.dta{rm}
+CovidLongitudinal UCLA 20200927.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-10-04
+{err}This is UCLA update 2020-10-04
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -797,11 +892,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20201004.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20211004.dta{rm}
+CovidLongitudinal UCLA 20201004.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-10-11
+{err}This is UCLA update 2020-10-11
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -825,11 +925,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20201011.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20211011.dta{rm}
+CovidLongitudinal UCLA 20201011.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-10-18
+{err}This is UCLA update 2020-10-18
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -853,11 +958,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20201018.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20211018.dta{rm}
+CovidLongitudinal UCLA 20201018.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-10-25
+{err}This is UCLA update 2020-10-25
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -881,11 +991,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20201025.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20211025.dta{rm}
+CovidLongitudinal UCLA 20201025.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-11-01
+{err}This is UCLA update 2020-11-01
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -909,11 +1024,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20201101.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20211101.dta{rm}
+CovidLongitudinal UCLA 20201101.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-11-08
+{err}This is UCLA update 2020-11-08
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -937,11 +1057,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20201108.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20211108.dta{rm}
+CovidLongitudinal UCLA 20201108.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-11-22
+{err}This is UCLA update 2020-11-22
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -965,11 +1090,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20201122.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20211122.dta{rm}
+CovidLongitudinal UCLA 20201122.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-11-29
+{err}This is UCLA update 2020-11-29
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -993,11 +1123,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20201129.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20211129.dta{rm}
+CovidLongitudinal UCLA 20201129.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-12-06
+{err}This is UCLA update 2020-12-06
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -1021,11 +1156,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20201206.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20211206.dta{rm}
+CovidLongitudinal UCLA 20201206.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-12-13
+{err}This is UCLA update 2020-12-13
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -1049,11 +1189,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20201213.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20211213.dta{rm}
+CovidLongitudinal UCLA 20201213.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update 2021-12-20
+{err}This is UCLA update 2020-12-20
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -1077,8 +1222,13 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str20{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20201220.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20211220.dta{rm}
+CovidLongitudinal UCLA 20201220.dta{rm}
 saved
 {p_end}
 
@@ -1101,7 +1251,7 @@ saved
 . 
 . foreach update of local list {c -(}
 {txt}  2{com}. 
-. di in red "This is UCLA update pred_state_ 2021-" "`update'"
+. di in red "This is UCLA update pred_state_ 2020-" "`update'"
 {txt}  3{com}. 
 . capture shell rm -r  "pred_state_`update'.csv"
 {txt}  4{com}. 
@@ -1135,9 +1285,9 @@ saved
 {txt} 22{com}. 
 . replace update = subinstr(update, "-", "",.)
 {txt} 23{com}. 
-. gen year2021 = "2021"
+. gen year2020 = "2020"
 {txt} 24{com}. 
-. gen updatenew = year2021 + update
+. gen updatenew = year2020 + update
 {txt} 25{com}. 
 . drop update
 {txt} 26{com}. 
@@ -1164,7 +1314,7 @@ saved
 > graph export "DayDeaMeRaUCLA USA `update'.pdf", replace */
 . 
 . {c )-}
-{err}This is UCLA update pred_state_ 2021-02-28
+{err}This is UCLA update pred_state_ 2020-02-28
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 5,300 obs)
 {res}
@@ -1188,11 +1338,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str2{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200228.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210228.dta{rm}
+CovidLongitudinal UCLA 20200228.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update pred_state_ 2021-06-06
+{err}This is UCLA update pred_state_ 2020-06-06
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 5,151 obs)
 {res}
@@ -1216,11 +1371,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str2{sf}{txt} now {bf}{res}str24{sf}
 {txt}(101 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200606.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210606.dta{rm}
+CovidLongitudinal UCLA 20200606.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update pred_state_ 2021-06-14
+{err}This is UCLA update pred_state_ 2020-06-14
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 5,151 obs)
 {res}
@@ -1244,11 +1404,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str2{sf}{txt} now {bf}{res}str24{sf}
 {txt}(101 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200614.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210614.dta{rm}
+CovidLongitudinal UCLA 20200614.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update pred_state_ 2021-06-21
+{err}This is UCLA update pred_state_ 2020-06-21
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 5,151 obs)
 {res}
@@ -1272,11 +1437,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str2{sf}{txt} now {bf}{res}str24{sf}
 {txt}(101 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200621.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210621.dta{rm}
+CovidLongitudinal UCLA 20200621.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update pred_state_ 2021-06-27
+{err}This is UCLA update pred_state_ 2020-06-27
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 5,138 obs)
 {res}
@@ -1300,11 +1470,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str2{sf}{txt} now {bf}{res}str24{sf}
 {txt}(102 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200627.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210627.dta{rm}
+CovidLongitudinal UCLA 20200627.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update pred_state_ 2021-06-30
+{err}This is UCLA update pred_state_ 2020-06-30
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 5,541 obs)
 {res}
@@ -1328,11 +1503,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str2{sf}{txt} now {bf}{res}str24{sf}
 {txt}(101 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200630.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210630.dta{rm}
+CovidLongitudinal UCLA 20200630.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update pred_state_ 2021-07-06
+{err}This is UCLA update pred_state_ 2020-07-06
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 5,500 obs)
 {res}
@@ -1356,11 +1536,16 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str2{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20200706.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20210706.dta{rm}
+CovidLongitudinal UCLA 20200706.dta{rm}
 saved
 {p_end}
-{err}This is UCLA update pred_state_ 2021-11-15
+{err}This is UCLA update pred_state_ 2020-11-15
 {res}{txt}(encoding automatically selected: ISO-8859-1)
 {res}{text}(17 vars, 2,600 obs)
 {res}
@@ -1384,8 +1569,13 @@ saved
 {txt}variable {bf}{res}loc_grand_name{sf}{txt} was {bf}{res}str2{sf}{txt} now {bf}{res}str24{sf}
 {txt}(100 real changes made)
 {p 0 4 2}
+(file {bf}
+CovidLongitudinal UCLA 20201115.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-CovidLongitudinal UCLA 20211115.dta{rm}
+CovidLongitudinal UCLA 20201115.dta{rm}
 saved
 {p_end}
 
@@ -1411,44 +1601,44 @@ saved
 . 
 . 
 . local list ///
-> 20210103 ///
-> 20210110 ///
-> 20210206 ///
-> 20210228 ///
-> 20210307 ///
-> 20210315 ///
-> 20210328 ///
-> 20210404 ///
-> 20210606 ///
-> 20210614 ///
-> 20210621 ///
-> 20210627 ///
-> 20210630 ///
-> 20210706 ///
-> 20210712 ///
-> 20210719 ///
-> 20210726 ///
-> 20210802 ///
-> 20210809 ///
-> 20210816 ///
-> 20210823 ///
-> 20210830 ///
-> 20210906 ///
-> 20210913 ///
-> 20210920 ///
-> 20210927 ///
-> 20211004 ///
-> 20211011 ///
-> 20211018 ///
-> 20211025 ///
-> 20211101 ///
-> 20211108 ///
-> 20211115 ///
-> 20211122 ///
-> 20211129 ///
-> 20211206 ///
-> 20211213 ///
-> 20211220
+> 20200103 ///
+> 20200110 ///
+> 20200206 ///
+> 20200228 ///
+> 20200307 ///
+> 20200315 ///
+> 20200328 ///
+> 20200404 ///
+> 20200606 ///
+> 20200614 ///
+> 20200621 ///
+> 20200627 ///
+> 20200630 ///
+> 20200706 ///
+> 20200712 ///
+> 20200719 ///
+> 20200726 ///
+> 20200802 ///
+> 20200809 ///
+> 20200816 ///
+> 20200823 ///
+> 20200830 ///
+> 20200906 ///
+> 20200913 ///
+> 20200920 ///
+> 20200927 ///
+> 20201004 ///
+> 20201011 ///
+> 20201018 ///
+> 20201025 ///
+> 20201101 ///
+> 20201108 ///
+> 20201115 ///
+> 20201122 ///
+> 20201129 ///
+> 20201206 ///
+> 20201213 ///
+> 20201220
 {txt}
 {com}. 
 . 
@@ -1468,193 +1658,383 @@ saved
 {txt}  8{com}. 
 . {c )-}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200103 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210103 countries.dta{rm}
+UCLA 20200103 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200110 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210110 countries.dta{rm}
+UCLA 20200110 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200206 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210206 countries.dta{rm}
+UCLA 20200206 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200228 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210228 countries.dta{rm}
+UCLA 20200228 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200307 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210307 countries.dta{rm}
+UCLA 20200307 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200315 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210315 countries.dta{rm}
+UCLA 20200315 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200328 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210328 countries.dta{rm}
+UCLA 20200328 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200404 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210404 countries.dta{rm}
+UCLA 20200404 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200606 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210606 countries.dta{rm}
+UCLA 20200606 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200614 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210614 countries.dta{rm}
+UCLA 20200614 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200621 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210621 countries.dta{rm}
+UCLA 20200621 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200627 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210627 countries.dta{rm}
+UCLA 20200627 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200630 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210630 countries.dta{rm}
+UCLA 20200630 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200706 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210706 countries.dta{rm}
+UCLA 20200706 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200712 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210712 countries.dta{rm}
+UCLA 20200712 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200719 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210719 countries.dta{rm}
+UCLA 20200719 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200726 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210726 countries.dta{rm}
+UCLA 20200726 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200802 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210802 countries.dta{rm}
+UCLA 20200802 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200809 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210809 countries.dta{rm}
+UCLA 20200809 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200816 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210816 countries.dta{rm}
+UCLA 20200816 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200823 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210823 countries.dta{rm}
+UCLA 20200823 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200830 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210830 countries.dta{rm}
+UCLA 20200830 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200906 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210906 countries.dta{rm}
+UCLA 20200906 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200913 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210913 countries.dta{rm}
+UCLA 20200913 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200920 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210920 countries.dta{rm}
+UCLA 20200920 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20200927 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20210927 countries.dta{rm}
+UCLA 20200927 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20201004 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20211004 countries.dta{rm}
+UCLA 20201004 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20201011 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20211011 countries.dta{rm}
+UCLA 20201011 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20201018 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20211018 countries.dta{rm}
+UCLA 20201018 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20201025 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20211025 countries.dta{rm}
+UCLA 20201025 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20201101 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20211101 countries.dta{rm}
+UCLA 20201101 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20201108 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20211108 countries.dta{rm}
+UCLA 20201108 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20201115 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20211115 countries.dta{rm}
+UCLA 20201115 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20201122 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20211122 countries.dta{rm}
+UCLA 20201122 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20201129 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20211129 countries.dta{rm}
+UCLA 20201129 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20201206 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20211206 countries.dta{rm}
+UCLA 20201206 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20201213 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20211213 countries.dta{rm}
+UCLA 20201213 countries.dta{rm}
 saved
 {p_end}
 {res}{txt}{p 0 4 2}
+(file {bf}
+UCLA 20201220 countries.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
-UCLA 20211220 countries.dta{rm}
+UCLA 20201220 countries.dta{rm}
 saved
 {p_end}
 
@@ -1662,7 +2042,7 @@ saved
 . 
 . 
 . 
-. use "UCLA 20210103 countries.dta" 
+. use "UCLA 20200103 countries.dta" 
 {txt}
 {com}. 
 . 
@@ -1967,7 +2347,7 @@ saved
 . * https://www.statalist.org/forums/forum/general-stata-discussion/general/1687043-how-to-rearrange-the-values-of-string-variables-according-to-a-criterion
 . 
 . reshape long countries, i(obs_no) j(str_date) string
-{txt}(j = 20210103 20210110 20210206 20210228 20210307 20210315 20210328 20210404 20210606 20210614 20210621 20210627 20210630 20210706 20210712 20210719 20210726 20210802 20210809 20210816 20210823 20210830 20210906 20210913 20210920 20210927 20211004 20211011 20211018 20211025 20211101 20211108 20211115 20211122 20211129 20211206 20211213 20211220)
+{txt}(j = 20200103 20200110 20200206 20200228 20200307 20200315 20200328 20200404 20200606 20200614 20200621 20200627 20200630 20200706 20200712 20200719 20200726 20200802 20200809 20200816 20200823 20200830 20200906 20200913 20200920 20200927 20201004 20201011 20201018 20201025 20201101 20201108 20201115 20201122 20201129 20201206 20201213 20201220)
 
 Data{col 36}Wide{col 43}->{col 48}Long
 {hline 77}
@@ -1975,7 +2355,7 @@ Number of observations     {res}          26   {txt}->   {res}988
 {txt}Number of variables        {res}          39   {txt}->   {res}3           
 {txt}j variable (38 values)                    ->   {res}str_date
 {txt}xij variables:
-{res}countries20210103 countries20210110 ... countries20211220{txt}->{res}countries
+{res}countries20200103 countries20200110 ... countries20201220{txt}->{res}countries
 {txt}{hline 77}
 
 {com}. gen int real_date = daily(str_date, "YMD")
@@ -2250,7 +2630,7 @@ saved
       {txt}name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/download/UCLA/log CovidLongitudinal UCLA.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res}25 Nov 2023, 05:09:13
+ {txt}closed on:  {res}18 Dec 2023, 15:12:50
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}
