@@ -3,7 +3,7 @@
       name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/log CovidLongitudinal Argentina 1 Process.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res}25 Nov 2023, 15:57:53
+ {txt}opened on:  {res}18 Dec 2023, 17:57:17
 {txt}
 {com}. 
 . ***************************************************************************
@@ -344,7 +344,7 @@ saved
 {txt}
 {com}. 
 . keep if loc_grand_name == "Argentina"
-{txt}(221,763 observations deleted)
+{txt}(221,742 observations deleted)
 
 {com}. 
 . keep date DayDeaMeSmJOHNARG
@@ -28978,7 +28978,7 @@ saved
       {txt}name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/log CovidLongitudinal Argentina 1 Process.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res}25 Nov 2023, 16:05:40
+ {txt}closed on:  {res}18 Dec 2023, 18:06:00
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}

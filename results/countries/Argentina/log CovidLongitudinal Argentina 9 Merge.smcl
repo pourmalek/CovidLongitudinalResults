@@ -1,9 +1,9 @@
 {smcl}
-{com}{sf}{ul off}{txt}{.-}
+{txt}{sf}{ul off}{.-}
       name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/log CovidLongitudinal Argentina 9 Merge.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res}25 Nov 2023, 16:07:49
+ {txt}opened on:  {res}18 Dec 2023, 18:08:06
 {txt}
 {com}. 
 . ***************************************************************************
@@ -4370,6 +4370,11 @@
 {com}. 
 . save "ALL MODELS Argentina error.dta", replace
 {txt}{p 0 4 2}
+(file {bf}
+ALL MODELS Argentina error.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
 ALL MODELS Argentina error.dta{rm}
 saved
@@ -4391,7 +4396,12 @@ saved
 {res}{txt}
 {com}.         
 .     export delimited name varlab using "ALL MODELS Argentina error data dictionary.csv", replace 
-{res}{txt}file {bf:ALL MODELS Argentina error data dictionary.csv} saved
+{res}{txt}{p 0 4 2}
+(file {bf}
+ALL MODELS Argentina error data dictionary.csv{rm}
+not found)
+{p_end}
+{txt}file {bf:ALL MODELS Argentina error data dictionary.csv} saved
 
 {com}.         
 . restore
@@ -4416,6 +4426,11 @@ saved
 {com}. 
 . save "ALL MODELS Argentina error - only models across error measures.dta", replace
 {txt}{p 0 4 2}
+(file {bf}
+ALL MODELS Argentina error - only models across error measures.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
 ALL MODELS Argentina error - only models across error measures.dta{rm}
 saved
@@ -4554,6 +4569,11 @@ all files already exist and are up to date.
 {com}. 
 . save "CovidLongitudinal Argentina merge temp.dta", replace 
 {txt}{p 0 4 2}
+(file {bf}
+CovidLongitudinal Argentina merge temp.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
 CovidLongitudinal Argentina merge temp.dta{rm}
 saved
@@ -4645,7 +4665,12 @@ saved
 {res}{txt}
 {com}.         
 .     export delimited name varlab using "ALL MODELS Argentina error - only models across error measures data dictionary.csv", replace 
-{res}{txt}file {bf:ALL MODELS Argentina error - only models across error measures data dictionary.csv} saved
+{res}{txt}{p 0 4 2}
+(file {bf}
+ALL MODELS Argentina error - only models across error measures data dictionary.csv{rm}
+not found)
+{p_end}
+{txt}file {bf:ALL MODELS Argentina error - only models across error measures data dictionary.csv} saved
 
 {com}.         
 . restore
@@ -4946,6 +4971,11 @@ xij variables:
 {com}. 
 . save "ALL MODELS Argentina error - only error measures across models.dta", replace
 {txt}{p 0 4 2}
+(file {bf}
+ALL MODELS Argentina error - only error measures across models.dta{rm}
+not found)
+{p_end}
+{p 0 4 2}
 file {bf}
 ALL MODELS Argentina error - only error measures across models.dta{rm}
 saved
@@ -4968,7 +4998,12 @@ saved
 {res}{txt}
 {com}.         
 .     export delimited name varlab using "ALL MODELS Argentina error - only error measures across models data dictionary.csv", replace 
-{res}{txt}file {bf:ALL MODELS Argentina error - only error measures across models data dictionary.csv} saved
+{res}{txt}{p 0 4 2}
+(file {bf}
+ALL MODELS Argentina error - only error measures across models data dictionary.csv{rm}
+not found)
+{p_end}
+{txt}file {bf:ALL MODELS Argentina error - only error measures across models data dictionary.csv} saved
 
 {com}.         
 . restore
@@ -4987,7 +5022,7 @@ saved
       {txt}name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/countries/Argentina/log CovidLongitudinal Argentina 9 Merge.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res}25 Nov 2023, 16:10:05
+ {txt}closed on:  {res}18 Dec 2023, 18:10:19
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}
