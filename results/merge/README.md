@@ -8,6 +8,8 @@ Predictive performance of international periodically updated COVID-19 epidemic m
 
 [Error measures results by country, maps](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/README.md#error-measures-results-by-country-maps)
 
+Number of countries included in COVID-19 epidemic models, 2020-21
+
 ***
 ***
 
@@ -321,4 +323,9 @@ YYGU = [Youyang Gu model](https://covid19-projections.com)
 ![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/89eba5b7-8a17-4cc3-b4d6-755b67983063)
 
 ***
+***
+
+### Number of countries included in COVID-19 epidemic models, 2020-21
+
+[]()
 
