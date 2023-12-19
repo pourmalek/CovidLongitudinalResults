@@ -8,7 +8,7 @@ Predictive performance of international periodically updated COVID-19 epidemic m
 
 [Error measures results by country, maps](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/README.md#error-measures-results-by-country-maps)
 
-Number of countries included in COVID-19 epidemic models, 2020-21
+[Number of countries included in COVID-19 epidemic models, 2020-22](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/README.md#number-of-countries-included-in-covid-19-epidemic-models-2020-22)
 
 ***
 ***
