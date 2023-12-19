@@ -327,5 +327,9 @@ YYGU = [Youyang Gu model](https://covid19-projections.com)
 
 ### Number of countries included in COVID-19 epidemic models, 2020-21
 
-[]()
+[graph 301 Number of countries included in C 19 epidemic models, 2020-21](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20301%20Number%20of%20countries%20included%20in%20C%2019%20epidemic%20models%2C%202020-21.pdf)
+
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/debcba77-794b-4a94-a855-1d3c4bc60896)
+
+***
 
