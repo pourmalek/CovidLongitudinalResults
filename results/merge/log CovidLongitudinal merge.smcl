@@ -3,7 +3,7 @@
       name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/merge/log CovidLongitudinal merge.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res}19 Dec 2023, 06:39:52
+ {txt}opened on:  {res}19 Dec 2023, 17:04:40
 {txt}
 {com}. 
 . 
@@ -249,7 +249,7 @@ saved
      {c TLC}{hline 7}{c -}{hline 10}{c -}{hline 8}{c TRC}
      {c |} {res}model   loc_gr~e   update {txt}{c |}
      {c LT}{hline 7}{c -}{hline 10}{c -}{hline 8}{c RT}
-  1. {c |} {res} LANL     Brunei        3 {txt}{c |}
+  1. {c |} {res} LANL    Grenada        3 {txt}{c |}
      {c BLC}{hline 7}{c -}{hline 10}{c -}{hline 8}{c BRC}
 
 {com}. 
@@ -261,7 +261,7 @@ saved
      {c TLC}{hline 7}{c -}{hline 10}{c -}{hline 8}{c TRC}
      {c |} {res}model   loc_gr~e   update {txt}{c |}
      {c LT}{hline 7}{c -}{hline 10}{c -}{hline 8}{c RT}
-  1. {c |} {res} DELP     Israel      314 {txt}{c |}
+  1. {c |} {res} DELP     Russia      314 {txt}{c |}
      {c BLC}{hline 7}{c -}{hline 10}{c -}{hline 8}{c BRC}
 
 {com}. 
@@ -349,11 +349,11 @@ saved
 {com}. 
 . list in 1 // min number of model per country, already knew it is one
 {txt}
-     {c TLC}{hline 34}{c -}{hline 7}{c TRC}
-     {c |} {res}                  loc_grand_name   model {txt}{c |}
-     {c LT}{hline 34}{c -}{hline 7}{c RT}
-  1. {c |} {res}Saint Vincent and the Grenadines       1 {txt}{c |}
-     {c BLC}{hline 34}{c -}{hline 7}{c BRC}
+     {c TLC}{hline 10}{c -}{hline 7}{c TRC}
+     {c |} {res}loc_gr~e   model {txt}{c |}
+     {c LT}{hline 10}{c -}{hline 7}{c RT}
+  1. {c |} {res}    Laos       1 {txt}{c |}
+     {c BLC}{hline 10}{c -}{hline 7}{c BRC}
 
 {com}. 
 . gsort - model
@@ -364,7 +364,7 @@ saved
      {c TLC}{hline 10}{c -}{hline 7}{c TRC}
      {c |} {res}loc_gr~e   model {txt}{c |}
      {c LT}{hline 10}{c -}{hline 7}{c RT}
-  1. {c |} {res}  Russia       6 {txt}{c |}
+  1. {c |} {res}Pakistan       6 {txt}{c |}
      {c BLC}{hline 10}{c -}{hline 7}{c BRC}
 
 {com}. 
@@ -14581,7 +14581,7 @@ format
 
 {txt}Contains data from {res}world_shp.dta
 {txt} Observations:{res}       526,312                  
-{txt}    Variables:{res}             5                  19 Dec 2023 06:40
+{txt}    Variables:{res}             5                  19 Dec 2023 17:04
 {txt}{hline}
 Variable      Storage   Display    Value
     name         type    format    label      Variable label
@@ -14619,7 +14619,7 @@ saved
 
 {txt}Contains data from {res}world.dta
 {txt} Observations:{res}           251                  
-{txt}    Variables:{res}            55                  19 Dec 2023 06:40
+{txt}    Variables:{res}            55                  19 Dec 2023 17:04
 {txt}{hline}
 Variable      Storage   Display    Value
     name         type    format    label      Variable label
@@ -18364,7 +18364,7 @@ saved
       {txt}name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/merge/log CovidLongitudinal merge.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res}19 Dec 2023, 06:42:26
+ {txt}closed on:  {res}19 Dec 2023, 17:07:37
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}
