@@ -3,7 +3,7 @@
       name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/merge/log CovidLongitudinal coverage.smcl
   {txt}log type:  {res}smcl
- {txt}opened on:  {res}19 Dec 2023, 17:07:37
+ {txt}opened on:  {res}19 Dec 2023, 19:25:43
 {txt}
 {com}. 
 . ***************************************************************************
@@ -2297,6 +2297,154 @@ saved
 {com}. 
 . 
 . 
+. egen loc_unique_DELP_mode = mode(loc_unique_DELP) 
+{txt}
+{com}. egen loc_unique_IHME_mode = mode(loc_unique_IHME) 
+{txt}
+{com}. egen loc_unique_IMPE_mode = mode(loc_unique_IMPE) 
+{txt}
+{com}. egen loc_unique_LANL_mode = mode(loc_unique_LANL) 
+{txt}
+{com}. egen loc_unique_UCLA_mode = mode(loc_unique_UCLA) 
+{txt}
+{com}. egen loc_unique_YYGU_mode = mode(loc_unique_YYGU) 
+{txt}
+{com}. 
+. tab1 *_mode
+
+{res}-> tabulation of loc_unique_DELP_mode  
+
+{txt}loc_unique_ {c |}
+  DELP_mode {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        164 {c |}{res}      1,237      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,237      100.00
+
+-> tabulation of loc_unique_IHME_mode  
+
+{txt}loc_unique_ {c |}
+  IHME_mode {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        162 {c |}{res}      1,237      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,237      100.00
+
+-> tabulation of loc_unique_IMPE_mode  
+
+{txt}loc_unique_ {c |}
+  IMPE_mode {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        193 {c |}{res}      1,237      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,237      100.00
+
+-> tabulation of loc_unique_LANL_mode  
+
+{txt}loc_unique_ {c |}
+  LANL_mode {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        171 {c |}{res}      1,237      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,237      100.00
+
+-> tabulation of loc_unique_UCLA_mode  
+
+{txt}loc_unique_ {c |}
+  UCLA_mode {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         26 {c |}{res}      1,237      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,237      100.00
+
+-> tabulation of loc_unique_YYGU_mode  
+
+{txt}loc_unique_ {c |}
+  YYGU_mode {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         71 {c |}{res}      1,237      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,237      100.00
+{txt}
+{com}. 
+. 
+. ssc install hsmode
+{txt}checking {hilite:hsmode} consistency and verifying not already installed...
+all files already exist and are up to date.
+
+{com}. 
+. hsmode loc_unique_DELP 
+
+{txt}(n = {res}314{txt})
+{col 16}{space 2}{space 2}  mode
+{hline 25}
+loc_unique_DELP{col 16}{space 2}{res}     164
+{txt}
+{com}. hsmode loc_unique_IHME
+
+{txt}(n = {res}107{txt})
+{col 16}{space 2}{space 2}  mode
+{hline 25}
+loc_unique_IHME{col 16}{space 2}{res}     162
+{txt}
+{com}. hsmode loc_unique_IMPE
+
+{txt}(n = {res}148{txt})
+{col 16}{space 2}{space 2}  mode
+{hline 25}
+loc_unique_IMPE{col 16}{space 2}{res}     193
+{txt}
+{com}. hsmode loc_unique_LANL
+
+{txt}(n = {res}129{txt})
+{col 16}{space 2}{space 2}  mode
+{hline 25}
+loc_unique_LANL{col 16}{space 2}{res}     160
+{txt}
+{com}. hsmode loc_unique_UCLA
+
+{txt}(n = {res}38{txt})
+{col 16}{space 2}{space 2}  mode
+{hline 25}
+loc_unique_UCLA{col 16}{space 2}{res}      26
+{txt}
+{com}. hsmode loc_unique_YYGU
+
+{txt}(n = {res}188{txt})
+{col 16}{space 2}{space 2}  mode
+{hline 25}
+loc_unique_YYGU{col 16}{space 2}{res}      71
+{txt}
+{com}. 
+. 
+. egen loc_unique_LANL_mode_min = mode(loc_unique_LANL), minmode 
+{txt}
+{com}. 
+. tab loc_unique_LANL_mode_min
+
+{txt}loc_unique_ {c |}
+LANL_mode_m {c |}
+         in {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        171 {c |}{res}      1,237      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,237      100.00
+{txt}
+{com}. 
+. egen loc_unique_LANL_mode_max = mode(loc_unique_LANL), maxmode 
+{txt}
+{com}. 
+. tab loc_unique_LANL_mode_max
+
+{txt}loc_unique_ {c |}
+LANL_mode_m {c |}
+         ax {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+        171 {c |}{res}      1,237      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,237      100.00
+{txt}
+{com}. 
 . 
 . 
 . 
@@ -2357,7 +2505,7 @@ format
       {txt}name:  {res}<unnamed>
        {txt}log:  {res}/Users/farshadpourmalek/Downloads/CovidLongitudinal-main/code/merge/log CovidLongitudinal coverage.smcl
   {txt}log type:  {res}smcl
- {txt}closed on:  {res}19 Dec 2023, 17:11:58
+ {txt}closed on:  {res}19 Dec 2023, 19:30:12
 {txt}{.-}
 {smcl}
 {txt}{sf}{ul off}
