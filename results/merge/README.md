@@ -214,21 +214,20 @@ For each model, two maps are shown that use different color schemes for error me
 
 - Note on blank or white areas in maps:
 
-(1) Turkmenistan is shown as blank in maps since Johns Hopkins reported deaths did not include this country. (2) One area in northeast and (3) another area in northwest of India are shown blank (white) in the World Bank [shape file used here](https://datacatalog.worldbank.org/search/dataset/0038272/World-Bank-Official-Boundaries). (4) Area Abyei between Sudan and South Sudan is also shown blank in the World Bank shape file.
- 
-![white](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/4f85b677-63a7-4e42-ae5e-43c6fad3afe7)
-
-JOHN: Johns Hopkins. The coronavirus resource center, Johns Hopkins University, Baltimore. https://coronavirus.jhu.edu/map.html
-
-
-Locations and countries not included in this study: 
+Locations and countries not included in this study (show blank white in maps): 
 
 Not included in JOHN: Aruba, French Guiana, French Polynesia, Guadeloupe, Guam, Martinique, New Caledonia, Puerto Rico, Reunion, Sint Maarten, Turkmenistan, Turks and Caicos Islands, Tuvalu, United States Virgin Islands, Western Sahara
+
+JOHN: Johns Hopkins. The coronavirus resource center, Johns Hopkins University, Baltimore. https://coronavirus.jhu.edu/map.html
 
 Not included in models assessed in this study: Antarctica, Dominica, Holy See, Marshall Islands, Palau, Saint Kitts and Nevis
 
 Not included in this study because the number of deaths were negligible: Diamond Princess (ship), MS Zaandam (ship), Summer Olympics 2020, Winter Olympics 2022
 
+Three other locations are shown blank white because they show blank in the the World Bank [shape file used here](https://datacatalog.worldbank.org/search/dataset/0038272/World-Bank-Official-Boundaries): (1) One area in northeast and (2) another area in northwest of India, (3) Area Abyei between Sudan and South Sudan is also shown blank in the World Bank shape file.
+
+![white](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/4f85b677-63a7-4e42-ae5e-43c6fad3afe7)
+ 
 ***
 
 [graph 101 a C19 daily deaths, DELP model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20101%20a%20C19%20daily%20deaths%2C%20DELP%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
