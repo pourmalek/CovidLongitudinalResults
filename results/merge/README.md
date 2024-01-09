@@ -220,6 +220,15 @@ For each model, two maps are shown that use different color schemes for error me
 
 JOHN: Johns Hopkins. The coronavirus resource center, Johns Hopkins University, Baltimore. https://coronavirus.jhu.edu/map.html
 
+
+Locations and countries not included in this study: 
+
+Not included in JOHN: Aruba, French Guiana, French Polynesia, Guadeloupe, Guam, Martinique, New Caledonia, Puerto Rico, Reunion, Sint Maarten, Turkmenistan, Turks and Caicos Islands, Tuvalu, United States Virgin Islands, Western Sahara
+
+Not included in models assessed in this study: Antarctica, Dominica, Holy See, Marshall Islands, Palau, Saint Kitts and Nevis
+
+Not included in this study because the number of deaths were negligible: Diamond Princess (ship), MS Zaandam (ship), Summer Olympics 2020, Winter Olympics 2022
+
 ***
 
 [graph 101 a C19 daily deaths, DELP model, Absolute Percent Error, Deciles of MEANS model](https://github.com/pourmalek/CovidLongitudinalResults/blob/main/results/merge/graph%20101%20a%20C19%20daily%20deaths%2C%20DELP%20model%2C%20Absolute%20Percent%20Error%2C%20Deciles%20of%20MEANS%20model.pdf)
