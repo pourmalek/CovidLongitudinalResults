@@ -226,7 +226,8 @@ Not included in this study because the number of deaths were negligible: Diamond
 
 Three other locations are shown blank white because they show blank in the the World Bank [shape file used here](https://datacatalog.worldbank.org/search/dataset/0038272/World-Bank-Official-Boundaries): (1) One area in northeast and (2) another area in northwest of India, (3) Area Abyei between Sudan and South Sudan is also shown blank in the World Bank shape file.
 
-![white](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/4f85b677-63a7-4e42-ae5e-43c6fad3afe7)
+![image](https://github.com/pourmalek/CovidLongitudinalResults/assets/30849720/fdc4bb1d-57da-4389-b082-5ab52de827db)
+
  
 ***
 
